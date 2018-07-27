@@ -1,9 +1,12 @@
 using RobRecSolver
-@static if VERSION < v"0.7.0-DEV.2005"
-    using Base.Test
-else
-    using Test
-end
+using Base.Test
 
-# write your own tests here
-@test 1 == 2
+tests = [
+    "initial_scenario_tests",
+    "minimum_knapsack_problem_tests",
+    "minimum_assignment_problem_tests"
+    ]
+
+for test in tests
+    include("$(test).jl")
+end
