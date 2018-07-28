@@ -7,7 +7,8 @@ files = [
         "minimum_knapsack_problem",
         "minimum_assignment_problem",
         "initial_scenario",
-        "recoverable_model",
+        "evaluation_problem",
+        "recoverable_problem",
         "experiment"
     ]
 
