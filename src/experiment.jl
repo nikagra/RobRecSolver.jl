@@ -1,9 +1,11 @@
-using RobRecSolver
-
 """
-#Usage:
-runExperiment([100, 400, 1000], generateKnapsackData)
-runExperiment([10, 25, 100], generateAssignmentData)
+Run experiment computing ratio ρ(c₀) with specified `n` and data generator.
+
+# Examples:
+```julia-repl
+julia> using RobRecSolver
+julia> runExperiment([100, 400, 1000], generateKnapsackData)
+```
 """
 function runExperiment(ns, dataGenerator)
     for n in ns
@@ -15,7 +17,7 @@ function runExperiment(ns, dataGenerator)
                 (C, c, d, Γ, X) = dataGenerator(n)
                 c₀ = initialScenario(c, d, Γ)
                 tic()
-                ρ = min(REC(C, c, α, X) + Γ, REC(C, c + d, α, X)) / REC(C, c₀, α, X)
+                ρ = min(recoverableProblem(C, c, α, X)[3] + Γ, recoverableProblem(C, c + d, α, X)[3]) / recoverableProblem(C, c₀, α, X)[3]
                 push!(times, toq())
                 push!(ratios, ρ)
             end

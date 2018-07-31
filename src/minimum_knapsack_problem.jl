@@ -1,7 +1,3 @@
-using JuMP, Cbc
-
-export minimumKnapsackProblem, getKnapsackConstraints
-
 """
     minimumKnapsackProblem(C, w, W)
 

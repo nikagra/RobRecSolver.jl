@@ -1,29 +1,30 @@
 """
-    evaluationProblem(C, c, d, Γ, α, x, X)
+    adversarialProblem(C, c, d, Γ, α, x, X)
 
-Compute EVAL(x) with accuracy ϵ.
+Compute ADV(x) with accuracy ϵ.
 """
-function evaluationProblem(C, c, d, Γ, α, x, X)
+function adversarialProblem(C, c, d, Γ, α, x, X)
     ub = Inf
     c₀ = initialScenario(c, d, Γ)
-    (y, lb) = incrementalProblem(c₀, α, x, X)
-    Y = [y]
+    (x, y, lb) = recoverableProblem(C, c₀, α, X)
+    Z = [(x, y)]
     while (ub - lb)/lb > 0.01
-        (c̃, t̃) = relaxedAdversarialProblem(c, d, Γ, Y)
-        ub = t̃
-        (y, nlb) = incrementalProblem(c̃, α, x, X)
+        (c, t) = relaxedAdversarialProblem(C, c, d, Γ, Z)
+        ub = t
+        (x, y, nlb) = recoverableProblem(C, c, α, X)
         if lb < nlb
             lb = nlb
         end
-        push!(Y, y)
+        push!(Z, (x, y))
     end
-    vecdot(C, x) + ub
+    lb
 end
 
-function relaxedAdversarialProblem(c, d, Γ, Y)
+function relaxedAdversarialProblem(C, c, d, Γ, Z)
     n = size(c, 1)
 
     model = Model(solver=CbcSolver())
+
     @variable(model, t̃)
     if ndims(c) == 1
         @variable(model, c̃[1:n])
@@ -36,7 +37,7 @@ function relaxedAdversarialProblem(c, d, Γ, Y)
 
     @objective(model, Max, t̃)
 
-    @constraint(model, [y in Y], t̃ <= vecdot(c̃, y))
+    @constraint(model, [(x, y) in Z], t̃ <= vecdot(C, x) + vecdot(c̃, y))
 
     @constraint(model, c̃ .>= c)
     @constraint(model, c̃ .<= c + d)

@@ -1,5 +1,3 @@
-export initialScenario
-
 """
     initialScenario(c, d, Γ)
 
@@ -11,16 +9,16 @@ function initialScenario(c, d, Γ)
     l = 0
     r = maximum(map((t) -> sum(t), zip(c, d)))
 
-    delta = []
+    δ = []
     while l < r
         m = ceil(Int, (l + r) / 2.0)
-        delta = calculateDelta(c, d, m)
-        if sum(delta) > Γ
+        δ = calculateDelta(c, d, m)
+        if sum(δ) > Γ
             r = m - 1
         else
             l = m
         end
     end
-    delta = reshape(calculateDelta(c, d, l), size(c))
-    return c + delta
+    δ = reshape(calculateDelta(c, d, l), size(c))
+    return c + δ
 end

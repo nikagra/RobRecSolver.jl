@@ -1,11 +1,10 @@
-using JuMP, Cbc
-
-export REC
-
 """
-Mathematical programming model for solving recoverable problem
+    recoverableProblem(C, c, α, X)
+
+Mathematical programming model for solving the following recoverable problem:
+    ``REC(c) = min_{x \\in X} min_{y \\in X^{\\alpha}_x} (Cx + cy)``
 """
-function REC(C, c, α, X)
+function recoverableProblem(C, c, α, X)
     @assert size(C) == size(c)
 
     n = size(C, 1)
@@ -24,7 +23,7 @@ function REC(C, c, α, X)
         throw(ArgumentError("Unsupported number of dimensions ($(ndims(C)))"))
     end
 
-    @objective(model, Min, vecdot(c, y))
+    @objective(model, Min, vecdot(C, x) + vecdot(c, y))
 
     @constraint(model, sum(x-z) <= α * sum(x))
 
@@ -42,5 +41,5 @@ function REC(C, c, α, X)
     end
 
     status = solve(model)
-    getobjectivevalue(model)
+    (getvalue(x), getvalue(y), getobjectivevalue(model))
 end

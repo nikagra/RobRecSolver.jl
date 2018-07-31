@@ -1,8 +1,4 @@
-using JuMP, Cbc
-
-export minimumAssignmentProblem, getAssignmentConstraints
-
-"""
+""""
     minimumAssignmentProblem(C)
 
 Solve minimum assignment problem using costs `C`
@@ -24,7 +20,7 @@ function minimumAssignmentProblem(C)
 end
 
 """
-    getAssignmentConstraints()
+    getAssignmentConstraints(m)
 
 Return a list of constraints defining a set of feasible solutions of a minimum assignment problem.
 Each constraint is function with one parameter, which is variable of a mathematical programming model
