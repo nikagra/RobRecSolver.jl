@@ -9,7 +9,7 @@ function minimumAssignmentProblem(C)
     m = size(C, 1)
     model = Model(solver = CbcSolver())
     @variable(model, x[1:m, 1:m], Bin)
-    @objective(model, Min, sum(C[i, j] * x[i, j] for  i = 1:m, j = 1:m))
+    @objective(model, Min, vecdot(C, x))
 
     for constraint in getAssignmentConstraints(m)
         JuMP.addconstraint(model, constraint(x))

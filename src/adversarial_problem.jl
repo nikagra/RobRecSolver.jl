@@ -1,9 +1,9 @@
 """
-    adversarialProblem(C, c, d, Γ, α, x, X)
+    adversarialProblem(C, c, d, Γ, α, X)
 
-Compute ADV(x) with accuracy ϵ.
+Compute ADV(ϵ) with accuracy ϵ.
 """
-function adversarialProblem(C, c, d, Γ, α, x, X)
+function adversarialProblem(C, c, d, Γ, α, X)
     ub = Inf
     c₀ = initialScenario(c, d, Γ)
     (x, y, lb) = recoverableProblem(C, c₀, α, X)

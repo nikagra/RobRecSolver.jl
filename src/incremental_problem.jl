@@ -27,5 +27,5 @@ function incrementalProblem(c, α, x, X)
     end
 
     status = solve(model)
-    return (map(x -> Int(x), getvalue(y)), getobjectivevalue(model))
+    return (getvalue(y), getobjectivevalue(model)) # InexactError is thrown here while solving computeAdversarialLowerBound -> evaluationProblem
 end

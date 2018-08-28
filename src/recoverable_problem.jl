@@ -9,7 +9,7 @@ function recoverableProblem(C, c, α, X)
 
     n = size(C, 1)
 
-    model = Model(solver=CbcSolver())
+    model = Model(solver=CbcSolver(seconds = 240.0))
     if ndims(C) == 1
         @variable(model, x[1:n], Bin)
         @variable(model, y[1:n], Bin)

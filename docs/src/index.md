@@ -42,7 +42,7 @@ evaluationProblem(C, c, d, Γ, α, x, X)
 ## Lower bounds
 
 ```@docs
-adversarialProblem(C, c, d, Γ, α, x, X)
+adversarialProblem(C, c, d, Γ, α, X)
 ```
 
 ## Experiments

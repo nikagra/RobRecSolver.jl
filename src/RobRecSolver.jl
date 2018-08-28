@@ -30,7 +30,8 @@ files = [
         "evaluation_problem",
         "recoverable_problem",
         "adversarial_problem",
-        "Incremental_problem",
+        "incremental_problem",
+        "selection_lower_bound",
         "experiment"
     ]
 
