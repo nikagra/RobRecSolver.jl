@@ -17,6 +17,7 @@ export
     evaluationProblem,
     incrementalProblem,
     recoverableProblem,
+    selectionLowerBound,
 
     # experiments
     generateKnapsackData,

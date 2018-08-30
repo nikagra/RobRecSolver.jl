@@ -8,7 +8,8 @@ tests = [
     "incremental_problem_tests",
     "recoverable_problem_tests",
     "evaluation_problem_tests",
-    "adversarial_problem_tests"
+    "adversarial_problem_tests",
+    "selection_lower_bound_tests"
     ]
 
 tic()

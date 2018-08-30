@@ -11,10 +11,11 @@ function runExperiment(ns, dataGenerator)
     for n in ns
         println("n = $n:")
         for α in collect(0.1:0.1:0.9)
+
             numberOfInstances = 5
-            times = Array[[] for i=1:3]
-            ratios = Array[[] for i=1:3]
-            r = []
+            times = Array[[] for i=1:4]
+            ratios = Array[[] for i=1:4]
+
             for i = 1:numberOfInstances
                 (C, c, d, Γ, X) = dataGenerator(n)
                 c₀ = initialScenario(c, d, Γ)
@@ -23,23 +24,33 @@ function runExperiment(ns, dataGenerator)
                 push!(times[1], Δt)
                 push!(ratios[1], ρ₀)
 
-                (ρₐ, Δt) = computeAdversarialLowerBound(C, c, d, Γ, α, X, c₀, x̲, x̅)
+                numerator = computeRatioNumerator(C, c, d, Γ, α, x̲, x̅, X)
+
+                (ρₐ, Δt) = computeAdversarialLowerBound(C, c, d, Γ, α, X, numerator)
                 push!(times[2], Δt)
                 push!(ratios[2], ρ₀)
 
-                (ρᵣ, Δt) = computeRecoverableLowerBound(C, c, d, Γ, α, X, c₀, x̲, x̅)
+                (ρᵣ, Δt) = computeRecoverableLowerBound(C, α, X, c₀, numerator)
                 push!(times[3], Δt)
                 push!(ratios[3], ρ₀)
 
+                (ρₛ, Δt) = computeSelectionLowerBound(C, c, d, Γ, α, X, numerator)
+                push!(times[4], Δt)
+                push!(ratios[4], ρ₀)
             end
-            @assert length(ratios[1]) == numberOfInstances
-            @assert length(times[1]) == numberOfInstances
+
             println("ρ(c₀): $α ⤑ ($(mean(ratios[1]))) in $(mean(times[1]))sec")
             println("ρₐ: $α ⤑ ($(mean(ratios[2]))) in $(mean(times[2]))sec")
             println("ρᵣ: $α ⤑ ($(mean(ratios[3]))) in $(mean(times[3]))sec")
-            println(times, ratios)
+            println("ρₛ: $α ⤑ ($(mean(ratios[4]))) in $(mean(times[4]))sec")
         end
     end
+end
+
+function computeRatioNumerator(C, c, d, Γ, α, x̲, x̅, X)
+    obj₁ = evaluationProblem(C, c, d, Γ, α, x̲, X)
+    obj₂ = evaluationProblem(C, c, d, Γ, α, x̅, X)
+    min(obj₁, obj₂)
 end
 
 function computeRecoverableRatio(C, c, d, Γ, α, X, c₀)
@@ -50,20 +61,22 @@ function computeRecoverableRatio(C, c, d, Γ, α, X, c₀)
     (min(t̲ + Γ, t̅) / t₀, toq(), x̲, x̅)
 end
 
-function computeAdversarialLowerBound(C, c, d, Γ, α, X, c₀, x̲, x̅)
+function computeAdversarialLowerBound(C, c, d, Γ, α, X, numerator)
     tic()
-    obj₁ = evaluationProblem(C, c, d, Γ, α, x̲, X)
-    obj₂ = evaluationProblem(C, c, d, Γ, α, x̅, X)
     lb = adversarialProblem(C, c, d, Γ, α, X)
-    (min(obj₁, obj₂) / lb, toq())
+    (numerator / lb, toq())
 end
 
-function computeRecoverableLowerBound(C, c, d, Γ, α, X, c₀, x̲, x̅)
+function computeRecoverableLowerBound(C, α, X, c₀, numerator)
     tic()
-    obj₁ = evaluationProblem(C, c, d, Γ, α, x̲, X)
-    obj₂ = evaluationProblem(C, c, d, Γ, α, x̅, X)
     (x₀, y₀, t₀) = recoverableProblem(C, c₀, α, X)
-    (min(obj₁, obj₂) / t₀, toq())
+    (numerator / t₀, toq())
+end
+
+function computeSelectionLowerBound(C, c, d, Γ, α, X, numerator)
+    tic()
+    t₀ = selectionLowerBound(C, c, d, Γ, α, X)
+    (numerator / t₀, toq())
 end
 
 function generateKnapsackData(n)
