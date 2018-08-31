@@ -10,7 +10,10 @@ julia> runExperiment([100, 400, 1000], generateKnapsackData)
 function runExperiment(ns, dataGenerator)
     for n in ns
         println("n = $n:")
-        for α in collect(0.1:0.1:0.9)
+        αs = collect(0.1:0.1:0.9)
+        timess = []
+        ratioss = []
+        for α in αs
 
             numberOfInstances = 5
             times = Array[[] for i=1:4]
@@ -30,20 +33,25 @@ function runExperiment(ns, dataGenerator)
                 push!(times[2], Δt)
                 push!(ratios[2], ρ₀)
 
-                (ρᵣ, Δt) = computeRecoverableLowerBound(C, α, X, c₀, numerator)
+                (ρₕ, Δt) = computeRecoverableLowerBound(C, α, X, c₀, numerator)
                 push!(times[3], Δt)
-                push!(ratios[3], ρ₀)
+                push!(ratios[3], ρₕ)
 
                 (ρₛ, Δt) = computeSelectionLowerBound(C, c, d, Γ, α, X, numerator)
                 push!(times[4], Δt)
-                push!(ratios[4], ρ₀)
+                push!(ratios[4], ρₛ)
             end
 
             println("ρ(c₀): $α ⤑ ($(mean(ratios[1]))) in $(mean(times[1]))sec")
             println("ρₐ: $α ⤑ ($(mean(ratios[2]))) in $(mean(times[2]))sec")
-            println("ρᵣ: $α ⤑ ($(mean(ratios[3]))) in $(mean(times[3]))sec")
+            println("ρₕ: $α ⤑ ($(mean(ratios[3]))) in $(mean(times[3]))sec")
             println("ρₛ: $α ⤑ ($(mean(ratios[4]))) in $(mean(times[4]))sec")
+
+            push!(timess, mean.(times[2:4]))
+            push!(ratioss, mean.(ratios[2:4]))
         end
+
+        drawPlots(αs, ratioss, timess)
     end
 end
 
@@ -77,6 +85,21 @@ function computeSelectionLowerBound(C, c, d, Γ, α, X, numerator)
     tic()
     t₀ = selectionLowerBound(C, c, d, Γ, α, X)
     (numerator / t₀, toq())
+end
+
+function drawPlots(αs, ratioss, timess)
+    plotly()
+    labels = ["ρₐ" "ρₕ" "ρₛ"]
+    plot(αs, transposeData(ratioss), lab = labels, xlabel = "α", ylabel = "average ratio ρₖ")
+    gui()
+
+    labels = ["ρₐ" "ρₕ" "ρₛ"]
+    plot(αs, transposeData(timess), lab = labels, xlabel = "α", ylabel = "average time (s.)")
+    gui()
+end
+
+function transposeData(data)
+    [hcat(data...)[i, :] for i in 1:size(hcat(data...), 1)]
 end
 
 function generateKnapsackData(n)
