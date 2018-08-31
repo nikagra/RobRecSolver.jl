@@ -5,6 +5,7 @@ by Adam Kasperski and Pawel Zielinski.
 module RobRecSolver
 
 using JuMP, Cbc
+using Plots
 
 export
     minimumAssignmentProblem,
