@@ -4,7 +4,8 @@ by Adam Kasperski and Pawel Zielinski.
 """
 module RobRecSolver
 
-using JuMP, Cbc
+using JuMP
+using CPLEX
 using Plots
 
 export

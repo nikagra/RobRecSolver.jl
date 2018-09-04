@@ -7,7 +7,7 @@ function selectionLowerBound(C, c, d, Γ, X, α)
     M = typemax(Int)
     n = size(C, 1)
 
-    model = Model(solver = CbcSolver(seconds = 240.0))
+    model = Model(solver = CplexSolver(CPX_PARAM_TILIM = 240))
 
     @variable(model, π >= 0)
     if ndims(c) == 1

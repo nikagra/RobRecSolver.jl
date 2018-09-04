@@ -7,7 +7,7 @@ function minimumKnapsackProblem(C, w, W)
     @assert length(C) == length(w)
 
     n = length(C)
-    model = Model(solver = CbcSolver())
+    model = Model(solver = CplexSolver())
     @variable(model, x[1:n], Bin)
     @objective(model, Min, dot(C, x))
 

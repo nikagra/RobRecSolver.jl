@@ -7,7 +7,7 @@ first stage solutions `x` and a list of constraints `X` defining a set of feasib
 function incrementalProblem(c, α, x, X)
     n = size(c, 1)
 
-    model = Model(solver=CbcSolver())
+    model = Model(solver=CplexSolver())
     if ndims(c) == 1
         @variable(model, y[1:n], Bin)
     elseif ndims(c) == 2

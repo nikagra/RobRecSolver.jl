@@ -7,7 +7,7 @@ function minimumAssignmentProblem(C)
     @assert ndims(C) == 2 && size(C, 1) == size(C, 2)
 
     m = size(C, 1)
-    model = Model(solver = CbcSolver())
+    model = Model(solver = CplexSolver())
     @variable(model, x[1:m, 1:m], Bin)
     @objective(model, Min, vecdot(C, x))
 

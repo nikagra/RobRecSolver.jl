@@ -23,7 +23,7 @@ end
 function relaxedAdversarialProblem(c, d, Γ, Y)
     n = size(c, 1)
 
-    model = Model(solver=CbcSolver())
+    model = Model(solver=CplexSolver())
     @variable(model, t̃)
     if ndims(c) == 1
         @variable(model, c̃[1:n])
