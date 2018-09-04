@@ -1,10 +1,10 @@
 """
-    selectionLowerBound(C, c, d, Γ, α, X)
+    selectionLowerBound(C, c, d, Γ, X, α)
 """
-function selectionLowerBound(C, c, d, Γ, α, X)
+function selectionLowerBound(C, c, d, Γ, X, α)
     @assert size(C) == size(c) == size(d)
 
-    M = 1
+    M = typemax(Int)
     n = size(C, 1)
 
     model = Model(solver = CbcSolver(seconds = 240.0))

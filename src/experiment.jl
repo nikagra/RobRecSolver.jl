@@ -23,22 +23,24 @@ function runExperiment(ns, dataGenerator)
                 (C, c, d, Γ, X) = dataGenerator(n)
                 c₀ = initialScenario(c, d, Γ)
 
-                (ρ₀, Δt, x̲, x̅) = computeRecoverableRatio(C, c, d, Γ, α, X, c₀)
+                (ρ₀, Δt, x̲, x̅) = computeRecoverableRatio(C, c, d, Γ, X, α, c₀)
                 push!(times[1], Δt)
                 push!(ratios[1], ρ₀)
 
-                numerator = computeRatioNumerator(C, c, d, Γ, α, x̲, x̅, X)
+                tic()
+                numerator = computeRatioNumerator(C, c, d, Γ, X, α, x̲, x̅)
+                Δtₙ = toq()
 
-                (ρₐ, Δt) = computeAdversarialLowerBound(C, c, d, Γ, α, X, numerator)
-                push!(times[2], Δt)
+                (ρₐ, Δt) = computeAdversarialLowerBound(C, c, d, Γ, X, α, numerator)
+                push!(times[2], Δt + Δtₙ)
                 push!(ratios[2], ρ₀)
 
-                (ρₕ, Δt) = computeRecoverableLowerBound(C, α, X, c₀, numerator)
-                push!(times[3], Δt)
+                (ρₕ, Δt) = computeRecoverableLowerBound(C, X, α, c₀, numerator)
+                push!(times[3], Δt + Δtₙ)
                 push!(ratios[3], ρₕ)
 
-                (ρₛ, Δt) = computeSelectionLowerBound(C, c, d, Γ, α, X, numerator)
-                push!(times[4], Δt)
+                (ρₛ, Δt) = computeSelectionLowerBound(C, c, d, Γ, X, α, numerator)
+                push!(times[4], Δt + Δtₙ)
                 push!(ratios[4], ρₛ)
             end
 
@@ -55,35 +57,42 @@ function runExperiment(ns, dataGenerator)
     end
 end
 
-function computeRatioNumerator(C, c, d, Γ, α, x̲, x̅, X)
+function computeRatioNumerator(C, c, d, Γ, X, α, x̲, x̅)
     obj₁ = evaluationProblem(C, c, d, Γ, α, x̲, X)
     obj₂ = evaluationProblem(C, c, d, Γ, α, x̅, X)
     min(obj₁, obj₂)
 end
 
-function computeRecoverableRatio(C, c, d, Γ, α, X, c₀)
+function computeRecoverableRatio(C, c, d, Γ, X, α, c₀)
     tic()
-    (x̲, y̲, t̲) = recoverableProblem(C, c, α, X)
-    (x̅, y̅, t̅) = recoverableProblem(C, c + d, α, X)
-    (x₀, y₀, t₀) = recoverableProblem(C, c₀, α, X)
+    (x̲, y̲, t̲) = recoverableProblem(C, c, X, α)
+    (x̅, y̅, t̅) = recoverableProblem(C, c + d, X, α)
+    (x₀, y₀, t₀) = recoverableProblem(C, c₀, X, α)
     (min(t̲ + Γ, t̅) / t₀, toq(), x̲, x̅)
 end
 
-function computeAdversarialLowerBound(C, c, d, Γ, α, X, numerator)
+function computeAdversarialLowerBound(C, c, d, Γ, X, α, numerator)
     tic()
-    lb = adversarialProblem(C, c, d, Γ, α, X)
+    lb = adversarialProblem(C, c, d, Γ, X, α)
     (numerator / lb, toq())
 end
 
-function computeRecoverableLowerBound(C, α, X, c₀, numerator)
+function computeRecoverableLowerBound(C, X, α, c₀, numerator)
     tic()
-    (x₀, y₀, t₀) = recoverableProblem(C, c₀, α, X)
+    (x₀, y₀, t₀) = recoverableProblem(C, c₀, X, α)
     (numerator / t₀, toq())
 end
 
-function computeSelectionLowerBound(C, c, d, Γ, α, X, numerator)
+function computeSelectionLowerBound(C, c, d, Γ, X, α, numerator)
     tic()
-    t₀ = selectionLowerBound(C, c, d, Γ, α, X)
+    t₀ = selectionLowerBound(C, c, d, Γ, X, α)
+    (numerator / t₀, toq())
+end
+
+function computeLagrangianLowerBound(C, c, d, Γ, X, α, numerator)
+    tic()
+    l = size(c, 1) # TODO: Replace with actual value of l = m (1 - α)
+    t₀ = lagrangianLowerBound(C, c, d, Γ, X, l)
     (numerator / t₀, toq())
 end
 

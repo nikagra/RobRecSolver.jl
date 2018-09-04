@@ -1,17 +1,17 @@
 """
-    adversarialProblem(C, c, d, Γ, α, X)
+    adversarialProblem(C, c, d, Γ, X, α)
 
 Compute ADV(ϵ) with accuracy ϵ.
 """
-function adversarialProblem(C, c, d, Γ, α, X)
+function adversarialProblem(C, c, d, Γ, X, α)
     ub = Inf
     c₀ = initialScenario(c, d, Γ)
-    (x, y, lb) = recoverableProblem(C, c₀, α, X)
+    (x, y, lb) = recoverableProblem(C, c₀, X, α)
     Z = [(x, y)]
     while (ub - lb)/lb > 0.01
         (c, t) = relaxedAdversarialProblem(C, c, d, Γ, Z)
         ub = t
-        (x, y, nlb) = recoverableProblem(C, c, α, X)
+        (x, y, nlb) = recoverableProblem(C, c, X, α)
         if lb < nlb
             lb = nlb
         end
