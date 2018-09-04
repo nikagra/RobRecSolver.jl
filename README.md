@@ -9,8 +9,9 @@
 ## Installation
 The package can be installed with `Pkg.clone`:
 ```julia-repl
-julia> Pkg.clone("git://github.com/nikagra/RobRecSolver.jl.git")
+julia> Pkg.clone("https://github.com/nikagra/RobRecSolver.jl.git")
 ```
+**Note:** This package depends on CPLEX. CPLEX must be downloaded and installed separately. Check [CPLEX.jl](https://github.com/JuliaOpt/CPLEX.jl) for further instructions.
 
 ## Usage
 Run the following commands Julia REPL to run experiments:
