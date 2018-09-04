@@ -1,10 +1,10 @@
 """
-    recoverableProblem(C, c, α, X)
+    recoverableProblem(C, c, X, α)
 
 Mathematical programming model for solving the following recoverable problem:
     ``REC(c) = min_{x \\in X} min_{y \\in X^{\\alpha}_x} (Cx + cy)``
 """
-function recoverableProblem(C, c, α, X)
+function recoverableProblem(C, c, X, α)
     @assert size(C) == size(c)
 
     n = size(C, 1)

@@ -10,15 +10,22 @@ using Plots
 export
     minimumAssignmentProblem,
     getAssignmentConstraints,
+
     minimumKnapsackProblem,
     getKnapsackConstraints,
+
     initialScenario,
+
     adversarialProblem,
     relaxedAdversarialProblem,
+
     evaluationProblem,
     incrementalProblem,
     recoverableProblem,
     selectionLowerBound,
+
+    lagrangianLowerBound,
+    relaxedIncrementalProblem,
 
     # experiments
     generateKnapsackData,
@@ -34,6 +41,7 @@ files = [
         "adversarial_problem",
         "incremental_problem",
         "selection_lower_bound",
+        "lagrangian_lower_bound",
         "experiment"
     ]
 
