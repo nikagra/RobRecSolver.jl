@@ -53,7 +53,7 @@ function runExperiment(ns, dataGenerator)
             push!(ratioss, mean.(ratios[2:4]))
         end
 
-        drawPlots(αs, ratioss, timess)
+        drawPlots(αs, ratioss, timess, n)
     end
 end
 
@@ -94,21 +94,6 @@ function computeLagrangianLowerBound(C, c, d, Γ, X, α, numerator)
     l = size(c, 1) # TODO: Replace with actual value of l = m (1 - α)
     t₀ = lagrangianLowerBound(C, c, d, Γ, X, l)
     (numerator / t₀, toq())
-end
-
-function drawPlots(αs, ratioss, timess)
-    plotly()
-    labels = ["ρₐ" "ρₕ" "ρₛ"]
-    plot(αs, transposeData(ratioss), lab = labels, xlabel = "α", ylabel = "average ratio ρₖ")
-    gui()
-
-    labels = ["ρₐ" "ρₕ" "ρₛ"]
-    plot(αs, transposeData(timess), lab = labels, xlabel = "α", ylabel = "average time (s.)")
-    gui()
-end
-
-function transposeData(data)
-    [hcat(data...)[i, :] for i in 1:size(hcat(data...), 1)]
 end
 
 function generateKnapsackData(n)

@@ -7,6 +7,7 @@ module RobRecSolver
 using JuMP
 using CPLEX
 using Plots
+import GR # workaround due to https://github.com/JuliaPlots/Plots.jl/issues/1047
 
 export
     minimumAssignmentProblem,
@@ -31,7 +32,8 @@ export
     # experiments
     generateKnapsackData,
     generateAssignmentData,
-    runExperiment
+    runExperiment,
+    drawPlots
 
 files = [
         "minimum_knapsack_problem",
@@ -43,7 +45,8 @@ files = [
         "incremental_problem",
         "selection_lower_bound",
         "lagrangian_lower_bound",
-        "experiment"
+        "experiment",
+        "plots"
     ]
 
     for file in files

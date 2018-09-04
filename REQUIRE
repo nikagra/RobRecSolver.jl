@@ -1,5 +1,5 @@
 julia 0.6
 JuMP 0.18.0
-CPLEX
+CPLEX 0.3.0
 Plots 0.17.0
 Documenter 0.18.0
