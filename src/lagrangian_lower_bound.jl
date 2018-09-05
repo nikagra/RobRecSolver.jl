@@ -34,7 +34,7 @@ function relaxedIncrementalProblem(C, c, d, Γ, X, μ, l)
 
     n = size(C, 1)
 
-    model = Model(solver = CplexSolver())
+    model = Model(solver = CplexSolver(CPXPARAM_ScreenOutput = 0))
 
     @variable(model, π >= 0)
     if ndims(C) == 1

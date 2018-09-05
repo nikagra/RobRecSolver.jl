@@ -9,7 +9,7 @@ function recoverableProblem(C, c, X, α)
 
     n = size(C, 1)
 
-    model = Model(solver=CplexSolver(CPX_PARAM_TILIM = 240))
+    model = Model(solver=CplexSolver(CPX_PARAM_TILIM = 240, CPXPARAM_ScreenOutput = 0))
     if ndims(C) == 1
         @variable(model, x[1:n], Bin)
         @variable(model, y[1:n], Bin)

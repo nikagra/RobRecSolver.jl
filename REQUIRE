@@ -2,4 +2,5 @@ julia 0.6
 JuMP 0.18.0
 CPLEX 0.3.0
 Plots 0.17.0
+MicroLogging 0.2.0
 Documenter 0.18.0

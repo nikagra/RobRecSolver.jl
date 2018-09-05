@@ -9,7 +9,7 @@ julia> runExperiment([100, 400, 1000], generateKnapsackData)
 """
 function runExperiment(ns, dataGenerator)
     for n in ns
-        println("n = $n:")
+        @info "Starting computation for n = $(n)..."
         αs = collect(0.1:0.1:0.9)
         timess = []
         ratioss = []
@@ -20,34 +20,45 @@ function runExperiment(ns, dataGenerator)
             ratios = Array[[] for i=1:4]
 
             for i = 1:numberOfInstances
+
+                @info "Generating data for instance #$(i) with α=$(α)"
+
                 (C, c, d, Γ, X) = dataGenerator(n)
                 c₀ = initialScenario(c, d, Γ)
 
+                @info "Computing recoverable ratio for instance #$(i) with α=$(α)"
                 (ρ₀, Δt, x̲, x̅) = computeRecoverableRatio(C, c, d, Γ, X, α, c₀)
                 push!(times[1], Δt)
                 push!(ratios[1], ρ₀)
+                @info "Computation of recoverable ratio for instance #$(i) with α=$(α) has finished in $(Δt) with result $(ρ₀)"
 
                 tic()
                 numerator = computeRatioNumerator(C, c, d, Γ, X, α, x̲, x̅)
                 Δtₙ = toq()
 
+                @info "Computing adversarial lower bound for instance #$(i) with α=$(α)"
                 (ρₐ, Δt) = computeAdversarialLowerBound(C, c, d, Γ, X, α, numerator)
                 push!(times[2], Δt + Δtₙ)
-                push!(ratios[2], ρ₀)
+                push!(ratios[2], ρₐ)
+                @info "Computation of adversarial lower bound for instance #$(i) with α=$(α) has finished in $(Δt + Δtₙ) with result $(ρ₀)"
 
+                @info "Computing recoverable lower bound for instance #$(i) with α=$(α)"
                 (ρₕ, Δt) = computeRecoverableLowerBound(C, X, α, c₀, numerator)
                 push!(times[3], Δt + Δtₙ)
                 push!(ratios[3], ρₕ)
+                @info "Computation of recoverable lower bound for instance #$(i) with α=$(α) has finished in $(Δt + Δtₙ) with result $(ρₕ)"
 
+                @info "Computing selection lower bound for instance #$(i) with α=$(α)"
                 (ρₛ, Δt) = computeSelectionLowerBound(C, c, d, Γ, X, α, numerator)
                 push!(times[4], Δt + Δtₙ)
                 push!(ratios[4], ρₛ)
+                @info "Computation of selection lower bound for instance #$(i) with α=$(α) has finished in $(Δt + Δtₙ) with result $(ρₛ)"
             end
 
-            println("ρ(c₀): $α ⤑ ($(mean(ratios[1]))) in $(mean(times[1]))sec")
-            println("ρₐ: $α ⤑ ($(mean(ratios[2]))) in $(mean(times[2]))sec")
-            println("ρₕ: $α ⤑ ($(mean(ratios[3]))) in $(mean(times[3]))sec")
-            println("ρₛ: $α ⤑ ($(mean(ratios[4]))) in $(mean(times[4]))sec")
+            @info "Average recoverable ratio for α=$α is $(mean(ratios[1])) was computes in $(@sprintf("%.2f", mean(times[1])))sec on average"
+            @info "Average adversarial lower bound for α=$α is $(mean(ratios[2])) was computes in $(@sprintf("%.2f", mean(times[2])))sec on average"
+            @info "Average recoverable lower bound for α=$α is $(mean(ratios[3])) was computes in $(@sprintf("%.2f", mean(times[3])))sec on average"
+            @info "Average selection lower bound for α=$α is $(mean(ratios[4])) was computes in $(@sprintf("%.2f", mean(times[4])))sec on average"
 
             push!(timess, mean.(times[2:4]))
             push!(ratioss, mean.(ratios[2:4]))

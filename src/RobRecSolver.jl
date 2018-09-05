@@ -6,6 +6,7 @@ module RobRecSolver
 
 using JuMP
 using CPLEX
+using MicroLogging
 using Plots
 import GR # workaround due to https://github.com/JuliaPlots/Plots.jl/issues/1047
 
