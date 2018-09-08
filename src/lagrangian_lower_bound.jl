@@ -2,7 +2,7 @@
     lagrangian_lower_bound(C, c, d, Γ, X, l)
 """
 function lagrangianLowerBound(C, c, d, Γ, X, l)
-    ϵ = 1e-2
+    ϵ = 1e-1
     ϕ = (1 + sqrt(5)) / 2
 
     α = 0

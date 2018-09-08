@@ -4,11 +4,14 @@
 Compute EVAL(x) with accuracy ϵ.
 """
 function evaluationProblem(C, c, d, Γ, α, x, X)
+    tic()
     ub = Inf
     c₀ = initialScenario(c, d, Γ)
     (y, lb) = incrementalProblem(c₀, α, x, X)
     Y = [y]
-    while (ub - lb)/lb > 0.01
+    Δt = toq()
+    while (ub - lb)/lb > 0.01 && Δt <= 600
+        tic()
         (c̃, t̃) = relaxedAdversarialProblem(c, d, Γ, Y)
         ub = t̃
         (y, nlb) = incrementalProblem(c̃, α, x, X)
@@ -16,6 +19,7 @@ function evaluationProblem(C, c, d, Γ, α, x, X)
             lb = nlb
         end
         push!(Y, y)
+        Δt += toq()
     end
     vecdot(C, x) + ub
 end

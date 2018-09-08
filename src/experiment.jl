@@ -11,61 +11,58 @@ function runExperiment(ns, dataGenerator)
     for n in ns
         @info "Starting computation for n = $(n)..."
         αs = collect(0.1:0.1:0.9)
-        timess = []
-        ratioss = []
+        resultss = []
         for α in αs
 
             numberOfInstances = 5
             times = Array[[] for i=1:4]
             ratios = Array[[] for i=1:4]
 
-            for i = 1:numberOfInstances
-
-                @info "Generating data for instance #$(i) with α=$(α)"
-
-                (C, c, d, Γ, X) = dataGenerator(n)
-                c₀ = initialScenario(c, d, Γ)
-
-                @info "Computing recoverable ratio for instance #$(i) with α=$(α)"
-                (ρ₀, Δt, x̲, x̅) = computeRecoverableRatio(C, c, d, Γ, X, α, c₀)
-                push!(times[1], Δt)
-                push!(ratios[1], ρ₀)
-                @info "Computation of recoverable ratio for instance #$(i) with α=$(α) has finished in $(Δt) with result $(ρ₀)"
-
-                tic()
-                numerator = computeRatioNumerator(C, c, d, Γ, X, α, x̲, x̅)
-                Δtₙ = toq()
-
-                @info "Computing adversarial lower bound for instance #$(i) with α=$(α)"
-                (ρₐ, Δt) = computeAdversarialLowerBound(C, c, d, Γ, X, α, numerator)
-                push!(times[2], Δt + Δtₙ)
-                push!(ratios[2], ρₐ)
-                @info "Computation of adversarial lower bound for instance #$(i) with α=$(α) has finished in $(Δt + Δtₙ) with result $(ρ₀)"
-
-                @info "Computing recoverable lower bound for instance #$(i) with α=$(α)"
-                (ρₕ, Δt) = computeRecoverableLowerBound(C, X, α, c₀, numerator)
-                push!(times[3], Δt + Δtₙ)
-                push!(ratios[3], ρₕ)
-                @info "Computation of recoverable lower bound for instance #$(i) with α=$(α) has finished in $(Δt + Δtₙ) with result $(ρₕ)"
-
-                @info "Computing selection lower bound for instance #$(i) with α=$(α)"
-                (ρₛ, Δt) = computeSelectionLowerBound(C, c, d, Γ, X, α, numerator)
-                push!(times[4], Δt + Δtₙ)
-                push!(ratios[4], ρₛ)
-                @info "Computation of selection lower bound for instance #$(i) with α=$(α) has finished in $(Δt + Δtₙ) with result $(ρₛ)"
+            reducer(m₁, m₂) = mean(hcat(m₁, m₂), 2)
+            reduced = @parallel (reducer) for i = 1:numberOfInstances
+                generateInstanceAndCalculateRatios(n, α, dataGenerator, i)
             end
+            results = squeeze(reduced, 2)
 
-            @info "Average recoverable ratio for α=$α is $(mean(ratios[1])) was computes in $(@sprintf("%.2f", mean(times[1])))sec on average"
-            @info "Average adversarial lower bound for α=$α is $(mean(ratios[2])) was computes in $(@sprintf("%.2f", mean(times[2])))sec on average"
-            @info "Average recoverable lower bound for α=$α is $(mean(ratios[3])) was computes in $(@sprintf("%.2f", mean(times[3])))sec on average"
-            @info "Average selection lower bound for α=$α is $(mean(ratios[4])) was computes in $(@sprintf("%.2f", mean(times[4])))sec on average"
+            @info "Average recoverable ratio for α=$α is $(mean(results[1, 1])) was computes in $(@sprintf("%.2f", mean(results[1, 2])))sec on average"
+            @info "Average adversarial lower bound for α=$α is $(mean(results[2, 1])) was computes in $(@sprintf("%.2f", mean(results[2, 2])))sec on average"
+            @info "Average recoverable lower bound for α=$α is $(mean(results[3, 1])) was computes in $(@sprintf("%.2f", mean(results[3, 2])))sec on average"
+            @info "Average selection lower bound for α=$α is $(mean(results[4, 1])) was computes in $(@sprintf("%.2f", mean(results[4, 2])))sec on average"
 
-            push!(timess, mean.(times[2:4]))
-            push!(ratioss, mean.(ratios[2:4]))
+            push!(resultss, mean.(results[2:4, :]))
         end
 
-        drawPlots(αs, ratioss, timess, n)
+        ratios = [resultss[i][:,1] for i in 1:size(resultss,1)]
+        times = [resultss[i][:,2] for i in 1:size(resultss,1)]
+        drawPlots(αs, ratios, times, n)
     end
+end
+
+function generateInstanceAndCalculateRatios(n, α, dataGenerator, i)
+    @info "Generating data for instance #$(i) with α=$(α)"
+
+    (C, c, d, Γ, X) = dataGenerator(n)
+    c₀ = initialScenario(c, d, Γ)
+
+    @info "Computing recoverable ratio for instance #$(i) with α=$(α)"
+    Δt₀ = @elapsed (ρ₀, x̲, x̅) = computeRecoverableRatio(C, c, d, Γ, X, α, c₀)
+    @info "Computation of recoverable ratio for instance #$(i) with α=$(α) has finished in $(Δt₀) with result $(ρ₀)"
+
+    Δtₙ = @elapsed numerator = computeRatioNumerator(C, c, d, Γ, X, α, x̲, x̅)
+
+    @info "Computing adversarial lower bound for instance #$(i) with α=$(α)"
+    Δtₐ = @elapsed ρₐ = computeAdversarialLowerBound(C, c, d, Γ, X, α, numerator)
+    @info "Computation of adversarial lower bound for instance #$(i) with α=$(α) has finished in $(Δtₐ + Δtₙ) with result $(ρₐ)"
+
+    @info "Computing recoverable lower bound for instance #$(i) with α=$(α)"
+    Δtₕ = @elapsed ρₕ = computeRecoverableLowerBound(C, X, α, c₀, numerator)
+    @info "Computation of recoverable lower bound for instance #$(i) with α=$(α) has finished in $(Δtₕ + Δtₙ) with result $(ρₕ)"
+
+    @info "Computing selection lower bound for instance #$(i) with α=$(α)"
+    Δtₛ = @elapsed ρₛ = computeSelectionLowerBound(C, c, d, Γ, X, α, numerator)
+    @info "Computation of selection lower bound for instance #$(i) with α=$(α) has finished in $(Δtₛ + Δtₙ) with result $(ρₛ)"
+
+    cat(3, [ρ₀; ρₐ; ρₕ; ρₛ], [Δt₀; Δtₐ + Δtₙ; Δtₕ + Δtₙ; Δtₛ + Δtₙ])
 end
 
 function computeRatioNumerator(C, c, d, Γ, X, α, x̲, x̅)
@@ -75,36 +72,31 @@ function computeRatioNumerator(C, c, d, Γ, X, α, x̲, x̅)
 end
 
 function computeRecoverableRatio(C, c, d, Γ, X, α, c₀)
-    tic()
     (x̲, y̲, t̲) = recoverableProblem(C, c, X, α)
     (x̅, y̅, t̅) = recoverableProblem(C, c + d, X, α)
     (x₀, y₀, t₀) = recoverableProblem(C, c₀, X, α)
-    (min(t̲ + Γ, t̅) / t₀, toq(), x̲, x̅)
+    (min(t̲ + Γ, t̅) / t₀, x̲, x̅)
 end
 
 function computeAdversarialLowerBound(C, c, d, Γ, X, α, numerator)
-    tic()
     lb = adversarialProblem(C, c, d, Γ, X, α)
-    (numerator / lb, toq())
+    numerator / lb
 end
 
 function computeRecoverableLowerBound(C, X, α, c₀, numerator)
-    tic()
     (x₀, y₀, t₀) = recoverableProblem(C, c₀, X, α)
-    (numerator / t₀, toq())
+    numerator / t₀
 end
 
 function computeSelectionLowerBound(C, c, d, Γ, X, α, numerator)
-    tic()
     t₀ = selectionLowerBound(C, c, d, Γ, X, α)
-    (numerator / t₀, toq())
+    numerator / t₀
 end
 
 function computeLagrangianLowerBound(C, c, d, Γ, X, α, numerator)
-    tic()
     l = size(c, 1) # TODO: Replace with actual value of l = m (1 - α)
     t₀ = lagrangianLowerBound(C, c, d, Γ, X, l)
-    (numerator / t₀, toq())
+    numerator / t₀
 end
 
 function generateKnapsackData(n)

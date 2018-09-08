@@ -4,11 +4,14 @@
 Compute ADV(ϵ) with accuracy ϵ.
 """
 function adversarialProblem(C, c, d, Γ, X, α)
+    tic()
     ub = Inf
     c₀ = initialScenario(c, d, Γ)
     (x, y, lb) = recoverableProblem(C, c₀, X, α)
     Z = [(x, y)]
-    while (ub - lb)/lb > 0.01
+    Δt = toq()
+    while (ub - lb)/lb > 0.01 && Δt <= 600
+        tic()
         (c, t) = relaxedAdversarialProblem(C, c, d, Γ, Z)
         ub = t
         (x, y, nlb) = recoverableProblem(C, c, X, α)
@@ -16,6 +19,7 @@ function adversarialProblem(C, c, d, Γ, X, α)
             lb = nlb
         end
         push!(Z, (x, y))
+        Δt += toq()
     end
     lb
 end

@@ -4,6 +4,7 @@ by Adam Kasperski and Pawel Zielinski.
 """
 module RobRecSolver
 
+using Base.Distributed
 using JuMP
 using CPLEX
 using MicroLogging
