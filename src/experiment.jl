@@ -24,10 +24,10 @@ function runExperiment(ns, dataGenerator)
             end
             results = squeeze(reduced, 2)
 
-            @info "Average recoverable ratio for α=$α is $(mean(results[1, 1])) was computes in $(@sprintf("%.2f", mean(results[1, 2])))sec on average"
-            @info "Average adversarial lower bound for α=$α is $(mean(results[2, 1])) was computes in $(@sprintf("%.2f", mean(results[2, 2])))sec on average"
-            @info "Average recoverable lower bound for α=$α is $(mean(results[3, 1])) was computes in $(@sprintf("%.2f", mean(results[3, 2])))sec on average"
-            @info "Average selection lower bound for α=$α is $(mean(results[4, 1])) was computes in $(@sprintf("%.2f", mean(results[4, 2])))sec on average"
+            @info "Average recoverable ratio for α=$α is $(mean(results[1, 1])) was computed in $(@sprintf("%.2f", mean(results[1, 2])))sec on average"
+            @info "Average adversarial lower bound for α=$α is $(mean(results[2, 1])) was computed in $(@sprintf("%.2f", mean(results[2, 2])))sec on average"
+            @info "Average recoverable lower bound for α=$α is $(mean(results[3, 1])) was computed in $(@sprintf("%.2f", mean(results[3, 2])))sec on average"
+            @info "Average selection lower bound for α=$α is $(mean(results[4, 1])) was computed in $(@sprintf("%.2f", mean(results[4, 2])))sec on average"
 
             push!(resultss, mean.(results[2:4, :]))
         end
