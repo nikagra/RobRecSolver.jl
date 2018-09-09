@@ -27,7 +27,7 @@ end
 function relaxedAdversarialProblem(c, d, Γ, Y)
     n = size(c, 1)
 
-    model = Model(solver=CplexSolver(CPXPARAM_ScreenOutput = 0))
+    model = Model(solver=CplexSolver(CPX_PARAM_TILIM = 600, CPXPARAM_ScreenOutput = 0))
     @variable(model, t̃)
     if ndims(c) == 1
         @variable(model, c̃[1:n])

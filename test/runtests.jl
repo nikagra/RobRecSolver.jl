@@ -13,10 +13,8 @@ tests = [
     "lagrangian_lower_bound_tests"
     ]
 
-tic()
-for test in tests
+@time for test in tests
     println("Starting $(test)...")
     include("$(test).jl")
     println("$(test) finished.")
 end
-toc()
