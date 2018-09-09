@@ -8,10 +8,16 @@ using Base.Distributed
 using JuMP
 using CPLEX
 using MicroLogging
+using LaTeXStrings
 using Plots
-import GR # workaround due to https://github.com/JuliaPlots/Plots.jl/issues/1047
 
 export
+    # Types
+    DataGenerator,
+    KnapsackDataGenerator,
+    AssignmentDataGenerator,
+
+    # Functions
     minimumAssignmentProblem,
     getAssignmentConstraints,
 
@@ -32,10 +38,12 @@ export
     relaxedIncrementalProblem,
 
     # experiments
-    generateKnapsackData,
-    generateAssignmentData,
     runExperiment,
-    drawPlots
+    plotKnapsackResults,
+
+    # data generators
+    generateData,
+    hasEqualCardinalityProperty
 
 files = [
         "minimum_knapsack_problem",
@@ -47,6 +55,7 @@ files = [
         "incremental_problem",
         "selection_lower_bound",
         "lagrangian_lower_bound",
+        "data_generators",
         "experiment",
         "plots"
     ]
