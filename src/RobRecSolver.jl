@@ -29,6 +29,7 @@ export
 
     adversarialProblem,
     relaxedAdversarialProblem,
+    adversarialProblemWithCallback,
 
     evaluationProblem,
     incrementalProblem,
@@ -53,6 +54,7 @@ files = [
         "evaluation_problem",
         "recoverable_problem",
         "adversarial_problem",
+        "adversarial_problem_cb",
         "incremental_problem",
         "selection_lower_bound",
         "lagrangian_lower_bound",

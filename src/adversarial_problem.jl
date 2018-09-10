@@ -13,6 +13,7 @@ function adversarialProblem(C, c, d, Γ, X, α)
     while (ub - lb)/lb > 0.01 && Δt <= 600
         tic()
         (c̃, t̃) = relaxedAdversarialProblem(C, c, d, Γ, Z)
+
         ub = t̃
         (x, y, nlb) = recoverableProblem(C, c̃, X, α)
         if lb < nlb
