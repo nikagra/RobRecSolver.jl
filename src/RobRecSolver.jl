@@ -10,6 +10,7 @@ using CPLEX
 using MicroLogging
 using LaTeXStrings
 using Plots
+import PyPlot # workaround due to https://github.com/JuliaPlots/Plots.jl/issues/1047
 
 export
     # Types
@@ -38,7 +39,7 @@ export
     relaxedIncrementalProblem,
 
     # experiments
-    runExperiment,
+    runExperiments,
     plotKnapsackResults,
 
     # data generators

@@ -10,8 +10,6 @@ julia> runExperiments([100, 400, 1000], [10, 25, 100]])
 ```
 """
 function runExperiments(ns::Array{Int}, ms::Array{Int}; αs = collect(0.1:0.1:0.9), numberOfInstances = 5)
-    pyplot()
-
     @info "Starting experiments for minimum knapsack problem for n in $ns"
     Δt = @elapsed runKnapsackExperiments(ns, αs = αs, numberOfInstances = numberOfInstances)
     @info "Experiments for minimum knapsack problem have finished in $(Δt)sec"

@@ -1,5 +1,7 @@
 function plotKnapsackResults(n, αs, results)
-    @assert size(α) == size(results, 3)
+    @assert size(αs, 1) == size(results, 3)
+
+    pyplot()
 
     suffix = randstring(4)
     drawAndSavePlot(αs, results[1, 1, :], L"α", L"average\,ratio\,\rho(c_0)", "n = $n", "kn-plot-ratios-rec-$n-$suffix.png")
@@ -9,7 +11,9 @@ function plotKnapsackResults(n, αs, results)
 end
 
 function plotAssignmentResults(m, αs, results)
-    @assert size(α) == size(results, 3)
+    @assert size(αs, 1) == size(results, 3)
+
+    pyplot()
 
     suffix = randstring(4)
     drawAndSavePlot(αs, results[1, 1, :], L"α", L"average\,ratio\,\rho(c_0)", "m = $m", "as-plot-ratios-rec-$m-$suffix.png")
