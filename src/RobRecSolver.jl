@@ -28,10 +28,11 @@ export
     initialScenario,
 
     adversarialProblem,
-    relaxedAdversarialProblem,
     adversarialProblemWithCallback,
 
     evaluationProblem,
+    evaluationProblemWithCallback,
+
     incrementalProblem,
     recoverableProblem,
     selectionLowerBound,
@@ -52,6 +53,7 @@ files = [
         "minimum_assignment_problem",
         "initial_scenario",
         "evaluation_problem",
+        "evaluation_problem_cb",
         "recoverable_problem",
         "adversarial_problem",
         "adversarial_problem_cb",

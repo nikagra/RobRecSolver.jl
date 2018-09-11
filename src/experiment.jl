@@ -151,7 +151,11 @@ function computeRecoverableRatio(C, c, d, Γ, X, α, c₀)
 end
 
 function computeAdversarialLowerBound(C, c, d, Γ, X, α, numerator)
-    lb = adversarialProblem(C, c, d, Γ, X, α)
+    t = @elapsed lb = adversarialProblem(C, c, d, Γ, X, α)
+    t2 = @elapsed lb2 = adversarialProblemWithCallback(C, c, d, Γ, X, α)
+    println("$lb == $lb2")
+    println("t1 = $t seconds, t2 = $t2 seconds")
+    @assert abs(lb - lb2) < 10
     numerator / lb
 end
 

@@ -1,9 +1,9 @@
-function adversarialProblemWithCallback(C, c, d, Γ, X, α)
+function evaluationProblemWithCallback(C, c, d, Γ, α, x, X)
     n = size(c, 1)
 
     ub = Inf
     c₀ = initialScenario(c, d, Γ)
-    (x₀, y₀, lb) = recoverableProblem(C, c₀, X, α)
+    (y, lb) = incrementalProblem(c₀, α, x, X)
 
     model = Model(solver=CplexSolver(CPX_PARAM_TILIM = 600, CPXPARAM_ScreenOutput = 0))
 
@@ -23,7 +23,7 @@ function adversarialProblemWithCallback(C, c, d, Γ, X, α)
     @constraint(model, c̃ .>= c)
     @constraint(model, c̃ .<= c + d)
     @constraint(model, sum(c̃ - c) <= Γ)
-    @constraint(model, t̃ <= vecdot(C, x₀) + vecdot(c̃, y₀))
+    @constraint(model, t̃ <= vecdot(c̃, y))
 
     function callback(cb)
         if (ub - lb)/lb > 0.01
@@ -31,11 +31,11 @@ function adversarialProblemWithCallback(C, c, d, Γ, X, α)
             t̅ = getvalue(t̃)
 
             ub = t̅
-            (x, y, nlb) = recoverableProblem(C, c̅, X, α)
+            (y, nlb) = incrementalProblem(c̅, α, x, X)
             if lb < nlb
                 lb = nlb
             end
-            @lazyconstraint(cb, t̃ <= vecdot(C, x) + vecdot(c̃, y))
+            @lazyconstraint(cb, t̃ <= vecdot(c̃, y))
         end
     end
 
@@ -43,5 +43,5 @@ function adversarialProblemWithCallback(C, c, d, Γ, X, α)
 
     status = solve(model)
 
-    lb
+    vecdot(C, x) + ub
 end
