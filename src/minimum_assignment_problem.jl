@@ -7,7 +7,7 @@ function minimumAssignmentProblem(C)
     @assert ndims(C) == 2 && size(C, 1) == size(C, 2)
 
     m = size(C, 1)
-    model = Model(solver = CplexSolver(CPXPARAM_ScreenOutput = 0))
+    model = Model(solver = CplexSolver(CPXPARAM_ScreenOutput = getProperty("minimumAssignmentProblem.cplexLogging")))
     @variable(model, x[1:m, 1:m], Bin)
     @objective(model, Min, vecdot(C, x))
 

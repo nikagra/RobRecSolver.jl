@@ -11,6 +11,7 @@ using MicroLogging
 using LaTeXStrings
 using Plots
 import PyPlot # workaround due to https://github.com/JuliaPlots/Plots.jl/issues/1047
+using ConfParser
 
 export
     # Types
@@ -43,6 +44,7 @@ export
     # experiments
     runExperiments,
     plotKnapsackResults,
+    getProperties,
 
     # data generators
     generateData,
@@ -62,7 +64,8 @@ files = [
         "lagrangian_lower_bound",
         "data_generators",
         "experiment",
-        "plots"
+        "plots",
+        "properties"
     ]
 
     for file in files

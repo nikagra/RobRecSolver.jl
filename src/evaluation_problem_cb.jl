@@ -5,7 +5,8 @@ function evaluationProblemWithCallback(C, c, d, Γ, α, x, X)
     c₀ = initialScenario(c, d, Γ)
     (y, lb) = incrementalProblem(c₀, α, x, X)
 
-    model = Model(solver=CplexSolver(CPX_PARAM_TILIM = 600, CPXPARAM_ScreenOutput = 0))
+    model = Model(solver=CplexSolver(CPX_PARAM_TILIM = CPX_PARAM_TILIM = getProperty("evaluationProblem.timeLimit"),
+        CPXPARAM_ScreenOutput = getProperty("evaluationProblem.cplexLogging")))
 
     @variable(model, dummy, Int) # needed for callback to be called
     @variable(model, t̃)

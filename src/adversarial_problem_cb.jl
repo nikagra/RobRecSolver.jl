@@ -1,11 +1,13 @@
 function adversarialProblemWithCallback(C, c, d, Γ, X, α)
+    ϵ = getProperty("adversarialProblem.epsilon", parameterType = Float64)
     n = size(c, 1)
 
     ub = Inf
     c₀ = initialScenario(c, d, Γ)
     (x₀, y₀, lb) = recoverableProblem(C, c₀, X, α)
 
-    model = Model(solver=CplexSolver(CPX_PARAM_TILIM = 600, CPXPARAM_ScreenOutput = 0))
+    model = Model(solver=CplexSolver(CPX_PARAM_TILIM = getProperty("adversarialProblem.timeLimit"),
+        CPXPARAM_ScreenOutput = getProperty("adversarialProblem.cplexLogging")))
 
     @variable(model, dummy, Int) # needed for callback to be called
     @variable(model, t̃)

@@ -4,13 +4,16 @@
 Compute EVAL(x) with accuracy ϵ.
 """
 function evaluationProblem(C, c, d, Γ, α, x, X)
+    ϵ = getProperty("evaluationProblem.epsilon", parameterType = Float64)
+    timeLimit = getProperty("evaluationProblem.timeLimit")
+
     tic()
     ub = Inf
     c₀ = initialScenario(c, d, Γ)
     (y, lb) = incrementalProblem(c₀, α, x, X)
     Y = [y]
     Δt = toq()
-    while (ub - lb)/lb > 0.01 && Δt <= 600
+    while (ub - lb)/lb > ϵ && Δt <= timeLimit
         tic()
         (c̃, t̃) = relaxedAdversarialProblem(c, d, Γ, Y)
         ub = t̃
@@ -27,7 +30,9 @@ end
 function relaxedAdversarialProblem(c, d, Γ, Y)
     n = size(c, 1)
 
-    model = Model(solver=CplexSolver(CPX_PARAM_TILIM = 600, CPXPARAM_ScreenOutput = 0))
+    model = Model(solver=CplexSolver(CPX_PARAM_TILIM = getProperty("evaluationProblem.timeLimit"),
+        CPXPARAM_ScreenOutput = getProperty("evaluationProblem.cplexLogging")))
+
     @variable(model, t̃)
     if ndims(c) == 1
         @variable(model, c̃[1:n])

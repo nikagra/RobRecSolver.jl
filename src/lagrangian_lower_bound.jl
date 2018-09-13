@@ -2,7 +2,7 @@
     lagrangian_lower_bound(C, c, d, Γ, X, l)
 """
 function lagrangianLowerBound(C, c, d, Γ, X, l)
-    ϵ = 1e-1
+    ϵ = getProperty("lagrangianLowerBound.epsilon", parameterType = Float64)
     ϕ = (1 + sqrt(5)) / 2
 
     α = 0
@@ -34,7 +34,7 @@ function relaxedIncrementalProblem(C, c, d, Γ, X, μ, l)
 
     n = size(C, 1)
 
-    model = Model(solver = CplexSolver(CPXPARAM_ScreenOutput = 0))
+    model = Model(solver = CplexSolver(CPXPARAM_ScreenOutput = getProperty("lagrangianLowerBound.cplexLogging")))
 
     @variable(model, π >= 0)
     if ndims(C) == 1

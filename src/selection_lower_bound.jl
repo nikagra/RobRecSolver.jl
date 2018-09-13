@@ -7,7 +7,8 @@ function selectionLowerBound(C, c, d, Γ, X, α)
     M = typemax(Int)
     n = size(C, 1)
 
-    model = Model(solver = CplexSolver(CPX_PARAM_TILIM = 600, CPXPARAM_ScreenOutput = 0))
+    model = Model(solver = CplexSolver(CPX_PARAM_TILIM = getProperty("selectionLowerBound.timeLimit"),
+        CPXPARAM_ScreenOutput = getProperty("selectionLowerBound.cplexLogging")))
 
     @variable(model, π >= 0)
     if ndims(c) == 1

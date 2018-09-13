@@ -7,7 +7,7 @@ function minimumKnapsackProblem(C, w, W)
     @assert length(C) == length(w)
 
     n = length(C)
-    model = Model(solver = CplexSolver(CPXPARAM_ScreenOutput = 0))
+    model = Model(solver = CplexSolver(CPXPARAM_ScreenOutput = getProperty("minimumKnapsackProblem.cplexLogging")))
     @variable(model, x[1:n], Bin)
     @objective(model, Min, dot(C, x))
 

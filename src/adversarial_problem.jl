@@ -4,13 +4,16 @@
 Compute ADV(ϵ) with accuracy ϵ.
 """
 function adversarialProblem(C, c, d, Γ, X, α)
+    ϵ = getProperty("adversarialProblem.epsilon", parameterType = Float64)
+    timeLimit = getProperty("adversarialProblem.timeLimit")
+
     tic()
     ub = Inf
     c₀ = initialScenario(c, d, Γ)
     (x, y, lb) = recoverableProblem(C, c₀, X, α)
     Z = [(x, y)]
     Δt = toq()
-    while (ub - lb)/lb > 0.01 && Δt <= 600
+    while (ub - lb)/lb > ϵ && Δt <= timeLimit
         tic()
         (c̃, t̃) = relaxedAdversarialProblem(C, c, d, Γ, Z)
 
@@ -28,7 +31,8 @@ end
 function relaxedAdversarialProblem(C, c, d, Γ, Z)
     n = size(c, 1)
 
-    model = Model(solver=CplexSolver(CPX_PARAM_TILIM = 600, CPXPARAM_ScreenOutput = 0))
+    model = Model(solver=CplexSolver(CPX_PARAM_TILIM = getProperty("adversarialProblem.timeLimit"),
+        CPXPARAM_ScreenOutput = getProperty("adversarialProblem.cplexLogging")))
 
     @variable(model, t̃)
     if ndims(c) == 1
