@@ -65,7 +65,8 @@ files = [
         "data_generators",
         "experiment",
         "plots",
-        "properties"
+        "properties",
+        "logging"
     ]
 
     for file in files

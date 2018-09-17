@@ -7,23 +7,26 @@ function evaluationProblem(C, c, d, Γ, α, x, X)
     ϵ = getProperty("evaluationProblem.epsilon", parameterType = Float64)
     timeLimit = getProperty("evaluationProblem.timeLimit")
 
-    tic()
-    ub = Inf
-    c₀ = initialScenario(c, d, Γ)
-    (y, lb) = incrementalProblem(c₀, α, x, X)
-    Y = [y]
-    Δt = toq()
-    while (ub - lb)/lb > ϵ && Δt <= timeLimit
-        tic()
-        (c̃, t̃) = relaxedAdversarialProblem(c, d, Γ, Y)
-        ub = t̃
-        (y, nlb) = incrementalProblem(c̃, α, x, X)
-        if lb < nlb
-            lb = nlb
-        end
-        push!(Y, y)
-        Δt += toq()
+    Δt = @elapsed begin
+        ub = Inf
+        c₀ = initialScenario(c, d, Γ)
+        (y, lb) = incrementalProblem(c₀, α, x, X)
+        Y = [y]
     end
+    while (ub - lb)/lb > ϵ && Δt <= timeLimit
+        Δt += @elapsed begin
+            (c̃, t̃) = relaxedAdversarialProblem(c, d, Γ, Y)
+            ub = t̃
+            (y, nlb) = incrementalProblem(c̃, α, x, X)
+            if lb < nlb
+                lb = nlb
+            end
+            push!(Y, y)
+        end
+    end
+
+    @debug "$(size(Y, 1)) constraints was added to this evaluation problem"
+
     vecdot(C, x) + ub
 end
 

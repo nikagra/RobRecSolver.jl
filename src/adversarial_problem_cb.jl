@@ -1,6 +1,7 @@
 function adversarialProblemWithCallback(C, c, d, Γ, X, α)
     ϵ = getProperty("adversarialProblem.epsilon", parameterType = Float64)
     n = size(c, 1)
+    numCallbacks = 0
 
     ub = Inf
     c₀ = initialScenario(c, d, Γ)
@@ -38,12 +39,16 @@ function adversarialProblemWithCallback(C, c, d, Γ, X, α)
                 lb = nlb
             end
             @lazyconstraint(cb, t̃ <= vecdot(C, x) + vecdot(c̃, y))
+
+            numCallbacks += 1
         end
     end
 
     addlazycallback(model, callback, fractional=true)
 
     status = solve(model)
+
+    @debug "$numCallbacks constraints was added to this adversarial problem"
 
     lb
 end
