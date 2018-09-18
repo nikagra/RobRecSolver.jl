@@ -86,21 +86,21 @@ function generateInstanceAndCalculateRatiosWithoutEqualCardinality(α, dataGener
 
     @info "Computing recoverable ratio for instance #$(i) with α=$(α)"
     Δt₀ = @elapsed (ρ₀, x̲, x̅) = computeRecoverableRatio(C, c, d, Γ, X, α, c₀)
-    @info "Computation of recoverable ratio for instance #$(i) with α=$(α) has finished in $(Δt₀) with result $(ρ₀)"
+    @info "Computation of recoverable ratio for instance #$(i) with α=$(α) has finished in $(Δt₀)sec. with result $(ρ₀)"
 
     Δtₙ = @elapsed numerator = computeRatioNumerator(C, c, d, Γ, X, α, x̲, x̅)
 
     @info "Computing adversarial lower bound for instance #$(i) with α=$(α)"
     Δtₐ = @elapsed ρₐ = computeAdversarialLowerBound(C, c, d, Γ, X, α, numerator)
-    @info "Computation of adversarial lower bound for instance #$(i) with α=$(α) has finished in $(Δtₐ + Δtₙ) with result $(ρₐ)"
+    @info "Computation of adversarial lower bound for instance #$(i) with α=$(α) has finished in $(Δtₐ + Δtₙ)sec. with result $(ρₐ)"
 
     @info "Computing recoverable lower bound for instance #$(i) with α=$(α)"
     Δtₕ = @elapsed ρₕ = computeRecoverableLowerBound(C, X, α, c₀, numerator)
-    @info "Computation of recoverable lower bound for instance #$(i) with α=$(α) has finished in $(Δtₕ + Δtₙ) with result $(ρₕ)"
+    @info "Computation of recoverable lower bound for instance #$(i) with α=$(α) has finished in $(Δtₕ + Δtₙ)sec. with result $(ρₕ)"
 
     @info "Computing selection lower bound for instance #$(i) with α=$(α)"
     Δtₛ = @elapsed ρₛ = computeSelectionLowerBound(C, c, d, Γ, X, α, numerator)
-    @info "Computation of selection lower bound for instance #$(i) with α=$(α) has finished in $(Δtₛ + Δtₙ) with result $(ρₛ)"
+    @info "Computation of selection lower bound for instance #$(i) with α=$(α) has finished in $(Δtₛ + Δtₙ)sec. with result $(ρₛ)"
 
     cat(3, [ρ₀ ρₐ ρₕ ρₛ], [Δt₀ (Δtₐ + Δtₙ) (Δtₕ + Δtₙ) (Δtₛ + Δtₙ)])
 end
@@ -114,25 +114,25 @@ function generateInstanceAndCalculateRatiosWithEqualCardinality(α, dataGenerato
 
     @info "Computing recoverable ratio for instance #$(i) with α=$(α)"
     Δt₀ = @elapsed (ρ₀, x̲, x̅) = computeRecoverableRatio(C, c, d, Γ, X, α, c₀)
-    @info "Computation of recoverable ratio for instance #$(i) with α=$(α) has finished in $(Δt₀) with result $(ρ₀)"
+    @info "Computation of recoverable ratio for instance #$(i) with α=$(α) has finished in $(Δt₀)sec. with result $(ρ₀)"
 
     Δtₙ = @elapsed numerator = computeRatioNumerator(C, c, d, Γ, X, α, x̲, x̅)
 
     @info "Computing adversarial lower bound for instance #$(i) with α=$(α)"
     Δtₐ = @elapsed ρₐ = computeAdversarialLowerBound(C, c, d, Γ, X, α, numerator)
-    @info "Computation of adversarial lower bound for instance #$(i) with α=$(α) has finished in $(Δtₐ + Δtₙ) with result $(ρₐ)"
+    @info "Computation of adversarial lower bound for instance #$(i) with α=$(α) has finished in $(Δtₐ + Δtₙ)sec. with result $(ρₐ)"
 
     @info "Computing recoverable lower bound for instance #$(i) with α=$(α)"
     Δtₕ = @elapsed ρₕ = computeRecoverableLowerBound(C, X, α, c₀, numerator)
-    @info "Computation of recoverable lower bound for instance #$(i) with α=$(α) has finished in $(Δtₕ + Δtₙ) with result $(ρₕ)"
+    @info "Computation of recoverable lower bound for instance #$(i) with α=$(α) has finished in $(Δtₕ + Δtₙ)sec. with result $(ρₕ)"
 
     @info "Computing selection lower bound for instance #$(i) with α=$(α)"
     Δtₛ = @elapsed ρₛ = computeSelectionLowerBound(C, c, d, Γ, X, α, numerator)
-    @info "Computation of selection lower bound for instance #$(i) with α=$(α) has finished in $(Δtₛ + Δtₙ) with result $(ρₛ)"
+    @info "Computation of selection lower bound for instance #$(i) with α=$(α) has finished in $(Δtₛ + Δtₙ)sec. with result $(ρₛ)"
 
     @info "Computing Lagrangian lower bound for instance #$(i) with α=$(α)"
     Δtₗ = @elapsed ρₗ = computeLagrangianLowerBound(C, c, d, Γ, X, α, numerator)
-    @info "Computation of Lagrangian lower bound for instance #$(i) with α=$(α) has finished in $(Δtₛ + Δtₙ) with result $(ρₛ)"
+    @info "Computation of Lagrangian lower bound for instance #$(i) with α=$(α) has finished in $(Δtₛ + Δtₙ)sec. with result $(ρₛ)"
 
     cat(3, [ρ₀ ρₐ ρₕ ρₛ ρₗ], [Δt₀ (Δtₐ + Δtₙ) (Δtₕ + Δtₙ) (Δtₛ + Δtₙ) (Δtₗ + Δtₙ)])
 end
@@ -153,9 +153,6 @@ end
 function computeAdversarialLowerBound(C, c, d, Γ, X, α, numerator)
     t = @elapsed lb = adversarialProblem(C, c, d, Γ, X, α)
     t2 = @elapsed lb2 = adversarialProblemWithCallback(C, c, d, Γ, X, α)
-    println("$lb == $lb2")
-    println("t1 = $t seconds, t2 = $t2 seconds")
-    @assert abs(lb - lb2) < 10
     numerator / lb
 end
 

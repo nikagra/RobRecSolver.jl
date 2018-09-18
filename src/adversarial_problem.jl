@@ -7,24 +7,27 @@ function adversarialProblem(C, c, d, Γ, X, α)
     ϵ = getProperty("adversarialProblem.epsilon", parameterType = Float64)
     timeLimit = getProperty("adversarialProblem.timeLimit")
 
-    tic()
-    ub = Inf
-    c₀ = initialScenario(c, d, Γ)
-    (x, y, lb) = recoverableProblem(C, c₀, X, α)
-    Z = [(x, y)]
-    Δt = toq()
-    while (ub - lb)/lb > ϵ && Δt <= timeLimit
-        tic()
-        (c̃, t̃) = relaxedAdversarialProblem(C, c, d, Γ, Z)
-
-        ub = t̃
-        (x, y, nlb) = recoverableProblem(C, c̃, X, α)
-        if lb < nlb
-            lb = nlb
-        end
-        push!(Z, (x, y))
-        Δt += toq()
+    Δt = @elapsed begin
+        ub = Inf
+        c₀ = initialScenario(c, d, Γ)
+        (x, y, lb) = recoverableProblem(C, c₀, X, α)
+        Z = [(x, y)]
     end
+    while (ub - lb)/lb > ϵ && Δt <= timeLimit
+        Δt += @elapsed begin
+            (c̃, t̃) = relaxedAdversarialProblem(C, c, d, Γ, Z)
+
+            ub = t̃
+            (x, y, nlb) = recoverableProblem(C, c̃, X, α)
+            if lb < nlb
+                lb = nlb
+            end
+            push!(Z, (x, y))
+        end
+    end
+
+    @debug "$(size(Z, 1)) constraints was added to this adversarial problem"
+
     lb
 end
 

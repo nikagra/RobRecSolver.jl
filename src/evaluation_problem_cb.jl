@@ -1,5 +1,6 @@
 function evaluationProblemWithCallback(C, c, d, Γ, α, x, X)
     n = size(c, 1)
+    numCallbacks = 0
 
     ub = Inf
     c₀ = initialScenario(c, d, Γ)
@@ -37,12 +38,16 @@ function evaluationProblemWithCallback(C, c, d, Γ, α, x, X)
                 lb = nlb
             end
             @lazyconstraint(cb, t̃ <= vecdot(c̃, y))
+
+            numCallbacks += 1
         end
     end
 
     addlazycallback(model, callback, fractional=true)
 
     status = solve(model)
+
+    @debug "$numCallbacks constraints was added to this evaluation problem"
 
     vecdot(C, x) + ub
 end
