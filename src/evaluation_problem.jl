@@ -6,31 +6,35 @@ Compute EVAL(x) with accuracy ϵ.
 function evaluationProblem(C, c, d, Γ, α, x, X)
     ϵ = getProperty("evaluationProblem.epsilon", parameterType = Float64)
     timeLimit = getProperty("evaluationProblem.timeLimit")
+    numConstraints = 1
 
     Δt = @elapsed begin
         ub = Inf
         c₀ = initialScenario(c, d, Γ)
         (y, lb) = incrementalProblem(c₀, α, x, X)
-        Y = [y]
+
+        (model, c̃ᵥ, c̃, t̃ᵥ, t̃) = relaxedAdversarialProblem(c, d, Γ, y)
     end
     while (ub - lb)/lb > ϵ && Δt <= timeLimit
         Δt += @elapsed begin
-            (c̃, t̃) = relaxedAdversarialProblem(c, d, Γ, Y)
+            (model, c̃, t̃) = addConstraintAndSolve(model, c̃ᵥ, t̃ᵥ, y)
+
             ub = t̃
             (y, nlb) = incrementalProblem(c̃, α, x, X)
             if lb < nlb
                 lb = nlb
             end
-            push!(Y, y)
+
+            numConstraints += 1
         end
     end
 
-    @debug "$(size(Y, 1)) constraints was added to this evaluation problem"
+    @debug "$(numConstraints) constraints was added to this evaluation problem"
 
     vecdot(C, x) + ub
 end
 
-function relaxedAdversarialProblem(c, d, Γ, Y)
+function relaxedAdversarialProblem(c, d, Γ, y)
     n = size(c, 1)
 
     model = Model(solver=CplexSolver(CPX_PARAM_TILIM = getProperty("evaluationProblem.timeLimit"),
@@ -48,12 +52,20 @@ function relaxedAdversarialProblem(c, d, Γ, Y)
 
     @objective(model, Max, t̃)
 
-    @constraint(model, [y in Y], t̃ <= vecdot(c̃, y))
+    @constraint(model, t̃ <= vecdot(c̃, y))
 
     @constraint(model, c̃ .>= c)
     @constraint(model, c̃ .<= c + d)
     @constraint(model, sum(c̃ - c) <= Γ)
 
     status = solve(model)
-    return (getvalue(c̃), getvalue(t̃))
+    return (model, c̃, getvalue(c̃), t̃, getvalue(t̃))
+end
+
+function addConstraintAndSolve(model, c̃, t̃, y)
+    @constraint(model, t̃ <= vecdot(c̃, y))
+
+    status = solve(model)
+
+    return (model, getvalue(c̃), getvalue(t̃))
 end
