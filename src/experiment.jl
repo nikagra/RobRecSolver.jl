@@ -151,8 +151,7 @@ function computeRecoverableRatio(C, c, d, Γ, X, α, c₀)
 end
 
 function computeAdversarialLowerBound(C, c, d, Γ, X, α, numerator)
-    t = @elapsed lb = adversarialProblem(C, c, d, Γ, X, α)
-    t2 = @elapsed lb2 = adversarialProblemWithCallback(C, c, d, Γ, X, α)
+    lb = adversarialProblem(C, c, d, Γ, X, α)
     numerator / lb
 end
 
