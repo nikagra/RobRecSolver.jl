@@ -9,21 +9,22 @@ function adversarialProblem(C, c, d, Γ, X, α)
     numConstraints = 1
 
     Δt = @elapsed begin
-        ub = Inf
         c₀ = initialScenario(c, d, Γ)
         (x, y, lb) = recoverableProblem(C, c₀, X, α)
 
         (model, c̃ᵥ, c̃, t̃ᵥ, t̃) = relaxedAdversarialProblem(C, c, d, Γ, x, y)
+        ub = t̃
     end
-    while (ub - lb)/lb > ϵ && Δt <= timeLimit
+    while abs(ub - lb)/lb > ϵ && Δt <= timeLimit
         Δt += @elapsed begin
-            (model, c̃, t̃) = addConstraintAndSolve(model, C, c̃ᵥ, t̃ᵥ, x, y)
 
-            ub = t̃
             (x, y, nlb) = recoverableProblem(C, c̃, X, α)
             if lb < nlb
                 lb = nlb
             end
+
+            (model, c̃, t̃) = addConstraintAndSolve(model, C, c̃ᵥ, t̃ᵥ, x, y)
+            ub = t̃
 
             numConstraints += 1
         end

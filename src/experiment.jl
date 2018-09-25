@@ -10,6 +10,8 @@ julia> runExperiments([100, 400, 1000], [10, 25, 100]])
 ```
 """
 function runExperiments(ns::Array{Int}, ms::Array{Int}; αs = collect(0.1:0.1:0.9), numberOfInstances = 5)
+    srand(310923)
+
     @info "Starting experiments for minimum knapsack problem for n in $ns"
     Δt = @elapsed runKnapsackExperiments(ns, αs = αs, numberOfInstances = numberOfInstances)
     @info "Experiments for minimum knapsack problem have finished in $(Δt)sec"
@@ -166,7 +168,7 @@ function computeSelectionLowerBound(C, c, d, Γ, X, α, numerator)
 end
 
 function computeLagrangianLowerBound(C, c, d, Γ, X, α, numerator)
-    l = 10 * size(c, 1) # TODO: Replace with actual value of l = m (1 - α)
+    l = ceil(size(c, 1) * (1 - α))
     t₀ = lagrangianLowerBound(C, c, d, Γ, X, l)
     numerator / t₀
 end

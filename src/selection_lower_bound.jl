@@ -4,7 +4,6 @@
 function selectionLowerBound(C, c, d, Γ, X, α)
     @assert size(C) == size(c) == size(d)
 
-    M = typemax(Int)
     n = size(C, 1)
 
     model = Model(solver = CplexSolver(CPX_PARAM_TILIM = getProperty("selectionLowerBound.timeLimit"),
@@ -29,18 +28,23 @@ function selectionLowerBound(C, c, d, Γ, X, α)
     @objective(model, Min, vecdot(C, x) + π * Γ + vecdot(c, y) + vecdot(u, d))
 
     # Linearization of dot(x, y) >= (1 - α) sum(x)
-    @constraint(model, z .<= M * x)
+    @constraint(model, z .<= x)
     @constraint(model, z .<= y)
-    @constraint(model, z .>= y - (1 - x) * M)
     @constraint(model, sum(z) >= (1 - α) * sum(x))
 
     @constraint(model, -y + π + u .>= 0)
 
     # Constraints defining set of feasible solutions
     for constraint in X
-        JuMP.addconstraint(model, constraint(x)) # check this
+        JuMP.addconstraint(model, constraint(x))
     end
 
     status = solve(model)
-    getobjectivevalue(model)
+
+    if status == :Optimal
+        getobjectivevalue(model)
+    else
+        -getobjectivebound(model)
+    end
+
 end
