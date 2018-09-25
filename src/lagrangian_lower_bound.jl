@@ -70,5 +70,10 @@ function relaxedIncrementalProblem(C, c, d, Γ, X, μ, l)
     @constraint(model, z .<= y)
 
     status = solve(model)
-    getobjectivevalue(model)
+
+    if status == :Optimal
+        getobjectivevalue(model)
+    else
+        getobjectivebound(model)
+    end
 end

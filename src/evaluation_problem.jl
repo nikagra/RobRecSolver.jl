@@ -9,21 +9,22 @@ function evaluationProblem(C, c, d, Γ, α, x, X)
     numConstraints = 1
 
     Δt = @elapsed begin
-        ub = Inf
         c₀ = initialScenario(c, d, Γ)
         (y, lb) = incrementalProblem(c₀, α, x, X)
 
         (model, c̃ᵥ, c̃, t̃ᵥ, t̃) = relaxedAdversarialProblem(c, d, Γ, y)
+        ub = t̃
     end
-    while (ub - lb)/lb > ϵ && Δt <= timeLimit
+    while abs(ub - lb)/lb > ϵ && Δt <= timeLimit
         Δt += @elapsed begin
-            (model, c̃, t̃) = addConstraintAndSolve(model, c̃ᵥ, t̃ᵥ, y)
 
-            ub = t̃
             (y, nlb) = incrementalProblem(c̃, α, x, X)
             if lb < nlb
                 lb = nlb
             end
+
+            (model, c̃, t̃) = addConstraintAndSolve(model, c̃ᵥ, t̃ᵥ, y)
+            ub = t̃
 
             numConstraints += 1
         end
