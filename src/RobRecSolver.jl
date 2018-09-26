@@ -15,9 +15,9 @@ using ConfParser
 
 export
     # Types
-    DataGenerator,
-    KnapsackDataGenerator,
-    AssignmentDataGenerator,
+    ProblemDescriptor,
+    KnapsackProblemDescriptor,
+    AssignmentProblemDescriptor,
 
     # Functions
     minimumAssignmentProblem,

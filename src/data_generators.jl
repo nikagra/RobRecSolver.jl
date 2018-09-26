@@ -1,16 +1,18 @@
-abstract type DataGenerator end
+abstract type ProblemDescriptor end
 
-generateData(c::DataGenerator) = error("No generateData method defined for data generator type $(typeof(c))")
-hasEqualCardinalityProperty(c::DataGenerator) = c.equalCardinalityProperty
+generateData(c::ProblemDescriptor) = error("No generateData method defined for data generator type $(typeof(c))")
+hasEqualCardinalityProperty(c::ProblemDescriptor) = c.equalCardinalityProperty
+getCardinality(c::ProblemDescriptor) = c.cardinality
 
-struct KnapsackDataGenerator <: DataGenerator
+struct KnapsackProblemDescriptor <: ProblemDescriptor
     equalCardinalityProperty::Bool
-    n::Integer
+    cardinality::Int
+    n::Int
 
-    KnapsackDataGenerator(n::Integer) = new(false, n)
+    KnapsackProblemDescriptor(n::Integer) = new(false, -1, n)
 end
 
-function generateData(g::KnapsackDataGenerator)
+function generateData(g::KnapsackProblemDescriptor)
     C = rand(1:20, g.n)
     c = rand(1:20, g.n)
     d = rand(1:100, g.n)
@@ -21,14 +23,15 @@ function generateData(g::KnapsackDataGenerator)
     (C, c, d, Γ, X)
 end
 
-struct AssignmentDataGenerator <: DataGenerator
+struct AssignmentProblemDescriptor <: ProblemDescriptor
     equalCardinalityProperty::Bool
-    m::Integer
+    cardinality::Int
+    m::Int
 
-    AssignmentDataGenerator(m::Integer) = new(true, m)
+    AssignmentProblemDescriptor(m::Integer) = new(true, m, m)
 end
 
-function generateData(g::AssignmentDataGenerator)
+function generateData(g::AssignmentProblemDescriptor)
     C = rand(1:20, g.m, g.m)
     c = rand(1:20, g.m, g.m)
     d = rand(1:100, g.m, g.m)
