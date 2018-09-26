@@ -1,7 +1,7 @@
 """
     selectionLowerBound(C, c, d, Γ, X, α)
 """
-function selectionLowerBound(C, c, d, Γ, X, α)
+function selectionLowerBound(C, c, d, Γ, X, α, dg)
     @assert size(C) == size(c) == size(d)
 
     n = size(C, 1)
@@ -30,9 +30,16 @@ function selectionLowerBound(C, c, d, Γ, X, α)
     # Linearization of dot(x, y) >= (1 - α) sum(x)
     @constraint(model, z .<= x)
     @constraint(model, z .<= y)
-    @constraint(model, sum(z) >= (1 - α) * sum(x))
-
     @constraint(model, -y + π + u .>= 0)
+
+    if hasEqualCardinalityProperty(dg)
+        cardinality = getCardinality(dg)
+        k = ceil(cardinality * (1 - α))
+        @constraint(model, sum(z) >= k)
+        @constraint(model, sum(y) == cardinality)
+    else
+        @constraint(model, sum(z) >= (1 - α) * sum(x))
+    end
 
     # Constraints defining set of feasible solutions
     for constraint in X
@@ -40,11 +47,9 @@ function selectionLowerBound(C, c, d, Γ, X, α)
     end
 
     status = solve(model)
-
     if status == :Optimal
-        getobjectivevalue(model)
+        return getobjectivevalue(model)
     else
-        -getobjectivebound(model)
+        return getobjectivebound(model)
     end
-
 end

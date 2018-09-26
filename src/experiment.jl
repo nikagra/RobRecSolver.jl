@@ -26,14 +26,14 @@ function runKnapsackExperiments(ns; αs = collect(0.1:0.1:0.9), numberOfInstance
     for n in ns
         @info "Starting minimum knapsack problem experiment for n = $(n)..."
 
-        dataGenerator = KnapsackDataGenerator(n)
+        problemDescriptor = KnapsackProblemDescriptor(n)
         resultss = []
 
         for α in αs
 
             reducer(m₁, m₂) = vcat(m₁, m₂)
             reduced = @parallel (reducer) for i = 1:numberOfInstances
-                generateInstanceAndCalculateRatiosWithoutEqualCardinality(α, dataGenerator, i)
+                generateInstanceAndCalculateRatiosWithoutEqualCardinality(α, problemDescriptor, i)
             end
             results = squeeze(mean(reduced, 1), 1)
 
@@ -54,14 +54,14 @@ function runAssignmentExperiments(ms; αs = collect(0.1:0.1:0.9), numberOfInstan
     for m in ms
         @info "Starting minimum assignment problem experiment for m = $(m)..."
 
-        dataGenerator = AssignmentDataGenerator(m)
+        problemDescriptor = AssignmentProblemDescriptor(m)
         resultss = []
 
         for α in αs
 
             reducer(m₁, m₂) = vcat(m₁, m₂)
             reduced = @parallel (reducer) for i = 1:numberOfInstances
-                generateInstanceAndCalculateRatiosWithEqualCardinality(α, dataGenerator, i)
+                generateInstanceAndCalculateRatiosWithEqualCardinality(α, problemDescriptor, i)
             end
             results = squeeze(mean(reduced, 1), 1)
 
@@ -79,11 +79,10 @@ function runAssignmentExperiments(ms; αs = collect(0.1:0.1:0.9), numberOfInstan
     end
 end
 
-function generateInstanceAndCalculateRatiosWithoutEqualCardinality(α, dataGenerator::DataGenerator, i)
-    @assert !hasEqualCardinalityProperty(dataGenerator) "The problem is expected to has equal cardinality property"
+function generateInstanceAndCalculateRatiosWithoutEqualCardinality(α, problemDescriptor::ProblemDescriptor, i)
 
     @info "Generating data for instance #$(i) with α=$(α)"
-    (C, c, d, Γ, X) = generateData(dataGenerator)
+    (C, c, d, Γ, X) = generateData(problemDescriptor)
     c₀ = initialScenario(c, d, Γ)
 
     @info "Computing recoverable ratio for instance #$(i) with α=$(α)"
@@ -101,17 +100,17 @@ function generateInstanceAndCalculateRatiosWithoutEqualCardinality(α, dataGener
     @info "Computation of recoverable lower bound for instance #$(i) with α=$(α) has finished in $(Δtₕ + Δtₙ)sec. with result $(ρₕ)"
 
     @info "Computing selection lower bound for instance #$(i) with α=$(α)"
-    Δtₛ = @elapsed ρₛ = computeSelectionLowerBound(C, c, d, Γ, X, α, numerator)
+    Δtₛ = @elapsed ρₛ = computeSelectionLowerBound(C, c, d, Γ, X, α, numerator, problemDescriptor)
     @info "Computation of selection lower bound for instance #$(i) with α=$(α) has finished in $(Δtₛ + Δtₙ)sec. with result $(ρₛ)"
 
     cat(3, [ρ₀ ρₐ ρₕ ρₛ], [Δt₀ (Δtₐ + Δtₙ) (Δtₕ + Δtₙ) (Δtₛ + Δtₙ)])
 end
 
-function generateInstanceAndCalculateRatiosWithEqualCardinality(α, dataGenerator::DataGenerator, i)
-    @assert hasEqualCardinalityProperty(dataGenerator) "The problem is expected to has equal cardinality property"
+function generateInstanceAndCalculateRatiosWithEqualCardinality(α, problemDescriptor::ProblemDescriptor, i)
+    @assert hasEqualCardinalityProperty(problemDescriptor) "The problem is expected to has equal cardinality property"
 
     @info "Generating data for instance #$(i) with α=$(α)"
-    (C, c, d, Γ, X) = generateData(dataGenerator)
+    (C, c, d, Γ, X) = generateData(problemDescriptor)
     c₀ = initialScenario(c, d, Γ)
 
     @info "Computing recoverable ratio for instance #$(i) with α=$(α)"
@@ -129,11 +128,11 @@ function generateInstanceAndCalculateRatiosWithEqualCardinality(α, dataGenerato
     @info "Computation of recoverable lower bound for instance #$(i) with α=$(α) has finished in $(Δtₕ + Δtₙ)sec. with result $(ρₕ)"
 
     @info "Computing selection lower bound for instance #$(i) with α=$(α)"
-    Δtₛ = @elapsed ρₛ = computeSelectionLowerBound(C, c, d, Γ, X, α, numerator)
+    Δtₛ = @elapsed ρₛ = computeSelectionLowerBound(C, c, d, Γ, X, α, numerator, problemDescriptor)
     @info "Computation of selection lower bound for instance #$(i) with α=$(α) has finished in $(Δtₛ + Δtₙ)sec. with result $(ρₛ)"
 
     @info "Computing Lagrangian lower bound for instance #$(i) with α=$(α)"
-    Δtₗ = @elapsed ρₗ = computeLagrangianLowerBound(C, c, d, Γ, X, α, numerator)
+    Δtₗ = @elapsed ρₗ = computeLagrangianLowerBound(C, c, d, Γ, X, α, numerator, problemDescriptor)
     @info "Computation of Lagrangian lower bound for instance #$(i) with α=$(α) has finished in $(Δtₛ + Δtₙ)sec. with result $(ρₛ)"
 
     cat(3, [ρ₀ ρₐ ρₕ ρₛ ρₗ], [Δt₀ (Δtₐ + Δtₙ) (Δtₕ + Δtₙ) (Δtₛ + Δtₙ) (Δtₗ + Δtₙ)])
@@ -162,13 +161,13 @@ function computeRecoverableLowerBound(C, X, α, c₀, numerator)
     numerator / t₀
 end
 
-function computeSelectionLowerBound(C, c, d, Γ, X, α, numerator)
-    t₀ = selectionLowerBound(C, c, d, Γ, X, α)
+function computeSelectionLowerBound(C, c, d, Γ, X, α, numerator, problemDescriptor::ProblemDescriptor)
+    t₀ = selectionLowerBound(C, c, d, Γ, X, α, problemDescriptor)
     numerator / t₀
 end
 
 function computeLagrangianLowerBound(C, c, d, Γ, X, α, numerator)
     l = ceil(size(c, 1) * (1 - α))
-    t₀ = lagrangianLowerBound(C, c, d, Γ, X, l)
+    t₀ = lagrangianLowerBound(C, c, d, Γ, X, l, problemDescriptor)
     numerator / t₀
 end
