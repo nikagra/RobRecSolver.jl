@@ -48,5 +48,5 @@ adversarialProblem(C, c, d, Γ, α, X)
 ## Experiments
 
 ```@docs
-runExperiment(ns, dataGenerator)
+runExperiment(ns, problemDescriptor)
 ```
