@@ -46,7 +46,7 @@ function runKnapsackExperiments(ns; αs = collect(0.1:0.1:0.9), numberOfInstance
         end
 
         resultss = cat(3, resultss...)
-        plotKnapsackResults(n, αs, resultss)
+        exportKnapsackResults(n, αs, resultss)
     end
 end
 
@@ -75,7 +75,7 @@ function runAssignmentExperiments(ms; αs = collect(0.1:0.1:0.9), numberOfInstan
         end
 
         resultss = cat(3, resultss...)
-        plotAssignmentResults(m, αs, resultss)
+        exportAssignmentResults(m, αs, resultss)
     end
 end
 
@@ -166,7 +166,7 @@ function computeSelectionLowerBound(C, c, d, Γ, X, α, numerator, problemDescri
     numerator / t₀
 end
 
-function computeLagrangianLowerBound(C, c, d, Γ, X, α, numerator)
+function computeLagrangianLowerBound(C, c, d, Γ, X, α, numerator, problemDescriptor::ProblemDescriptor)
     l = ceil(size(c, 1) * (1 - α))
     t₀ = lagrangianLowerBound(C, c, d, Γ, X, l, problemDescriptor)
     numerator / t₀
