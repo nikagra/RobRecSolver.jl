@@ -12,6 +12,8 @@ using LaTeXStrings
 using Plots
 import PyPlot # workaround due to https://github.com/JuliaPlots/Plots.jl/issues/1047
 using ConfParser
+using DataFrames
+using CSV
 
 export
     # Types
@@ -43,7 +45,8 @@ export
 
     # experiments
     runExperiments,
-    plotKnapsackResults,
+    exportKnapsackResults,
+    exportAssignmentResults,
     getProperties,
 
     # data generators
@@ -64,7 +67,7 @@ files = [
         "lagrangian_lower_bound",
         "data_generators",
         "experiment",
-        "plots",
+        "export",
         "properties",
         "logging"
     ]
