@@ -1,5 +1,7 @@
 """
     lagrangian_lower_bound(C, c, d, Γ, X, l, dg)
+
+Computes Lagrangian lower bound.
 """
 function lagrangianLowerBound(C, c, d, Γ, X, l, dg)
     @assert hasEqualCardinalityProperty(dg)

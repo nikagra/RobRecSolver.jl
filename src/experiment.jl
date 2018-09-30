@@ -1,7 +1,7 @@
 """
     runExperiments(ns::Array{Integer}, ms::Array{Integer}; numberOfInstances = 5)
 
-Run experiments
+Main function to run experiments
 
 # Examples:
 ```julia-repl

@@ -1,5 +1,7 @@
 """
-    selectionLowerBound(C, c, d, Γ, X, α)
+    selectionLowerBound(C, c, d, Γ, X, α, dg)
+
+Computes selection lower bound.
 """
 function selectionLowerBound(C, c, d, Γ, X, α, dg)
     @assert size(C) == size(c) == size(d)

@@ -1,52 +1,45 @@
 # RobRecSolver.jl Documentation
 
+## High-level interface
+
 ```@docs
-RobRecSolver
+RobRecSolver.runExperiments
 ```
 
-## Problems
-### Minimum Assignment problem
+## Solver Functions
+
+### Incremental Problem
 
 ```@docs
-minimumAssignmentProblem(C)
+RobRecSolver.incrementalProblem
 ```
 
+### Evaluation Problem
+
 ```@docs
-getAssignmentConstraints(m)
+RobRecSolver.evaluationProblem
 ```
 
-### Minimum Knapsack problem
+### Recoverable Problem
 
 ```@docs
-minimumKnapsackProblem(C, w, W)
+RobRecSolver.recoverableProblem
 ```
 
+### Adversarial Problem
+
 ```@docs
-getKnapsackConstraints(w, W)
+RobRecSolver.adversarialProblem
 ```
 
-##Solving the problems by MIP formulations
+### Selection Lower Bound
 
 ```@docs
-recoverableProblem(C, c, α, X)
+RobRecSolver.selectionLowerBound
 ```
 
-```@docs
-incrementalProblem(c, α, x, X)
-```
+### Lagrangian Lower Bound
 
 ```@docs
-evaluationProblem(C, c, d, Γ, α, x, X)
-```
-
-## Lower bounds
-
-```@docs
-adversarialProblem(C, c, d, Γ, α, X)
-```
-
-## Experiments
-
-```@docs
-runExperiment(ns, problemDescriptor)
+RobRecSolver.lagrangianLowerBound
 ```

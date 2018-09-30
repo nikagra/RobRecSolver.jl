@@ -1,7 +1,7 @@
 """
     evaluationProblem(C, c, d, Γ, α, x, X)
 
-Compute EVAL(x) with accuracy ϵ.
+Computes EVAL(x) with accuracy ϵ.
 """
 function evaluationProblem(C, c, d, Γ, α, x, X)
     ϵ = getProperty("evaluationProblem.epsilon", parameterType = Float64)

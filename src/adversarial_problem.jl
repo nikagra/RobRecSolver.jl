@@ -1,7 +1,7 @@
 """
     adversarialProblem(C, c, d, Γ, X, α)
 
-Compute ADV(ϵ) with accuracy ϵ.
+Computes ADV(ϵ) with accuracy ϵ.
 """
 function adversarialProblem(C, c, d, Γ, X, α)
     ϵ = getProperty("adversarialProblem.epsilon", parameterType = Float64)
