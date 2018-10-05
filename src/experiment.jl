@@ -10,7 +10,6 @@ julia> runExperiments([100, 400, 1000], [10, 25, 100]])
 ```
 """
 function runExperiments(ns::Array{Int}, ms::Array{Int}; αs = collect(0.1:0.1:0.9), numberOfInstances = 5)
-    srand(310923)
 
     @info "Starting experiments for minimum knapsack problem for n in $ns"
     Δt = @elapsed runKnapsackExperiments(ns, αs = αs, numberOfInstances = numberOfInstances)
@@ -25,6 +24,8 @@ end
 function runKnapsackExperiments(ns; αs = collect(0.1:0.1:0.9), numberOfInstances = 5)
     for n in ns
         @info "Starting minimum knapsack problem experiment for n = $(n)..."
+
+        srand(310923)
 
         problemDescriptor = KnapsackProblemDescriptor(n)
         resultss = []
@@ -53,6 +54,8 @@ end
 function runAssignmentExperiments(ms; αs = collect(0.1:0.1:0.9), numberOfInstances = 5)
     for m in ms
         @info "Starting minimum assignment problem experiment for m = $(m)..."
+
+        srand(310923)
 
         problemDescriptor = AssignmentProblemDescriptor(m)
         resultss = []
