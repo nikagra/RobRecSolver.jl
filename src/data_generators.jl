@@ -14,7 +14,7 @@ struct KnapsackProblemDescriptor <: ProblemDescriptor
     n::Int
     saneComputationLimit::Int
 
-    KnapsackProblemDescriptor(n::Integer) = new(false, -1, n, 25)
+    KnapsackProblemDescriptor(n::Integer) = new(false, -1, n, 400)
 end
 
 function generateData(g::KnapsackProblemDescriptor)
