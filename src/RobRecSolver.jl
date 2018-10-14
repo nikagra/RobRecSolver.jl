@@ -51,6 +51,8 @@ export
 
     # data generators
     generateData,
+    getProblemSize,
+    getSaneComputationLimit,
     hasEqualCardinalityProperty
 
 files = [

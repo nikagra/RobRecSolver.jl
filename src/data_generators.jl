@@ -1,6 +1,10 @@
 abstract type ProblemDescriptor end
 
 generateData(c::ProblemDescriptor) = error("No generateData method defined for data generator type $(typeof(c))")
+
+getProblemSize(c::ProblemDescriptor) = c.n
+getSaneComputationLimit(c::ProblemDescriptor) = c.saneComputationLimit
+
 hasEqualCardinalityProperty(c::ProblemDescriptor) = c.equalCardinalityProperty
 getCardinality(c::ProblemDescriptor) = c.cardinality
 
@@ -8,8 +12,9 @@ struct KnapsackProblemDescriptor <: ProblemDescriptor
     equalCardinalityProperty::Bool
     cardinality::Int
     n::Int
+    saneComputationLimit::Int
 
-    KnapsackProblemDescriptor(n::Integer) = new(false, -1, n)
+    KnapsackProblemDescriptor(n::Integer) = new(false, -1, n, 400)
 end
 
 function generateData(g::KnapsackProblemDescriptor)
@@ -26,16 +31,17 @@ end
 struct AssignmentProblemDescriptor <: ProblemDescriptor
     equalCardinalityProperty::Bool
     cardinality::Int
-    m::Int
+    n::Int
+    saneComputationLimit::Int
 
-    AssignmentProblemDescriptor(m::Integer) = new(true, m, m)
+    AssignmentProblemDescriptor(n::Integer) = new(true, n, n, 25)
 end
 
 function generateData(g::AssignmentProblemDescriptor)
-    C = rand(1:20, g.m, g.m)
-    c = rand(1:20, g.m, g.m)
-    d = rand(1:100, g.m, g.m)
+    C = rand(1:20, g.n, g.n)
+    c = rand(1:20, g.n, g.n)
+    d = rand(1:100, g.n, g.n)
     Γ = floor(Int, 0.1 * sum(d))
-    X = getAssignmentConstraints(g.m)
+    X = getAssignmentConstraints(g.n)
     (C, c, d, Γ, X)
 end
