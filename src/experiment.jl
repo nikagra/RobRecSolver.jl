@@ -39,9 +39,11 @@ function runKnapsackExperiments(ns; αs = collect(0.1:0.1:0.9), numberOfInstance
             results = squeeze(mean(reduced, 1), 1)
 
             @info "Average recoverable ratio for α=$α is $(mean(results[1, 1])) was computed in $(@sprintf("%.2f", mean(results[1, 2])))sec on average"
-            @info "Average adversarial lower bound for α=$α is $(mean(results[2, 1])) was computed in $(@sprintf("%.2f", mean(results[2, 2])))sec on average"
-            @info "Average recoverable lower bound for α=$α is $(mean(results[3, 1])) was computed in $(@sprintf("%.2f", mean(results[3, 2])))sec on average"
-            @info "Average selection lower bound for α=$α is $(mean(results[4, 1])) was computed in $(@sprintf("%.2f", mean(results[4, 2])))sec on average"
+            if getProblemSize(problemDescriptor) ≤ getSaneComputationLimit(problemDescriptor)
+                @info "Average adversarial lower bound for α=$α is $(mean(results[2, 1])) was computed in $(@sprintf("%.2f", mean(results[2, 2])))sec on average"
+                @info "Average recoverable lower bound for α=$α is $(mean(results[3, 1])) was computed in $(@sprintf("%.2f", mean(results[3, 2])))sec on average"
+                @info "Average selection lower bound for α=$α is $(mean(results[4, 1])) was computed in $(@sprintf("%.2f", mean(results[4, 2])))sec on average"
+            end
 
             push!(resultss, results)
         end
@@ -95,7 +97,7 @@ function generateInstanceAndCalculateRatios(α, problemDescriptor::ProblemDescri
     @info "Computation of recoverable ratio for instance #$(i) with α=$(α) has finished in $(Δt₀)sec. with result $(ρ₀)"
 
     if getProblemSize(problemDescriptor) > getSaneComputationLimit(problemDescriptor)
-        cat(3, [ρ₀], [Δt₀])
+        return cat(3, [ρ₀], [Δt₀])
     end
 
     Δtₙ = @elapsed numerator = computeRatioNumerator(C, c, d, Γ, X, α, x̲, x̅)
