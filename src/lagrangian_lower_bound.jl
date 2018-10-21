@@ -6,52 +6,62 @@ Computes Lagrangian lower bound.
 function lagrangianLowerBound(C, c, d, Γ, X, l, dg)
     @assert hasEqualCardinalityProperty(dg)
 
-    ϵ = getProperty("lagrangianLowerBound.epsilon", parameterType = Float64)
-    invϕ = (sqrt(5) - 1) / 2 # 1/ϕ
-    invϕ² = (3 - sqrt(5)) / 2 # 1/ϕ²
+    tₗ = getProperty("lagrangianLowerBound.timeLimit", parameterType = Int)
 
-    α = 0
-    β = 100 # TODO: check this assumption
+    Δt = @elapsed begin
+        ϵ = getProperty("lagrangianLowerBound.epsilon", parameterType = Float64)
+        invϕ = (sqrt(5) - 1) / 2 # 1/ϕ
+        invϕ² = (3 - sqrt(5)) / 2 # 1/ϕ²
 
-    h = β - α
+        α = 0
+        β = 100 # TODO: check this assumption
 
-    γ = α + invϕ² * h
-    fγ, status = relaxedIncrementalProblem(C, c, d, Γ, X, γ, l)
-    if status != :Optimal
-        -1
+        h = β - α
+
+        γ = α + invϕ² * h
+        fγ, status = relaxedIncrementalProblem(C, c, d, Γ, X, γ, l)
+        if status != :Optimal
+            return missing
+        end
+
+        δ = α + invϕ * h
+        fδ, status = relaxedIncrementalProblem(C, c, d, Γ, X, δ, l)
+        if status != :Optimal
+            return missing
+        end
+
+        n = ceil(log(ϵ/h)/log(invϕ))
     end
-
-    δ = α + invϕ * h
-    fδ, status = relaxedIncrementalProblem(C, c, d, Γ, X, δ, l)
-    if status != :Optimal
-        -1
-    end
-
-    n = ceil(log(ϵ/h)/log(invϕ))
     for i in 0:n-2
-        if fγ > fδ
-            # β, δ, fδ = δ, γ, fγ
-            β = δ
-            δ = γ
-            fδ = fγ
-            h *=  invϕ
-            γ = α + invϕ² * h
+        if Δt > tₗ
+            break
+        end
 
-            fγ, status = relaxedIncrementalProblem(C, c, d, Γ, X, γ, l)
-            if status != :Optimal
-                -1
-            end
-        else
-            # α, γ, fγ = γ, δ, fδ
-            α = γ
-            γ = δ
-            fγ = fδ
-            h *=  invϕ
-            δ = α + invϕ * h  # TODO: Why `invphi` here
+        Δt += @elapsed begin
+            if fγ > fδ
+                # β, δ, fδ = δ, γ, fγ
+                β = δ
+                δ = γ
+                fδ = fγ
+                h *=  invϕ
+                γ = α + invϕ² * h
 
-            fδ, status = relaxedIncrementalProblem(C, c, d, Γ, X, δ, l)
-            if status != :Optimal
-                -1
+                fγ, status = relaxedIncrementalProblem(C, c, d, Γ, X, γ, l)
+                if status != :Optimal
+                    return missing
+                end
+            else
+                # α, γ, fγ = γ, δ, fδ
+                α = γ
+                γ = δ
+                fγ = fδ
+                h *=  invϕ
+                δ = α + invϕ * h  # TODO: Why `invphi` here
+
+                fδ, status = relaxedIncrementalProblem(C, c, d, Γ, X, δ, l)
+                if status != :Optimal
+                    return missing
+                end
             end
         end
     end
@@ -59,11 +69,11 @@ function lagrangianLowerBound(C, c, d, Γ, X, l, dg)
     if (fγ > fδ)
         μ = (α + γ) / 2
         t, status = relaxedIncrementalProblem(C, c, d, Γ, X, μ, l)
-        t
+        return if (status != :Optimal) missing else t end
     else
         μ = (γ + β) / 2
         t, status = relaxedIncrementalProblem(C, c, d, Γ, X, μ, l)
-        t
+        return if (status != :Optimal) missing else t end
     end
 end
 
