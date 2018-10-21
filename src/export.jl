@@ -3,7 +3,7 @@ function exportKnapsackResults(n, limit, αs, results)
 
     pyplot()
 
-    suffix = randstring(4)
+    suffix = Dates.format(Dates.now(), "duyyyy@HH_MM")
 
     df = DataFrame(a = αs, b = results[1, 1, :])
     saveCsv("kn-plot-ratios-rec-$n-$suffix.csv", df, ["α", "ρ(c_0)"])
@@ -29,7 +29,7 @@ function exportAssignmentResults(m, limit, αs, results)
 
     pyplot()
 
-    suffix = randstring(4)
+    suffix = Dates.format(Dates.now(), "duyyyy@HH_MM")
 
     df = DataFrame(a = αs, b = results[1, 1, :])
     saveCsv("as-plot-ratios-rec-$m-$suffix.csv", df, ["α", "ρ(c_0)"])

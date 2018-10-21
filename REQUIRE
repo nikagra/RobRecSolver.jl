@@ -9,3 +9,4 @@ Documenter 0.18.0
 ConfParser 0.0.9
 CSV 0.2.0
 DataFrames 0.11.0
+DataArrays 0.7.0

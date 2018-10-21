@@ -13,6 +13,7 @@ using Plots
 import PyPlot # workaround due to https://github.com/JuliaPlots/Plots.jl/issues/1047
 using ConfParser
 using DataFrames
+using DataArrays
 using CSV
 
 export

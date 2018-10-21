@@ -36,7 +36,7 @@ function runKnapsackExperiments(ns; αs = collect(0.1:0.1:0.9), numberOfInstance
             reduced = @parallel (reducer) for i = 1:numberOfInstances
                 generateInstanceAndCalculateRatios(α, problemDescriptor, i)
             end
-            results = squeeze(mean(reduced, 1), 1)
+            results = squeeze(mean(convert(DataArray, reduced), 1; skipmissing = true), 1)
 
             @info "Average recoverable ratio for α=$α is $(mean(results[1, 1])) was computed in $(@sprintf("%.2f", mean(results[1, 2])))sec on average"
             if getProblemSize(problemDescriptor) ≤ getSaneComputationLimit(problemDescriptor)
@@ -68,7 +68,7 @@ function runAssignmentExperiments(ms; αs = collect(0.1:0.1:0.9), numberOfInstan
             reduced = @parallel (reducer) for i = 1:numberOfInstances
                 generateInstanceAndCalculateRatios(α, problemDescriptor, i)
             end
-            results = squeeze(mean(reduced, 1), 1)
+            results = squeeze(mean(convert(DataArray, reduced), 1; skipmissing = true), 1)
 
             @info "Average recoverable ratio for α=$α is $(mean(results[1, 1])) was computed in $(@sprintf("%.2f", mean(results[1, 2])))sec on average"
             if getProblemSize(problemDescriptor) ≤ getSaneComputationLimit(problemDescriptor)
@@ -76,6 +76,10 @@ function runAssignmentExperiments(ms; αs = collect(0.1:0.1:0.9), numberOfInstan
                 @info "Average recoverable lower bound for α=$α is $(mean(results[3, 1])) was computed in $(@sprintf("%.2f", mean(results[3, 2])))sec on average"
                 @info "Average selection lower bound for α=$α is $(mean(results[4, 1])) was computed in $(@sprintf("%.2f", mean(results[4, 2])))sec on average"
                 @info "Average lagrangian lower bound for α=$α is $(mean(results[5, 1])) was computed in $(@sprintf("%.2f", mean(results[5, 2])))sec on average"
+
+
+                solvedLagrangianPoblems = count(i -> !ismissing(i), reduced[:, 5, 1])
+                @warn "$solvedLagrangianPoblems out of $numberOfInstances lagrangian lower bound problems was solved optimaly for α=$α"
             end
 
             push!(resultss, results)
