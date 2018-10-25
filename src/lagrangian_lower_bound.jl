@@ -21,12 +21,14 @@ function lagrangianLowerBound(C, c, d, Γ, X, l, dg)
         γ = α + invϕ² * h
         fγ, status = relaxedIncrementalProblem(C, c, d, Γ, X, γ, l)
         if status != :Optimal
+            @warn "Lagrangian lower bound solved non-optimaly"
             return missing
         end
 
         δ = α + invϕ * h
         fδ, status = relaxedIncrementalProblem(C, c, d, Γ, X, δ, l)
         if status != :Optimal
+            @warn "Lagrangian lower bound solved non-optimaly"
             return missing
         end
 
@@ -34,6 +36,7 @@ function lagrangianLowerBound(C, c, d, Γ, X, l, dg)
     end
     for i in 0:n-2
         if Δt > tₗ
+            @warn "Lagrangian lower bound time limit exceeded (current time is $Δt seconds with time limit $tₗ seconds)"
             break
         end
 
@@ -48,6 +51,7 @@ function lagrangianLowerBound(C, c, d, Γ, X, l, dg)
 
                 fγ, status = relaxedIncrementalProblem(C, c, d, Γ, X, γ, l)
                 if status != :Optimal
+                    @warn "Lagrangian lower bound solved non-optimaly"
                     return missing
                 end
             else
@@ -60,6 +64,7 @@ function lagrangianLowerBound(C, c, d, Γ, X, l, dg)
 
                 fδ, status = relaxedIncrementalProblem(C, c, d, Γ, X, δ, l)
                 if status != :Optimal
+                    @warn "Lagrangian lower bound solved non-optimaly"
                     return missing
                 end
             end
@@ -69,11 +74,21 @@ function lagrangianLowerBound(C, c, d, Γ, X, l, dg)
     if (fγ > fδ)
         μ = (α + γ) / 2
         t, status = relaxedIncrementalProblem(C, c, d, Γ, X, μ, l)
-        return if (status != :Optimal) missing else t end
+        if status != :Optimal
+            @warn "Lagrangian lower bound solved non-optimaly"
+            return missing
+        else
+            return t
+        end
     else
         μ = (γ + β) / 2
         t, status = relaxedIncrementalProblem(C, c, d, Γ, X, μ, l)
-        return if (status != :Optimal) missing else t end
+        if status != :Optimal
+            @warn "Lagrangian lower bound solved non-optimaly"
+            return missing
+        else
+            return t
+        end
     end
 end
 
