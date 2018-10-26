@@ -123,7 +123,7 @@ function generateInstanceAndCalculateRatios(α, problemDescriptor::ProblemDescri
 
         @info "Computing Lagrangian lower bound for instance #$(i) with α=$(α)"
         Δtₗ = @elapsed ρₗ = computeLagrangianLowerBound(C, c, d, Γ, X, α, numerator, problemDescriptor)
-        @info "Computation of Lagrangian lower bound for instance #$(i) with α=$(α) has finished in $(Δtₛ + Δtₙ)sec. with result $(ρₛ)"
+        @info "Computation of Lagrangian lower bound for instance #$(i) with α=$(α) has finished in $(Δtₗ + Δtₙ)sec. with result $(ρₗ)"
 
         cat(3, [ρ₀ ρₐ ρₕ ρₛ ρₗ], [Δt₀ (Δtₐ + Δtₙ) (Δtₕ + Δtₙ) (Δtₛ + Δtₙ) (Δtₗ + Δtₙ)])
     else
