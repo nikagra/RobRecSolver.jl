@@ -55,7 +55,7 @@ function saveCsv(filename, data, columnNames)
     CSV.write(filename, df; colnames = columnNames)
 end
 
-function drawAndSavePlot(filename, x, ys, xlabel, ylabel, yslabels, linestyles)
-    p = plot(x, ys, xlabel = xlabel, ylabel = ylabel, lab = yslabels, linestyle = linestyles)
+function drawAndSavePlot(filename, x, ys, xlabel, ylabel, yslabels; linestyles = [:solid :dash :dashdot :dot], shape = [:diamond :pentagon :star4 :utriangle], palette=:grays)
+    p = plot(x, ys, xlabel = xlabel, ylabel = ylabel, lab = yslabels, linestyle = linestyles, shape = shape, palette = palette)
     savefig(p, filename)
 end
