@@ -42,10 +42,7 @@ function lagrangianLowerBound(C, c, d, Γ, X, l, dg)
 
         Δt += @elapsed begin
             if fγ > fδ
-                # β, δ, fδ = δ, γ, fγ
-                β = δ
-                δ = γ
-                fδ = fγ
+                β, δ, fδ = δ, γ, fγ
                 h *=  invϕ
                 γ = α + invϕ² * h
 
@@ -55,10 +52,7 @@ function lagrangianLowerBound(C, c, d, Γ, X, l, dg)
                     return missing
                 end
             else
-                # α, γ, fγ = γ, δ, fδ
-                α = γ
-                γ = δ
-                fγ = fδ
+                α, γ, fγ = γ, δ, fδ
                 h *=  invϕ
                 δ = α + invϕ * h  # TODO: Why `invphi` here
 
@@ -72,7 +66,7 @@ function lagrangianLowerBound(C, c, d, Γ, X, l, dg)
     end
 
     if (fγ > fδ)
-        μ = (α + γ) / 2
+        μ = (α + δ) / 2
         t, status = relaxedIncrementalProblem(C, c, d, Γ, X, μ, l)
         if status != :Optimal
             @warn "Lagrangian lower bound solved non-optimaly"
