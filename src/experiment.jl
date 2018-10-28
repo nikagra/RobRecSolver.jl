@@ -97,21 +97,21 @@ function generateInstanceAndCalculateRatios(α, problemDescriptor::ProblemDescri
     c₀ = initialScenario(c, d, Γ)
 
     @info "Computing recoverable ratio for instance #$(i) with α=$(α)"
-    Δt₀ = @elapsed (ρ₀, x̲, x̅) = computeRecoverableRatio(C, c, d, Γ, X, α, c₀)
+    Δt₀ = @elapsed (ρ₀, x̲, x̅) = computeRecoverableRatio(C, c, d, Γ, X, α, c₀, problemDescriptor)
     @info "Computation of recoverable ratio for instance #$(i) with α=$(α) has finished in $(Δt₀)sec. with result $(ρ₀)"
 
     if getProblemSize(problemDescriptor) > getSaneComputationLimit(problemDescriptor)
         return cat(3, [ρ₀], [Δt₀])
     end
 
-    Δtₙ = @elapsed numerator = computeRatioNumerator(C, c, d, Γ, X, α, x̲, x̅)
+    Δtₙ = @elapsed numerator = computeRatioNumerator(C, c, d, Γ, X, α, x̲, x̅, problemDescriptor)
 
     @info "Computing adversarial lower bound for instance #$(i) with α=$(α)"
-    Δtₐ = @elapsed ρₐ = computeAdversarialLowerBound(C, c, d, Γ, X, α, numerator)
+    Δtₐ = @elapsed ρₐ = computeAdversarialLowerBound(C, c, d, Γ, X, α, numerator, problemDescriptor)
     @info "Computation of adversarial lower bound for instance #$(i) with α=$(α) has finished in $(Δtₐ + Δtₙ)sec. with result $(ρₐ)"
 
     @info "Computing recoverable lower bound for instance #$(i) with α=$(α)"
-    Δtₕ = @elapsed ρₕ = computeRecoverableLowerBound(C, X, α, c₀, numerator)
+    Δtₕ = @elapsed ρₕ = computeRecoverableLowerBound(C, X, α, c₀, numerator, problemDescriptor)
     @info "Computation of recoverable lower bound for instance #$(i) with α=$(α) has finished in $(Δtₕ + Δtₙ)sec. with result $(ρₕ)"
 
     @info "Computing selection lower bound for instance #$(i) with α=$(α)"
@@ -131,26 +131,26 @@ function generateInstanceAndCalculateRatios(α, problemDescriptor::ProblemDescri
     end
 end
 
-function computeRatioNumerator(C, c, d, Γ, X, α, x̲, x̅)
-    obj₁ = evaluationProblem(C, c, d, Γ, α, x̲, X)
-    obj₂ = evaluationProblem(C, c, d, Γ, α, x̅, X)
+function computeRatioNumerator(C, c, d, Γ, X, α, x̲, x̅, problemDescriptor)
+    obj₁ = evaluationProblem(C, c, d, Γ, α, x̲, X, problemDescriptor)
+    obj₂ = evaluationProblem(C, c, d, Γ, α, x̅, X, problemDescriptor)
     min(obj₁, obj₂)
 end
 
-function computeRecoverableRatio(C, c, d, Γ, X, α, c₀)
-    (x̲, y̲, t̲) = recoverableProblem(C, c, X, α)
-    (x̅, y̅, t̅) = recoverableProblem(C, c + d, X, α)
-    (x₀, y₀, t₀) = recoverableProblem(C, c₀, X, α)
+function computeRecoverableRatio(C, c, d, Γ, X, α, c₀, problemDescriptor)
+    (x̲, y̲, t̲) = recoverableProblem(C, c, X, α, problemDescriptor)
+    (x̅, y̅, t̅) = recoverableProblem(C, c + d, X, α, problemDescriptor)
+    (x₀, y₀, t₀) = recoverableProblem(C, c₀, X, α, problemDescriptor)
     (min(t̲ + Γ, t̅) / t₀, x̲, x̅)
 end
 
-function computeAdversarialLowerBound(C, c, d, Γ, X, α, numerator)
-    lb = adversarialProblem(C, c, d, Γ, X, α)
+function computeAdversarialLowerBound(C, c, d, Γ, X, α, numerator, problemDescriptor)
+    lb = adversarialProblem(C, c, d, Γ, X, α, problemDescriptor)
     numerator / lb
 end
 
-function computeRecoverableLowerBound(C, X, α, c₀, numerator)
-    (x₀, y₀, t₀) = recoverableProblem(C, c₀, X, α)
+function computeRecoverableLowerBound(C, X, α, c₀, numerator, problemDescriptor)
+    (x₀, y₀, t₀) = recoverableProblem(C, c₀, X, α, problemDescriptor)
     numerator / t₀
 end
 

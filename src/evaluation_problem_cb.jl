@@ -1,10 +1,10 @@
-function evaluationProblemWithCallback(C, c, d, Γ, α, x, X)
+function evaluationProblemWithCallback(C, c, d, Γ, α, x, X, pd)
     n = size(c, 1)
     numCallbacks = 0
 
     ub = Inf
     c₀ = initialScenario(c, d, Γ)
-    (y, lb) = incrementalProblem(c₀, α, x, X)
+    (y, lb) = incrementalProblem(c₀, α, x, X, pd)
 
     model = Model(solver=CplexSolver(CPX_PARAM_TILIM = CPX_PARAM_TILIM = getProperty("evaluationProblem.timeLimit"),
         CPXPARAM_ScreenOutput = getProperty("evaluationProblem.cplexLogging")))
@@ -33,7 +33,7 @@ function evaluationProblemWithCallback(C, c, d, Γ, α, x, X)
             t̅ = getvalue(t̃)
 
             ub = t̅
-            (y, nlb) = incrementalProblem(c̅, α, x, X)
+            (y, nlb) = incrementalProblem(c̅, α, x, X, pd)
             if lb < nlb
                 lb = nlb
             end

@@ -6,7 +6,7 @@ Computes Lagrangian lower bound.
 function lagrangianLowerBound(C, c, d, Γ, X, l, dg)
     @assert hasEqualCardinalityProperty(dg)
 
-    tₗ = getProperty("lagrangianLowerBound.timeLimit", parameterType = Int)
+    tₗ = getProperty("lagrangianLowerBound.overallTimeLimit", parameterType = Int)
 
     Δt = @elapsed begin
         ϵ = getProperty("lagrangianLowerBound.epsilon", parameterType = Float64)
@@ -91,7 +91,8 @@ function relaxedIncrementalProblem(C, c, d, Γ, X, μ, l)
 
     n = size(C, 1)
 
-    model = Model(solver = CplexSolver(CPXPARAM_ScreenOutput = getProperty("lagrangianLowerBound.cplexLogging")))
+    model = Model(solver = CplexSolver(CPXPARAM_ScreenOutput = getProperty("lagrangianLowerBound.cplexLogging"),
+        CPX_PARAM_TILIM = getProperty("lagrangianLowerBound.subproblemTimeLimit")))
 
     @variable(model, π >= 0)
     if ndims(C) == 1

@@ -1,11 +1,11 @@
-function adversarialProblemWithCallback(C, c, d, Γ, X, α)
+function adversarialProblemWithCallback(C, c, d, Γ, X, α, pd)
     ϵ = getProperty("adversarialProblem.epsilon", parameterType = Float64)
     n = size(c, 1)
     numCallbacks = 0
 
     ub = Inf
     c₀ = initialScenario(c, d, Γ)
-    (x₀, y₀, lb) = recoverableProblem(C, c₀, X, α)
+    (x₀, y₀, lb) = recoverableProblem(C, c₀, X, α, pd)
 
     model = Model(solver=CplexSolver(CPX_PARAM_TILIM = getProperty("adversarialProblem.timeLimit"),
         CPXPARAM_ScreenOutput = getProperty("adversarialProblem.cplexLogging")))
@@ -34,7 +34,7 @@ function adversarialProblemWithCallback(C, c, d, Γ, X, α)
             t̅ = getvalue(t̃)
 
             ub = t̅
-            (x, y, nlb) = recoverableProblem(C, c̅, X, α)
+            (x, y, nlb) = recoverableProblem(C, c̅, X, α, pd)
             if lb < nlb
                 lb = nlb
             end

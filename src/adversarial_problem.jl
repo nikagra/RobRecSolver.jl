@@ -1,16 +1,16 @@
 """
-    adversarialProblem(C, c, d, Γ, X, α)
+    adversarialProblem(C, c, d, Γ, X, α, pd)
 
 Computes ADV(ϵ) with accuracy ϵ.
 """
-function adversarialProblem(C, c, d, Γ, X, α)
+function adversarialProblem(C, c, d, Γ, X, α, pd)
     ϵ = getProperty("adversarialProblem.epsilon", parameterType = Float64)
     timeLimit = getProperty("adversarialProblem.timeLimit")
     numConstraints = 1
 
     Δt = @elapsed begin
         c₀ = initialScenario(c, d, Γ)
-        (x, y, lb) = recoverableProblem(C, c₀, X, α)
+        (x, y, lb) = recoverableProblem(C, c₀, X, α, pd)
 
         (model, c̃ᵥ, c̃, t̃ᵥ, t̃) = relaxedAdversarialProblem(C, c, d, Γ, x, y)
         ub = t̃
@@ -18,7 +18,7 @@ function adversarialProblem(C, c, d, Γ, X, α)
     while abs(ub - lb)/lb > ϵ && Δt <= timeLimit
         Δt += @elapsed begin
 
-            (x, y, nlb) = recoverableProblem(C, c̃, X, α)
+            (x, y, nlb) = recoverableProblem(C, c̃, X, α, pd)
             if lb < nlb
                 lb = nlb
             end
