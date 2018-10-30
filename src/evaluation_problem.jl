@@ -1,16 +1,16 @@
 """
-    evaluationProblem(C, c, d, Γ, α, x, X)
+    evaluationProblem(C, c, d, Γ, α, x, X, pd)
 
 Computes EVAL(x) with accuracy ϵ.
 """
-function evaluationProblem(C, c, d, Γ, α, x, X)
+function evaluationProblem(C, c, d, Γ, α, x, X, pd)
     ϵ = getProperty("evaluationProblem.epsilon", parameterType = Float64)
     timeLimit = getProperty("evaluationProblem.timeLimit")
     numConstraints = 1
 
     Δt = @elapsed begin
         c₀ = initialScenario(c, d, Γ)
-        (y, lb) = incrementalProblem(c₀, α, x, X)
+        (y, lb) = incrementalProblem(c₀, α, x, X, pd)
 
         (model, c̃ᵥ, c̃, t̃ᵥ, t̃) = relaxedAdversarialProblem(c, d, Γ, y)
         ub = t̃
@@ -18,7 +18,7 @@ function evaluationProblem(C, c, d, Γ, α, x, X)
     while abs(ub - lb)/lb > ϵ && Δt <= timeLimit
         Δt += @elapsed begin
 
-            (y, nlb) = incrementalProblem(c̃, α, x, X)
+            (y, nlb) = incrementalProblem(c̃, α, x, X, pd)
             if lb < nlb
                 lb = nlb
             end
