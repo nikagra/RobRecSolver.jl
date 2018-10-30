@@ -60,7 +60,6 @@ function relaxedAdversarialProblem(c, d, Γ, y)
     @constraint(model, sum(c̃ - c) <= Γ)
 
     status = solve(model)
-    @assert getvalue(t̃) == getobjectivevalue(model)
     return (model, c̃, getvalue(c̃), t̃, getvalue(t̃))
 end
 
