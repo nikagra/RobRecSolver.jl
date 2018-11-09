@@ -105,6 +105,7 @@ function generateInstanceAndCalculateRatios(α, problemDescriptor::ProblemDescri
     end
 
     Δtₙ = @elapsed numerator = computeRatioNumerator(C, c, d, Γ, X, α, x̲, x̅, problemDescriptor)
+    @debug "Ratio numerator for for instance #$(i) with α=$(α) was calculated in $(Δtₙ)sec."
 
     @info "Computing adversarial lower bound for instance #$(i) with α=$(α)"
     Δtₐ = @elapsed ρₐ = computeAdversarialLowerBound(C, c, d, Γ, X, α, numerator, problemDescriptor)
@@ -125,9 +126,9 @@ function generateInstanceAndCalculateRatios(α, problemDescriptor::ProblemDescri
         Δtₗ = @elapsed ρₗ = computeLagrangianLowerBound(C, c, d, Γ, X, α, numerator, problemDescriptor)
         @info "Computation of Lagrangian lower bound for instance #$(i) with α=$(α) has finished in $(Δtₗ + Δtₙ)sec. with result $(ρₗ)"
 
-        cat(3, [ρ₀ ρₐ ρₕ ρₛ ρₗ], [Δt₀ (Δtₐ + Δtₙ) (Δtₕ + Δtₙ) (Δtₛ + Δtₙ) (Δtₗ + Δtₙ)])
+        cat(3, [ρ₀ ρₐ ρₕ ρₛ ρₗ numerator], [Δt₀ (Δtₐ + Δtₙ) (Δtₕ + Δtₙ) (Δtₛ + Δtₙ) (Δtₗ + Δtₙ) Δtₙ])
     else
-        cat(3, [ρ₀ ρₐ ρₕ ρₛ], [Δt₀ (Δtₐ + Δtₙ) (Δtₕ + Δtₙ) (Δtₛ + Δtₙ)])
+        cat(3, [ρ₀ ρₐ ρₕ ρₛ numerator], [Δt₀ (Δtₐ + Δtₙ) (Δtₕ + Δtₙ) (Δtₛ + Δtₙ) Δtₙ])
     end
 end
 
