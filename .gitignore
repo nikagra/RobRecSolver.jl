@@ -1,7 +1,0 @@
-*.jl.cov
-*.jl.*.cov
-*.jl.mem
-
-# Documenter's build directory
-docs/build
-docs/site/
