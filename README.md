@@ -20,9 +20,10 @@ julia> runExperiments([100, 400, 1000], [10, 25, 100]])
 
 ## Documentation
 Documentation is available here:
-- [**STABLE**][https://nikagra.github.io/RobRecSolver.jl/stable] &mdash; **documentation of the most recently tagged version.**
-- [**DEVEL**][https://nikagra.github.io/RobRecSolver.jl/latest] &mdash; *documentation of the in-development version.*
-The package uses `Documenter.jl` to generate documentation. Run the following command from the `docs/` directory:
+- [**STABLE**](https://nikagra.github.io/RobRecSolver.jl/stable) &mdash; **documentation of the most recently tagged version.**
+- [**DEVEL**](https://nikagra.github.io/RobRecSolver.jl/latest) &mdash; *documentation of the in-development version.*
+
+The package uses `Documenter.jl` to generate documentation. To generate documentation manually run the following command from the `docs/` directory:
 ```bash
 $ julia make.jl
 ```
