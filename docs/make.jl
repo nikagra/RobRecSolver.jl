@@ -1,8 +1,11 @@
 using Documenter, RobRecSolver
 
 makedocs(
-    modules = [RobRecSolver],
-    format = :html,
-    sitename = "CSV.jl",
-    pages = ["Home" => "index.md"]
+    modules = [RobRecSolver]
+)
+
+deploydocs(
+    deps   = Deps.pip("mkdocs", "python-markdown-math"),
+    repo = "github.com/nikagra/RobRecSolver.jl.git",
+    julia = "0.6"
 )
