@@ -1,6 +1,6 @@
 getProperty = let
     function loadProperties()
-        path = "$(Pkg.dir("RobRecSolver"))/conf/config.ini"
+        path = joinpath("$(Pkg.dir("RobRecSolver"))", "conf", "config.ini")
         @debug "Reading property file from $path"
         conf = ConfParse(path)
         parse_conf!(conf)

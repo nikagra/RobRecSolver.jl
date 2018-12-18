@@ -7,16 +7,14 @@ module RobRecSolver
 using Base.Distributed
 using JuMP
 using CPLEX
+
 using MicroLogging
-using LaTeXStrings
-using Plots
-import PyPlot # workaround due to https://github.com/JuliaPlots/Plots.jl/issues/1047
 using ConfParser
-using DataFrames
-using DataArrays
-using CSV
 
 export
+    #Modules
+    Experiments,
+
     # Types
     ProblemDescriptor,
     KnapsackProblemDescriptor,
@@ -42,17 +40,12 @@ export
     lagrangianLowerBound,
     relaxedIncrementalProblem,
 
-    # experiments
-    runExperiments,
-    exportKnapsackResults,
-    exportAssignmentResults,
-    getProperties,
-
-    # data generators
-    generateData,
+    # Utils
+    getProperty,
     getProblemSize,
     getSaneComputationLimit,
     hasEqualCardinalityProperty
+
 
 files = [
         "minimum_knapsack_problem",
@@ -64,15 +57,18 @@ files = [
         "incremental_problem",
         "selection_lower_bound",
         "lagrangian_lower_bound",
-        "data_generators",
-        "experiment",
-        "export",
+        "problem_descriptors",
         "properties",
-        "logging"
     ]
 
     for file in files
         include("$(file).jl")
     end
+
+    # Import experiments
+    include(joinpath("experiments", "Experiments.jl"))
+    using .Experiments
+
+    configure_logging(min_level=:debug)
 
 end # module
