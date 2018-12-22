@@ -1,11 +1,7 @@
 # RobRecSolver.jl Documentation
-
-## High-level interface
-
 ```@docs
-RobRecSolver.runExperiments
+RobRecSolver
 ```
-
 ## Solver Functions
 
 ### Incremental Problem
@@ -42,4 +38,52 @@ RobRecSolver.selectionLowerBound
 
 ```@docs
 RobRecSolver.lagrangianLowerBound
+```
+
+## Experiments
+```@docs
+RobRecSolver.Experiments
+```
+
+```@docs
+RobRecSolver.Experiments.generateData
+```
+
+```@docs
+RobRecSolver.Experiments.runExperiments
+```
+
+```@docs
+RobRecSolver.Experiments.runKnapsackExperiments
+```
+
+```@docs
+RobRecSolver.Experiments.runAssignmentExperiments
+```
+
+```@docs
+RobRecSolver.Experiments.exportKnapsackResults
+```
+
+```@docs
+RobRecSolver.Experiments.exportAssignmentResults
+```
+
+```@docs
+RobRecSolver.Experiments.saveCsv
+```
+
+```@docs
+RobRecSolver.Experiments.drawAndSavePlot
+```
+
+## Utilities
+The functions below allow customize package parameters like solver time limits or logging for different algorithms.
+
+```@docs
+RobRecSolver.loadProperties
+```
+
+```@docs
+RobRecSolver.getProperty
 ```

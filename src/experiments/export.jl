@@ -1,3 +1,8 @@
+"""
+    exportKnapsackResults(n, limit, αs, results)
+
+Saves results of minimum knapsack problem experiments to CSV files and as PDF plots.
+"""
 function exportKnapsackResults(n, limit, αs, results)
     @assert size(αs, 1) == size(results, 3)
 
@@ -24,6 +29,11 @@ function exportKnapsackResults(n, limit, αs, results)
     end
 end
 
+"""
+    exportAssignmentResults(n, limit, αs, results)
+
+Saves results of minimum assignment problem experiments to CSV files and as PDF plots.
+"""
 function exportAssignmentResults(m, limit, αs, results)
     @assert size(αs, 1) == size(results, 3)
 
@@ -50,11 +60,23 @@ function exportAssignmentResults(m, limit, αs, results)
     end
 end
 
+"""
+    saveCsv(filename, data, columnNames)
+
+Saves `data` described by `columnNames` to CSV file with name`filename`.
+"""
 function saveCsv(filename, data, columnNames)
     df = DataFrame(data)
     CSV.write(filename, df; colnames = columnNames)
 end
 
+"""
+    drawAndSavePlot(filename, x, ys, xlabel, ylabel, yslabels; linewidth=2, linestyles = [:solid :dash :dashdot :dot :solid], shape = [:diamond :pentagon :star4 :utriangle :square], palette=cgrad([:black, :grey]), annotations = [])
+
+Draws plot and saves it to PDF file with name `filename`. Here `x` is a values of 0X axis,
+`ys` is a columns of series, `xlabel` is label of 0X axis, `ylabel` is label of 0Y axis
+and `yslabels` is a labels of individual series. The rest of arguments are self-descriptive.
+"""
 function drawAndSavePlot(filename, x, ys, xlabel, ylabel, yslabels; linewidth=2, linestyles = [:solid :dash :dashdot :dot :solid], shape = [:diamond :pentagon :star4 :utriangle :square], palette=cgrad([:black, :grey]), annotations = [])
     p = plot(x, ys, linewidth=linewidth, xlabel = xlabel, ylabel = ylabel, lab = yslabels, linestyle = linestyles, shape = shape, markersize = 8, palette = palette, annotations = annotations)
     savefig(p, filename)

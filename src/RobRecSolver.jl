@@ -1,6 +1,7 @@
 """
-A Julia package implementing algorithms described in paper "Solving robust recoverable 0-1 optimization problems under interval budgeted uncertainty"
-by Adam Kasperski and Pawel Zielinski.
+`$(current_module())` is a Julia programming language package developed to test performance of algorithms
+proposed in _Robust recoverable 0-1 optimization problems under polyhedral uncertainty_
+(Mikita Hradovich, Adam Kasperski, Pawel Zielinski) which is available as preprint on [arxiv.org](https://arxiv.org/abs/1811.06719).
 """
 module RobRecSolver
 
@@ -41,6 +42,7 @@ export
     relaxedIncrementalProblem,
 
     # Utils
+    loadProperties,
     getProperty,
     getProblemSize,
     getSaneComputationLimit,

@@ -1,7 +1,7 @@
-using Documenter, RobRecSolver
+using Documenter, RobRecSolver, RobRecSolver.Experiments
 
 makedocs(
-    modules = [RobRecSolver]
+    modules = [RobRecSolver, RobRecSolver.Experiments]
 )
 
 deploydocs(

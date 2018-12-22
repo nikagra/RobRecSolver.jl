@@ -1,12 +1,16 @@
 """
-    runExperiments(ns::Array{Integer}, ms::Array{Integer}; numberOfInstances = 5)
+    runExperiments(ns::Array{Integer}, ms::Array{Integer};  αs = collect(0.1:0.1:0.9), numberOfInstances = 5)
 
-Main function to run experiments
+Entry point of experiments. This function runs experiments for minimum knapsack problem
+with problem size `n` specified by the list `ns` and minimum assignment problem with problem size `m` specified
+by the list `ms`. Optional argument `αs` specify a list of parameters defining
+neighbourhood of some solution ``x`` and optional argument `numberOfInstances`
+specify number of problem instances to be generated for each value of `alpha`.
 
 # Examples:
 ```julia-repl
-julia> using RobRecSolver
-julia> runExperiments([100, 400, 1000], [10, 25, 100]])
+julia> using RobRecSolver.Experiments
+julia> runExperiments([100, 400, 1000], [10, 25, 100])
 ```
 """
 function runExperiments(ns::Array{Int}, ms::Array{Int}; αs = collect(0.1:0.1:0.9), numberOfInstances = 5)
@@ -21,6 +25,11 @@ function runExperiments(ns::Array{Int}, ms::Array{Int}; αs = collect(0.1:0.1:0.
 end
 
 
+"""
+    runKnapsackExperiments(ns; αs = collect(0.1:0.1:0.9), numberOfInstances = 5)
+
+Runs experiments for minimum knapsack problem.
+"""
 function runKnapsackExperiments(ns; αs = collect(0.1:0.1:0.9), numberOfInstances = 5)
     for n in ns
         @info "Starting minimum knapsack problem experiment for n = $(n)..."
@@ -53,6 +62,11 @@ function runKnapsackExperiments(ns; αs = collect(0.1:0.1:0.9), numberOfInstance
     end
 end
 
+"""
+    runAssignmentExperiments(ms; αs = collect(0.1:0.1:0.9), numberOfInstances = 5)
+
+Runs experiments for minimum assignment problem.
+"""
 function runAssignmentExperiments(ms; αs = collect(0.1:0.1:0.9), numberOfInstances = 5)
     for m in ms
         @info "Starting minimum assignment problem experiment for m = $(m)..."

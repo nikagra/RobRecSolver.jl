@@ -1,3 +1,6 @@
+"""
+`$(current_module())` is a module containing all of the code regarding conduction of experiments.
+"""
 module Experiments
 
 using MicroLogging
