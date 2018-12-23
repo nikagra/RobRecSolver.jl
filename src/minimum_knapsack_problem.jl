@@ -1,7 +1,7 @@
 """
     minimumKnapsackProblem(C, w, W)
 
-Solve minimum knapsack problem using costs `C`, weights `w` and overall weight limit `W`
+Solve minimum knapsack problem using vector of costs `C`, weights `w` and overall weight limit `W`.
 """
 function minimumKnapsackProblem(C, w, W)
     @assert length(C) == length(w)
@@ -23,7 +23,7 @@ end
     getKnapsackConstraints(w, W)
 
 Return a list of constraints defining a set of feasible solutions of a minimum knapsack problem.
-Each constraint is function with one parameter, which is variable of a mathematical programming model
+Each constraint is function with one parameter, which is variable of a mathematical programming model.
 """
 function getKnapsackConstraints(w, W)
     [x -> @LinearConstraint(vecdot(w, x) >= W)]

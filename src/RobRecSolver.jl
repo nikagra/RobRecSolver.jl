@@ -1,22 +1,22 @@
 """
-A Julia package implementing algorithms described in paper "Solving robust recoverable 0-1 optimization problems under interval budgeted uncertainty"
-by Adam Kasperski and Pawel Zielinski.
+`$(current_module())` is a Julia programming language package developed to test performance of algorithms
+proposed in _Robust recoverable 0-1 optimization problems under polyhedral uncertainty_
+(Mikita Hradovich, Adam Kasperski, Pawel Zielinski) which is available as preprint on
+[arxiv.org](https://arxiv.org/abs/1811.06719). This work will later be referenced as _publication_.
 """
 module RobRecSolver
 
 using Base.Distributed
 using JuMP
 using CPLEX
+
 using MicroLogging
-using LaTeXStrings
-using Plots
-import PyPlot # workaround due to https://github.com/JuliaPlots/Plots.jl/issues/1047
 using ConfParser
-using DataFrames
-using DataArrays
-using CSV
 
 export
+    #Modules
+    Experiments,
+
     # Types
     ProblemDescriptor,
     KnapsackProblemDescriptor,
@@ -42,17 +42,13 @@ export
     lagrangianLowerBound,
     relaxedIncrementalProblem,
 
-    # experiments
-    runExperiments,
-    exportKnapsackResults,
-    exportAssignmentResults,
-    getProperties,
-
-    # data generators
-    generateData,
+    # Utils
+    loadProperties,
+    getProperty,
     getProblemSize,
     getSaneComputationLimit,
     hasEqualCardinalityProperty
+
 
 files = [
         "minimum_knapsack_problem",
@@ -64,15 +60,18 @@ files = [
         "incremental_problem",
         "selection_lower_bound",
         "lagrangian_lower_bound",
-        "data_generators",
-        "experiment",
-        "export",
+        "problem_descriptors",
         "properties",
-        "logging"
     ]
 
     for file in files
         include("$(file).jl")
     end
+
+    # Import experiments
+    include(joinpath("experiments", "Experiments.jl"))
+    using .Experiments
+
+    configure_logging(min_level=:debug)
 
 end # module

@@ -1,8 +1,18 @@
 """
     recoverableProblem(C, c, X, α, dg)
 
-Mathematical programming model for solving the following recoverable problem:
-    ``REC(c) = min_{x \\in X} min_{y \\in X^{\\alpha}_x} (Cx + cy)``
+Solves recoverable problem ``REC(c) = min_{x \\in X} min_{y \\in X^{\\alpha}_x} (Cx + cy)``. 
+
+Check section 4 _Solving the problems by MIP formulations_ of [publication](https://arxiv.org/abs/1811.06719)
+for more information about this algorithm.
+
+# Arguments
+- `C`: is a vector of nonnegative first stage costs.
+- `c`: is a vector of a nonnegative nominal second stage costs.
+- `X`: is a set of feasible solutions represented as a list functions, each of which
+    accepts a list of JuMP variables as an argument and returns a JuMP linear constraint.
+- `α`: fixed number belonging to ``[0, 1]``
+- `pd`: instance of [`ProblemDescriptor`](@ref)
 """
 function recoverableProblem(C, c, X, α, dg)
     @assert size(C) == size(c)
