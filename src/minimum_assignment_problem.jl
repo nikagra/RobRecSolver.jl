@@ -1,7 +1,7 @@
 """"
     minimumAssignmentProblem(C)
 
-Solve minimum assignment problem using costs `C`
+Solve minimum assignment problem using vector of costs `C`.
 """
 function minimumAssignmentProblem(C)
     @assert ndims(C) == 2 && size(C, 1) == size(C, 2)
@@ -23,7 +23,7 @@ end
     getAssignmentConstraints(m)
 
 Return a list of constraints defining a set of feasible solutions of a minimum assignment problem.
-Each constraint is function with one parameter, which is variable of a mathematical programming model
+Each constraint is function with one parameter, which is variable of a mathematical programming model.
 """
 function getAssignmentConstraints(m)
     constraints = []

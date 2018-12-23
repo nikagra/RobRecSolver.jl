@@ -2,6 +2,18 @@
     lagrangian_lower_bound(C, c, d, Γ, X, l, dg)
 
 Computes Lagrangian lower bound.
+
+Check section 5.3 _Lagrangian lower bound_ of [publication](https://arxiv.org/abs/1811.06719)
+for more information about this algorithm.
+
+# Arguments
+- `C`: is a vector of nonnegative first stage costs.
+- `c`: is a vector of a nonnegative nominal second stage costs.
+- `d`: is a vector of maximal deviations of the costs from their nominal values.
+- `Γ`: is a budget, or the amount of uncertainty, which can be allocated to the second stage costs.
+- `X`: is a set of feasible solutions represented as a list functions, each of which accepts a list of JuMP variables as an argument and returns a JuMP linear constraint.
+- `l`: value of parameter ``l=\\ceil{m(1-\\alpha)}``
+- `pd`: instance of [`ProblemDescriptor`](@ref)
 """
 function lagrangianLowerBound(C, c, d, Γ, X, l, dg)
     @assert hasEqualCardinalityProperty(dg)

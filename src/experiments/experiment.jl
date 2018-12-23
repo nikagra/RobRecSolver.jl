@@ -58,7 +58,7 @@ function runKnapsackExperiments(ns; αs = collect(0.1:0.1:0.9), numberOfInstance
         end
 
         resultss = cat(3, resultss...)
-        exportKnapsackResults(n, getSaneComputationLimit(problemDescriptor), αs, resultss)
+        exportKnapsackResults(problemDescriptor, αs, resultss)
     end
 end
 
@@ -100,7 +100,7 @@ function runAssignmentExperiments(ms; αs = collect(0.1:0.1:0.9), numberOfInstan
         end
 
         resultss = cat(3, resultss...)
-        exportAssignmentResults(m, getSaneComputationLimit(problemDescriptor), αs, resultss)
+        exportAssignmentResults(problemDescriptor, αs, resultss)
     end
 end
 

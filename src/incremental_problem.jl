@@ -1,8 +1,20 @@
 """
     incrementalProblem(c, α, x, X, pd)
 
-Solve incremental problem with specified costs `c`, parameter ``α \\in [0, 1]``,
+Solves incremental problem with specified costs `c`, parameter ``α \\in [0, 1]``,
 first stage solutions `x` and a list of constraints `X` defining a set of feasible solutions.
+It is subproblem of of [`evaluationProblem`](@ref) and [`adversarialProblem`](@ref).
+
+Check section 4 _Solving the problems by MIP formulations_ of [publication](https://arxiv.org/abs/1811.06719)
+for more information about this algorithm.
+
+# Arguments
+- `c`: is a vector of a nonnegative nominal second stage costs.
+- `α`: fixed number belonging to ``[0, 1]``
+- `x`: first stage solution.
+- `X`: is a set of feasible solutions represented as a list functions, each of which
+    accepts a list of JuMP variables as an argument and returns a JuMP linear constraint.
+- `pd`: instance of [`ProblemDescriptor`](@ref)
 """
 function incrementalProblem(c, α, x, X, pd)
     n = size(c, 1)

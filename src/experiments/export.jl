@@ -1,13 +1,22 @@
 """
-    exportKnapsackResults(n, limit, αs, results)
+    exportKnapsackResults(problemDescriptor, αs, results)
 
 Saves results of minimum knapsack problem experiments to CSV files and as PDF plots.
+
+# Arguments
+- `problemDescriptor::ProblemDescriptor`: implementation of [`ProblemDescriptor`](@ref) for this problem.
+- `αs::Array{Integer, 1}`: list of values of α.
+- `results::Array{Float64, 1}`: three-dimentional array of results, where first
+    dimention specify problem, second dimention specify ratios or times results,
+    the third one contain results for each value of α.
 """
 function exportKnapsackResults(n, limit, αs, results)
     @assert size(αs, 1) == size(results, 3)
 
     pyplot()
 
+    n = getProblemSize(problemDescriptor)
+    limit = getSaneComputationLimit(problemDescriptor)
     suffix = Dates.format(Dates.now(), "duyyyy@HH_MM")
 
     df = DataFrame(a = αs, b = results[1, 1, :])
@@ -30,15 +39,24 @@ function exportKnapsackResults(n, limit, αs, results)
 end
 
 """
-    exportAssignmentResults(n, limit, αs, results)
+    exportAssignmentResults(problemDescriptor, αs, results)
 
 Saves results of minimum assignment problem experiments to CSV files and as PDF plots.
+
+# Arguments
+- `problemDescriptor::ProblemDescriptor`: implementation of [`ProblemDescriptor`](@ref) for this problem.
+- `αs::Array{Integer, 1}`: list of values of α.
+- `results::Array{Float64, 1}`: three-dimentional array of results, where first
+    dimention specify problem, second dimention specify ratios or times results,
+    the third one contain results for each value of α.
 """
-function exportAssignmentResults(m, limit, αs, results)
+function exportAssignmentResults(problemDescriptor, αs, results)
     @assert size(αs, 1) == size(results, 3)
 
     pyplot()
 
+    m = getProblemSize(problemDescriptor)
+    limit = getSaneComputationLimit(problemDescriptor)
     suffix = Dates.format(Dates.now(), "duyyyy@HH_MM")
 
     df = DataFrame(a = αs, b = results[1, 1, :])
@@ -64,6 +82,11 @@ end
     saveCsv(filename, data, columnNames)
 
 Saves `data` described by `columnNames` to CSV file with name`filename`.
+
+# Examples:
+```
+julia> Experiments.saveCsv("item_prices.csv", ["milk" 100; "ham" 250], ["item", "price"])
+```
 """
 function saveCsv(filename, data, columnNames)
     df = DataFrame(data)
@@ -75,7 +98,12 @@ end
 
 Draws plot and saves it to PDF file with name `filename`. Here `x` is a values of 0X axis,
 `ys` is a columns of series, `xlabel` is label of 0X axis, `ylabel` is label of 0Y axis
-and `yslabels` is a labels of individual series. The rest of arguments are self-descriptive.
+and `yslabels` is a labels of individual series. The rest of arguments is self-descriptive.
+
+# Examples:
+```
+julia> Experiments.drawAndSavePlot("plot.pdf", [0.1, 0.2, 0.3], [21, 15, 12], "α", "average time (s)", "m=100")
+```
 """
 function drawAndSavePlot(filename, x, ys, xlabel, ylabel, yslabels; linewidth=2, linestyles = [:solid :dash :dashdot :dot :solid], shape = [:diamond :pentagon :star4 :utriangle :square], palette=cgrad([:black, :grey]), annotations = [])
     p = plot(x, ys, linewidth=linewidth, xlabel = xlabel, ylabel = ylabel, lab = yslabels, linestyle = linestyles, shape = shape, markersize = 8, palette = palette, annotations = annotations)

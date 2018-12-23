@@ -1,8 +1,46 @@
 # RobRecSolver.jl Documentation
+
+```@contents
+```
+
 ```@docs
 RobRecSolver
 ```
-## Solver Functions
+## Algorithms
+There is a number of types and helper functions defined to facilitate implementation
+of algorithms of algorithms described in paper.
+
+```@docs
+RobRecSolver.ProblemDescriptor
+```
+
+```@docs
+RobRecSolver.KnapsackProblemDescriptor
+```
+
+```@docs
+RobRecSolver.AssignmentProblemDescriptor
+```
+
+```@docs
+RobRecSolver.getProblemSize
+```
+
+```@docs
+RobRecSolver.getSaneComputationLimit
+```
+
+```@docs
+RobRecSolver.hasEqualCardinalityProperty
+```
+
+```@docs
+RobRecSolver.getCardinality
+```
+
+```@docs
+RobRecSolver.initialScenario
+```
 
 ### Incremental Problem
 
@@ -41,6 +79,26 @@ RobRecSolver.lagrangianLowerBound
 ```
 
 ## Experiments
+
+### Problems
+
+```@docs
+RobRecSolver.minimumKnapsackProblem
+```
+
+```@docs
+RobRecSolver.getKnapsackConstraints
+```
+
+```@docs
+RobRecSolver.minimumAssignmentProblem
+```
+
+```@docs
+RobRecSolver.getAssignmentConstraints
+```
+
+### Testing Framework
 ```@docs
 RobRecSolver.Experiments
 ```
