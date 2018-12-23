@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Description...">
+  <meta name="author" content="nikagra">
+  <link rel="shortcut icon" href="img/favicon.ico">
+  <title>Home - RobRecSolver.jl</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="assets/Documenter.css" rel="stylesheet">
+
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Home";
+    var mkdocs_page_input_path = "index.md";
+    var mkdocs_page_url = null;
+  </script>
+
+  <script src="js/jquery-2.1.1.min.js" defer></script>
+  <script src="js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="." class="icon icon-home"> RobRecSolver.jl</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+
+
+            <li class="toctree-l1 current">
+
+    <a class="current" href=".">Home</a>
+    <ul class="subnav">
+
+    <li class="toctree-l2"><a href="#robrecsolverjl-documentation">RobRecSolver.jl Documentation</a></li>
+
+        <ul>
+
+            <li><a class="toctree-l3" href="#algorithms">Algorithms</a></li>
+
+            <li><a class="toctree-l3" href="#experiments">Experiments</a></li>
+
+            <li><a class="toctree-l3" href="#utilities">Utilities</a></li>
+
+        </ul>
+
+
+    </ul>
+	    </li>
+
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href=".">RobRecSolver.jl</a>
+      </nav>
+
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".">Docs</a> &raquo;</li>
+
+
+
+    <li>Home</li>
+    <li class="wy-breadcrumbs-aside">
+
+        <a href="https://github.com/nikagra/RobRecSolver.jl/edit/master/docs/index.md"
+          class="icon icon-github"> Edit on GitHub</a>
+
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+
+                <p><a id='RobRecSolver.jl-Documentation-1'></a></p>
+<h1 id="robrecsolverjl-documentation">RobRecSolver.jl Documentation</h1>
+<ul>
+<li><a href=".#RobRecSolver.jl-Documentation-1">RobRecSolver.jl Documentation</a><ul>
+<li><a href=".#Algorithms-1">Algorithms</a></li>
+<li><a href=".#Experiments-1">Experiments</a></li>
+<li><a href=".#Utilities-1">Utilities</a></li>
+</ul>
+</li>
+</ul>
+<p><a id='RobRecSolver' href='#RobRecSolver'>#</a>
+<strong><code>RobRecSolver</code></strong> &mdash; <em>Module</em>.</p>
+<p><code>RobRecSolver</code> is a Julia programming language package developed to test performance of algorithms proposed in <em>Robust recoverable 0-1 optimization problems under polyhedral uncertainty</em> (Mikita Hradovich, Adam Kasperski, Pawel Zielinski) which is available as preprint on <a href="https://arxiv.org/abs/1811.06719">arxiv.org</a>. This work will later be referenced as <em>publication</em>.</p>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/26bf4679e18922aa1aae73e0deffa57021f77015/src/RobRecSolver.jl#L1-L6' class='documenter-source'>source</a><br></p>
+<p><a id='Algorithms-1'></a></p>
+<h2 id="algorithms">Algorithms</h2>
+<p>There is a number of types and helper functions defined to facilitate implementation of algorithms of algorithms described in paper.</p>
+<p><a id='RobRecSolver.ProblemDescriptor' href='#RobRecSolver.ProblemDescriptor'>#</a>
+<strong><code>RobRecSolver.ProblemDescriptor</code></strong> &mdash; <em>Type</em>.</p>
+<p>Base type for all problem descriptors. It is expected to has the following fields:</p>
+<ul>
+<li><code>n</code>: the size of the problem.</li>
+<li><code>saneComputationLimit</code>: maximum size of the problem for which computing results for   adversarial lower bound, recoverable lower bound, selection lower bound or   lagrangian lower bound makes sense.</li>
+<li><code>equalCardinalityProperty</code>: specifies if problem possess equal cardinality property.</li>
+<li><code>cardinality</code>: cardinality of the problem if any.</li>
+</ul>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/26bf4679e18922aa1aae73e0deffa57021f77015/src/problem_descriptors.jl#L1-L9' class='documenter-source'>source</a><br></p>
+<p><a id='RobRecSolver.KnapsackProblemDescriptor' href='#RobRecSolver.KnapsackProblemDescriptor'>#</a>
+<strong><code>RobRecSolver.KnapsackProblemDescriptor</code></strong> &mdash; <em>Type</em>.</p>
+<p><code>KnapsackProblemDescriptor</code> is an implementation <a href="#RobRecSolver.ProblemDescriptor"><code>ProblemDescriptor</code></a> for minmium knapsack problem.</p>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/26bf4679e18922aa1aae73e0deffa57021f77015/src/problem_descriptors.jl#L53-L56' class='documenter-source'>source</a><br></p>
+<p><a id='RobRecSolver.AssignmentProblemDescriptor' href='#RobRecSolver.AssignmentProblemDescriptor'>#</a>
+<strong><code>RobRecSolver.AssignmentProblemDescriptor</code></strong> &mdash; <em>Type</em>.</p>
+<p><code>AssignmentProblemDescriptor</code> is an implementation <a href="#RobRecSolver.ProblemDescriptor"><code>ProblemDescriptor</code></a> for minmium assignment problem.</p>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/26bf4679e18922aa1aae73e0deffa57021f77015/src/problem_descriptors.jl#L66-L69' class='documenter-source'>source</a><br></p>
+<p><a id='RobRecSolver.getProblemSize' href='#RobRecSolver.getProblemSize'>#</a>
+<strong><code>RobRecSolver.getProblemSize</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>getProblemSize(pd::ProblemDescriptor)
+</code></pre>
+
+<p>Returns the size of the problem.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>pd</code>: instance of <a href="#RobRecSolver.ProblemDescriptor"><code>ProblemDescriptor</code></a></li>
+</ul>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/26bf4679e18922aa1aae73e0deffa57021f77015/src/problem_descriptors.jl#L12-L19' class='documenter-source'>source</a><br></p>
+<p><a id='RobRecSolver.getSaneComputationLimit' href='#RobRecSolver.getSaneComputationLimit'>#</a>
+<strong><code>RobRecSolver.getSaneComputationLimit</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>getSaneComputationLimit(pd::ProblemDescriptor)
+</code></pre>
+
+<p>Returns maximum size of the problem for which computing results for adversarial lower bound, recoverable lower bound, selection lower bound or lagrangian lower bound makes sense.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>pd</code>: instance of <a href="#RobRecSolver.ProblemDescriptor"><code>ProblemDescriptor</code></a></li>
+</ul>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/26bf4679e18922aa1aae73e0deffa57021f77015/src/problem_descriptors.jl#L22-L30' class='documenter-source'>source</a><br></p>
+<p><a id='RobRecSolver.hasEqualCardinalityProperty' href='#RobRecSolver.hasEqualCardinalityProperty'>#</a>
+<strong><code>RobRecSolver.hasEqualCardinalityProperty</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>hasEqualCardinalityProperty(pd::ProblemDescriptor)
+</code></pre>
+
+<p>Returns whether the problem possess equal cardinality property.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>pd</code>: instance of <a href="#RobRecSolver.ProblemDescriptor"><code>ProblemDescriptor</code></a></li>
+</ul>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/26bf4679e18922aa1aae73e0deffa57021f77015/src/problem_descriptors.jl#L33-L40' class='documenter-source'>source</a><br></p>
+<p><a id='RobRecSolver.getCardinality' href='#RobRecSolver.getCardinality'>#</a>
+<strong><code>RobRecSolver.getCardinality</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>getCardinality(pd::ProblemDescriptor)
+</code></pre>
+
+<p>Returns cardinality of the problem if any.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>pd</code>: instance of <a href="#RobRecSolver.ProblemDescriptor"><code>ProblemDescriptor</code></a></li>
+</ul>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/26bf4679e18922aa1aae73e0deffa57021f77015/src/problem_descriptors.jl#L43-L50' class='documenter-source'>source</a><br></p>
+<p><a id='RobRecSolver.initialScenario' href='#RobRecSolver.initialScenario'>#</a>
+<strong><code>RobRecSolver.initialScenario</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>initialScenario(c, d, Γ)
+</code></pre>
+
+<p>Returns a good initial scenario $c_0$. It is used in computation of <a href=".#RobRecSolver.evaluationProblem"><code>evaluationProblem</code></a> and <a href=".#RobRecSolver.adversarialProblem"><code>adversarialProblem</code></a>.</p>
+<p>Check section 5.1 <em>Adversarial lower bound</em> of <a href="https://arxiv.org/abs/1811.06719">publication</a> for more information about this algorithm.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>c</code>: vector of nonnegative nominal second stage costs.</li>
+<li><code>d</code>: vector of maximal deviations of the costs from their nominal values.</li>
+<li><code>Γ</code>: budget, or the amount of uncertainty, which can be allocated to the second stage costs</li>
+</ul>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/26bf4679e18922aa1aae73e0deffa57021f77015/src/initial_scenario.jl#L1-L14' class='documenter-source'>source</a><br></p>
+<p><a id='Incremental-Problem-1'></a></p>
+<h3 id="incremental-problem">Incremental Problem</h3>
+<p><a id='RobRecSolver.incrementalProblem' href='#RobRecSolver.incrementalProblem'>#</a>
+<strong><code>RobRecSolver.incrementalProblem</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>incrementalProblem(c, α, x, X, pd)
+</code></pre>
+
+<p>Solves incremental problem with specified costs <code>c</code>, parameter $α \in [0, 1]$, first stage solutions <code>x</code> and a list of constraints <code>X</code> defining a set of feasible solutions. It is subproblem of of <a href=".#RobRecSolver.evaluationProblem"><code>evaluationProblem</code></a> and <a href=".#RobRecSolver.adversarialProblem"><code>adversarialProblem</code></a>.</p>
+<p>Check section 4 <em>Solving the problems by MIP formulations</em> of <a href="https://arxiv.org/abs/1811.06719">publication</a> for more information about this algorithm.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>c</code>: is a vector of a nonnegative nominal second stage costs.</li>
+<li><code>α</code>: fixed number belonging to $[0, 1]$</li>
+<li><code>x</code>: first stage solution.</li>
+<li><code>X</code>: is a set of feasible solutions represented as a list functions, each of which   accepts a list of JuMP variables as an argument and returns a JuMP linear constraint.</li>
+<li><code>pd</code>: instance of <a href="#RobRecSolver.ProblemDescriptor"><code>ProblemDescriptor</code></a></li>
+</ul>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/26bf4679e18922aa1aae73e0deffa57021f77015/src/incremental_problem.jl#L1-L18' class='documenter-source'>source</a><br></p>
+<p><a id='Evaluation-Problem-1'></a></p>
+<h3 id="evaluation-problem">Evaluation Problem</h3>
+<p><a id='RobRecSolver.evaluationProblem' href='#RobRecSolver.evaluationProblem'>#</a>
+<strong><code>RobRecSolver.evaluationProblem</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>evaluationProblem(C, c, d, Γ, α, x, X, pd)
+</code></pre>
+
+<p>Computes <em>Eval</em> with accuracy ϵ.</p>
+<p>Check section 4 <em>Solving the problems by MIP formulations</em> of <a href="https://arxiv.org/abs/1811.06719">publication</a> for more information about this algorithm.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>C</code>: is a vector of nonnegative first stage costs.</li>
+<li><code>c</code>: is a vector of a nonnegative nominal second stage costs.</li>
+<li><code>d</code>: is a vector of maximal deviations of the costs from their nominal values.</li>
+<li><code>Γ</code>: is a budget, or the amount of uncertainty, which can be allocated to the second stage costs.</li>
+<li><code>X</code>: is a set of feasible solutions represented as a list functions, each of which accepts a list of JuMP variables as an argument and returns a JuMP linear constraint.</li>
+<li><code>α</code>: fixed number belonging to $[0, 1]$</li>
+<li><code>pd</code>: instance of <a href="#RobRecSolver.ProblemDescriptor"><code>ProblemDescriptor</code></a></li>
+</ul>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/26bf4679e18922aa1aae73e0deffa57021f77015/src/evaluation_problem.jl#L1-L17' class='documenter-source'>source</a><br></p>
+<p><a id='Recoverable-Problem-1'></a></p>
+<h3 id="recoverable-problem">Recoverable Problem</h3>
+<p><a id='RobRecSolver.recoverableProblem' href='#RobRecSolver.recoverableProblem'>#</a>
+<strong><code>RobRecSolver.recoverableProblem</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>recoverableProblem(C, c, X, α, dg)
+</code></pre>
+
+<p>Solves recoverable problem $REC(c) = min_{x \in X} min_{y \in X^{\alpha}_x} (Cx + cy)$. </p>
+<p>Check section 4 <em>Solving the problems by MIP formulations</em> of <a href="https://arxiv.org/abs/1811.06719">publication</a> for more information about this algorithm.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>C</code>: is a vector of nonnegative first stage costs.</li>
+<li><code>c</code>: is a vector of a nonnegative nominal second stage costs.</li>
+<li><code>X</code>: is a set of feasible solutions represented as a list functions, each of which   accepts a list of JuMP variables as an argument and returns a JuMP linear constraint.</li>
+<li><code>α</code>: fixed number belonging to $[0, 1]$</li>
+<li><code>pd</code>: instance of <a href="#RobRecSolver.ProblemDescriptor"><code>ProblemDescriptor</code></a></li>
+</ul>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/26bf4679e18922aa1aae73e0deffa57021f77015/src/recoverable_problem.jl#L1-L16' class='documenter-source'>source</a><br></p>
+<p><a id='Adversarial-Problem-1'></a></p>
+<h3 id="adversarial-problem">Adversarial Problem</h3>
+<p><a id='RobRecSolver.adversarialProblem' href='#RobRecSolver.adversarialProblem'>#</a>
+<strong><code>RobRecSolver.adversarialProblem</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>adversarialProblem(C, c, d, Γ, X, α, pd)
+</code></pre>
+
+<p>Computes <em>Adv</em> with accuracy ϵ.</p>
+<p>Check section 5.1 <em>Adversarial lower bound</em> of <a href="https://arxiv.org/abs/1811.06719">publication</a> for more information about this algorithm.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>C</code>: is a vector of nonnegative first stage costs.</li>
+<li><code>c</code>: is a vector of a nonnegative nominal second stage costs.</li>
+<li><code>d</code>: is a vector of maximal deviations of the costs from their nominal values.</li>
+<li><code>Γ</code>: is a budget, or the amount of uncertainty, which can be allocated to the second stage costs.</li>
+<li><code>X</code>: is a set of feasible solutions represented as a list functions, each of which accepts a list of JuMP variables as an argument and returns a JuMP linear constraint.</li>
+<li><code>α</code>: fixed number belonging to $[0, 1]$</li>
+<li><code>pd</code>: instance of <a href="#RobRecSolver.ProblemDescriptor"><code>ProblemDescriptor</code></a></li>
+</ul>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/26bf4679e18922aa1aae73e0deffa57021f77015/src/adversarial_problem.jl#L1-L17' class='documenter-source'>source</a><br></p>
+<p><a id='Selection-Lower-Bound-1'></a></p>
+<h3 id="selection-lower-bound">Selection Lower Bound</h3>
+<p><a id='RobRecSolver.selectionLowerBound' href='#RobRecSolver.selectionLowerBound'>#</a>
+<strong><code>RobRecSolver.selectionLowerBound</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>selectionLowerBound(C, c, d, Γ, X, α, dg)
+</code></pre>
+
+<p>Computes selection lower bound.</p>
+<p>Check section 5.2 <em>Selection lower bound</em> of <a href="https://arxiv.org/abs/1811.06719">publication</a> for more information about this algorithm.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>C</code>: is a vector of nonnegative first stage costs.</li>
+<li><code>c</code>: is a vector of a nonnegative nominal second stage costs.</li>
+<li><code>d</code>: is a vector of maximal deviations of the costs from their nominal values.</li>
+<li><code>Γ</code>: is a budget, or the amount of uncertainty, which can be allocated to the second stage costs.</li>
+<li><code>X</code>: is a set of feasible solutions represented as a list functions, each of which   accepts a list of JuMP variables as an argument and returns a JuMP linear constraint.</li>
+<li><code>α</code>: fixed number belonging to $[0, 1]$</li>
+<li><code>pd</code>: instance of <a href="#RobRecSolver.ProblemDescriptor"><code>ProblemDescriptor</code></a></li>
+</ul>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/26bf4679e18922aa1aae73e0deffa57021f77015/src/selection_lower_bound.jl#L1-L18' class='documenter-source'>source</a><br></p>
+<p><a id='Lagrangian-Lower-Bound-1'></a></p>
+<h3 id="lagrangian-lower-bound">Lagrangian Lower Bound</h3>
+<p><a id='RobRecSolver.lagrangianLowerBound' href='#RobRecSolver.lagrangianLowerBound'>#</a>
+<strong><code>RobRecSolver.lagrangianLowerBound</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>lagrangian_lower_bound(C, c, d, Γ, X, l, dg)
+</code></pre>
+
+<p>Computes Lagrangian lower bound.</p>
+<p>Check section 5.3 <em>Lagrangian lower bound</em> of <a href="https://arxiv.org/abs/1811.06719">publication</a> for more information about this algorithm.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>C</code>: is a vector of nonnegative first stage costs.</li>
+<li><code>c</code>: is a vector of a nonnegative nominal second stage costs.</li>
+<li><code>d</code>: is a vector of maximal deviations of the costs from their nominal values.</li>
+<li><code>Γ</code>: is a budget, or the amount of uncertainty, which can be allocated to the second stage costs.</li>
+<li><code>X</code>: is a set of feasible solutions represented as a list functions, each of which accepts a list of JuMP variables as an argument and returns a JuMP linear constraint.</li>
+<li><code>l</code>: value of parameter $l=\lceil m(1-\alpha) \rceil$</li>
+<li><code>pd</code>: instance of <a href="#RobRecSolver.ProblemDescriptor"><code>ProblemDescriptor</code></a></li>
+</ul>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/26bf4679e18922aa1aae73e0deffa57021f77015/src/lagrangian_lower_bound.jl#L1-L17' class='documenter-source'>source</a><br></p>
+<p><a id='Experiments-1'></a></p>
+<h2 id="experiments">Experiments</h2>
+<p><a id='Problems-1'></a></p>
+<h3 id="problems">Problems</h3>
+<p><a id='RobRecSolver.minimumKnapsackProblem' href='#RobRecSolver.minimumKnapsackProblem'>#</a>
+<strong><code>RobRecSolver.minimumKnapsackProblem</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>minimumKnapsackProblem(C, w, W)
+</code></pre>
+
+<p>Solve minimum knapsack problem using vector of costs <code>C</code>, weights <code>w</code> and overall weight limit <code>W</code>.</p>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/26bf4679e18922aa1aae73e0deffa57021f77015/src/minimum_knapsack_problem.jl#L1-L5' class='documenter-source'>source</a><br></p>
+<p><a id='RobRecSolver.getKnapsackConstraints' href='#RobRecSolver.getKnapsackConstraints'>#</a>
+<strong><code>RobRecSolver.getKnapsackConstraints</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>getKnapsackConstraints(w, W)
+</code></pre>
+
+<p>Return a list of constraints defining a set of feasible solutions of a minimum knapsack problem. Each constraint is function with one parameter, which is variable of a mathematical programming model.</p>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/26bf4679e18922aa1aae73e0deffa57021f77015/src/minimum_knapsack_problem.jl#L22-L27' class='documenter-source'>source</a><br></p>
+<p><a id='RobRecSolver.minimumAssignmentProblem' href='#RobRecSolver.minimumAssignmentProblem'>#</a>
+<strong><code>RobRecSolver.minimumAssignmentProblem</code></strong> &mdash; <em>Function</em>.</p>
+<p>"     minimumAssignmentProblem(C)</p>
+<p>Solve minimum assignment problem using vector of costs <code>C</code>.</p>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/26bf4679e18922aa1aae73e0deffa57021f77015/src/minimum_assignment_problem.jl#L1-L6' class='documenter-source'>source</a><br></p>
+<p><a id='RobRecSolver.getAssignmentConstraints' href='#RobRecSolver.getAssignmentConstraints'>#</a>
+<strong><code>RobRecSolver.getAssignmentConstraints</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>getAssignmentConstraints(m)
+</code></pre>
+
+<p>Return a list of constraints defining a set of feasible solutions of a minimum assignment problem. Each constraint is function with one parameter, which is variable of a mathematical programming model.</p>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/26bf4679e18922aa1aae73e0deffa57021f77015/src/minimum_assignment_problem.jl#L22-L27' class='documenter-source'>source</a><br></p>
+<p><a id='Testing-Framework-1'></a></p>
+<h3 id="testing-framework">Testing Framework</h3>
+<p><a id='RobRecSolver.Experiments' href='#RobRecSolver.Experiments'>#</a>
+<strong><code>RobRecSolver.Experiments</code></strong> &mdash; <em>Module</em>.</p>
+<p><code>RobRecSolver.Experiments</code> is a module containing all of the code regarding conduction of experiments.</p>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/26bf4679e18922aa1aae73e0deffa57021f77015/src/experiments/Experiments.jl#L1-L3' class='documenter-source'>source</a><br></p>
+<p><a id='RobRecSolver.Experiments.generateData' href='#RobRecSolver.Experiments.generateData'>#</a>
+<strong><code>RobRecSolver.Experiments.generateData</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>generateData(problemDescriptor::ProblemDescriptor)
+</code></pre>
+
+<p>Helper function designed to generate experiment data for each problem under consideration. It returns a tuple <code>(C, c, d, Γ, X)</code> where</p>
+<ol>
+<li><code>C</code> is a vector of nonnegative first stage costs</li>
+<li><code>c</code> is a vector of a nonnegative nominal second stage costs</li>
+<li><code>d</code> is a vector of maximal deviations of the costs from their nominal values</li>
+<li><code>Γ</code> is a budget, or the amount of uncertainty, which can be allocated to the second stage costs</li>
+<li><code>X</code> is a set of feasible solutions represented as a list functions, each of which accepts a list of JuMP variables as an argument and returns a JuMP linear constraint</li>
+</ol>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/26bf4679e18922aa1aae73e0deffa57021f77015/src/experiments/data_generators.jl#L1-L11' class='documenter-source'>source</a><br></p>
+<p><a id='RobRecSolver.Experiments.runExperiments' href='#RobRecSolver.Experiments.runExperiments'>#</a>
+<strong><code>RobRecSolver.Experiments.runExperiments</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>runExperiments(ns::Array{Integer}, ms::Array{Integer};  αs = collect(0.1:0.1:0.9), numberOfInstances = 5)
+</code></pre>
+
+<p>Entry point of experiments. This function runs experiments for minimum knapsack problem with problem size <code>n</code> specified by the list <code>ns</code> and minimum assignment problem with problem size <code>m</code> specified by the list <code>ms</code>. Optional argument <code>αs</code> specify a list of parameters defining neighbourhood of some solution $x$ and optional argument <code>numberOfInstances</code> specify number of problem instances to be generated for each value of <code>alpha</code>.</p>
+<p><strong>Examples:</strong></p>
+<pre><code class="julia-repl">julia&gt; using RobRecSolver.Experiments
+julia&gt; runExperiments([100, 400, 1000], [10, 25, 100])
+</code></pre>
+
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/26bf4679e18922aa1aae73e0deffa57021f77015/src/experiments/experiment.jl#L1-L15' class='documenter-source'>source</a><br></p>
+<p><a id='RobRecSolver.Experiments.runKnapsackExperiments' href='#RobRecSolver.Experiments.runKnapsackExperiments'>#</a>
+<strong><code>RobRecSolver.Experiments.runKnapsackExperiments</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>runKnapsackExperiments(ns; αs = collect(0.1:0.1:0.9), numberOfInstances = 5)
+</code></pre>
+
+<p>Runs experiments for minimum knapsack problem.</p>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/26bf4679e18922aa1aae73e0deffa57021f77015/src/experiments/experiment.jl#L28-L32' class='documenter-source'>source</a><br></p>
+<p><a id='RobRecSolver.Experiments.runAssignmentExperiments' href='#RobRecSolver.Experiments.runAssignmentExperiments'>#</a>
+<strong><code>RobRecSolver.Experiments.runAssignmentExperiments</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>runAssignmentExperiments(ms; αs = collect(0.1:0.1:0.9), numberOfInstances = 5)
+</code></pre>
+
+<p>Runs experiments for minimum assignment problem.</p>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/26bf4679e18922aa1aae73e0deffa57021f77015/src/experiments/experiment.jl#L65-L69' class='documenter-source'>source</a><br></p>
+<p><a id='RobRecSolver.Experiments.exportKnapsackResults' href='#RobRecSolver.Experiments.exportKnapsackResults'>#</a>
+<strong><code>RobRecSolver.Experiments.exportKnapsackResults</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>exportKnapsackResults(problemDescriptor, αs, results)
+</code></pre>
+
+<p>Saves results of minimum knapsack problem experiments to CSV files and as PDF plots.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>problemDescriptor::ProblemDescriptor</code>: implementation of <a href="#RobRecSolver.ProblemDescriptor"><code>ProblemDescriptor</code></a> for this problem.</li>
+<li><code>αs::Array{Integer, 1}</code>: list of values of α.</li>
+<li><code>results::Array{Float64, 1}</code>: three-dimentional array of results, where first   dimention specify problem, second dimention specify ratios or times results,   the third one contain results for each value of α.</li>
+</ul>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/26bf4679e18922aa1aae73e0deffa57021f77015/src/experiments/export.jl#L1-L12' class='documenter-source'>source</a><br></p>
+<p><a id='RobRecSolver.Experiments.exportAssignmentResults' href='#RobRecSolver.Experiments.exportAssignmentResults'>#</a>
+<strong><code>RobRecSolver.Experiments.exportAssignmentResults</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>exportAssignmentResults(problemDescriptor, αs, results)
+</code></pre>
+
+<p>Saves results of minimum assignment problem experiments to CSV files and as PDF plots.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>problemDescriptor::ProblemDescriptor</code>: implementation of <a href="#RobRecSolver.ProblemDescriptor"><code>ProblemDescriptor</code></a> for this problem.</li>
+<li><code>αs::Array{Integer, 1}</code>: list of values of α.</li>
+<li><code>results::Array{Float64, 1}</code>: three-dimentional array of results, where first   dimention specify problem, second dimention specify ratios or times results,   the third one contain results for each value of α.</li>
+</ul>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/26bf4679e18922aa1aae73e0deffa57021f77015/src/experiments/export.jl#L41-L52' class='documenter-source'>source</a><br></p>
+<p><a id='RobRecSolver.Experiments.saveCsv' href='#RobRecSolver.Experiments.saveCsv'>#</a>
+<strong><code>RobRecSolver.Experiments.saveCsv</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>saveCsv(filename, data, columnNames)
+</code></pre>
+
+<p>Saves <code>data</code> described by <code>columnNames</code> to CSV file with name<code>filename</code>.</p>
+<p><strong>Examples:</strong></p>
+<pre><code>julia&gt; Experiments.saveCsv(&quot;item_prices.csv&quot;, [&quot;milk&quot; 100; &quot;ham&quot; 250], [&quot;item&quot;, &quot;price&quot;])
+</code></pre>
+
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/26bf4679e18922aa1aae73e0deffa57021f77015/src/experiments/export.jl#L81-L90' class='documenter-source'>source</a><br></p>
+<p><a id='RobRecSolver.Experiments.drawAndSavePlot' href='#RobRecSolver.Experiments.drawAndSavePlot'>#</a>
+<strong><code>RobRecSolver.Experiments.drawAndSavePlot</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>drawAndSavePlot(filename, x, ys, xlabel, ylabel, yslabels; linewidth=2, linestyles = [:solid :dash :dashdot :dot :solid], shape = [:diamond :pentagon :star4 :utriangle :square], palette=cgrad([:black, :grey]), annotations = [])
+</code></pre>
+
+<p>Draws plot and saves it to PDF file with name <code>filename</code>. Here <code>x</code> is a values of 0X axis, <code>ys</code> is a columns of series, <code>xlabel</code> is label of 0X axis, <code>ylabel</code> is label of 0Y axis and <code>yslabels</code> is a labels of individual series. The rest of arguments is self-descriptive.</p>
+<p><strong>Examples:</strong></p>
+<pre><code>julia&gt; Experiments.drawAndSavePlot(&quot;plot.pdf&quot;, [0.1, 0.2, 0.3], [21, 15, 12], &quot;α&quot;, &quot;average time (s)&quot;, &quot;m=100&quot;)
+</code></pre>
+
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/26bf4679e18922aa1aae73e0deffa57021f77015/src/experiments/export.jl#L96-L107' class='documenter-source'>source</a><br></p>
+<p><a id='Utilities-1'></a></p>
+<h2 id="utilities">Utilities</h2>
+<p>The functions below allow customize package parameters like solver time limits or logging for different algorithms.</p>
+<p><a id='RobRecSolver.loadProperties' href='#RobRecSolver.loadProperties'>#</a>
+<strong><code>RobRecSolver.loadProperties</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>loadProperties()
+</code></pre>
+
+<p>Loads properties stored in an INI file from the specified file location. To change default location set <code>ROBRECSOLVER_CONFIG</code> environment variable either in Julia REPL or in <code>~/.julia/config/startup.jl</code> and then reload RobRecSolver package:</p>
+<pre><code class="julia-repl">julia&gt; ENV[ROBRECSOLVER_CONFIG] = &quot;&lt;path_to_file&gt;&quot;
+julia&gt; Pkg.reload(&quot;RobRecSolver&quot;)
+</code></pre>
+
+<p>Use default properties file <code>Pkg.dir("RobRecSolver")/conf/config.ini</code> as a reference.</p>
+<p>In order to reset changes simply delete environment variable and reload RobRecSolver package.</p>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/26bf4679e18922aa1aae73e0deffa57021f77015/src/properties.jl#L3-L14' class='documenter-source'>source</a><br></p>
+<p><a id='RobRecSolver.getProperty' href='#RobRecSolver.getProperty'>#</a>
+<strong><code>RobRecSolver.getProperty</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>getProperty(parameter[, parameterType, section])
+</code></pre>
+
+<p>Get value for key of name <code>parameter</code> of type <code>parameterType</code> from section <code>section</code> from either default properties files or the one specified with a path in ROBRECSOLVER_CONFIG. Argument  <code>parameterType</code> defaults to <code>Int</code> and <code>section</code> defaults to <code>main</code>.</p>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/26bf4679e18922aa1aae73e0deffa57021f77015/src/properties.jl#L30-L35' class='documenter-source'>source</a><br></p>
+
+            </div>
+          </div>
+          <footer>
+
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+
+          <a href="https://github.com/nikagra/RobRecSolver.jl/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+
+
+
+    </span>
+</div>
+    <script>var base_url = '.';</script>
+    <script src="js/theme.js" defer></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML" defer></script>
+      <script src="assets/mathjaxhelper.js" defer></script>
+      <script src="search/main.js" defer></script>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 1.0.4
+Build Date UTC : 2018-12-23 22:00:17
+-->
