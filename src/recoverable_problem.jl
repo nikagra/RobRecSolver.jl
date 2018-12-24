@@ -12,7 +12,7 @@ for more information about this algorithm.
 - `X`: is a set of feasible solutions represented as a list functions, each of which
     accepts a list of JuMP variables as an argument and returns a JuMP linear constraint.
 - `α`: fixed number belonging to ``[0, 1]``
-- `pd`: instance of [`ProblemDescriptor`](@ref)
+- `pd`: an instance of [`ProblemDescriptor`](@ref)
 """
 function recoverableProblem(C, c, X, α, dg)
     @assert size(C) == size(c)

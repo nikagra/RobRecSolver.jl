@@ -1,7 +1,15 @@
 using Documenter, RobRecSolver, RobRecSolver.Experiments
 
 makedocs(
-    modules = [RobRecSolver, RobRecSolver.Experiments]
+    sitename = "RobRecSolver",
+    modules = [RobRecSolver, RobRecSolver.Experiments],
+    authors = "Mikita Hradovich",
+    pages = [
+        "Introduction" => "index.md",
+        "Installation Guide" => "installation.md",
+        "Reference" => "apireference.md",
+        "Experiments" => "experiments.md"
+    ]
 )
 
 deploydocs(

@@ -14,7 +14,7 @@ for more information about this algorithm.
 - `x`: first stage solution.
 - `X`: is a set of feasible solutions represented as a list functions, each of which
     accepts a list of JuMP variables as an argument and returns a JuMP linear constraint.
-- `pd`: instance of [`ProblemDescriptor`](@ref)
+- `pd`: an instance of [`ProblemDescriptor`](@ref)
 """
 function incrementalProblem(c, α, x, X, pd)
     n = size(c, 1)

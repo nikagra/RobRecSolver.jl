@@ -13,7 +13,7 @@ for more information about this algorithm.
 - `Γ`: is a budget, or the amount of uncertainty, which can be allocated to the second stage costs.
 - `X`: is a set of feasible solutions represented as a list functions, each of which accepts a list of JuMP variables as an argument and returns a JuMP linear constraint.
 - `l`: value of parameter ``l=\\ceil{m(1-\\alpha)}``
-- `pd`: instance of [`ProblemDescriptor`](@ref)
+- `pd`: an instance of [`ProblemDescriptor`](@ref)
 """
 function lagrangianLowerBound(C, c, d, Γ, X, l, dg)
     @assert hasEqualCardinalityProperty(dg)

@@ -13,7 +13,7 @@ for more information about this algorithm.
 - `Γ`: is a budget, or the amount of uncertainty, which can be allocated to the second stage costs.
 - `X`: is a set of feasible solutions represented as a list functions, each of which accepts a list of JuMP variables as an argument and returns a JuMP linear constraint.
 - `α`: fixed number belonging to ``[0, 1]``
-- `pd`: instance of [`ProblemDescriptor`](@ref)
+- `pd`: an instance of [`ProblemDescriptor`](@ref)
 """
 function adversarialProblem(C, c, d, Γ, X, α, pd)
     ϵ = getProperty("adversarialProblem.epsilon", parameterType = Float64)

@@ -14,8 +14,8 @@ julia> Pkg.clone("https://github.com/nikagra/RobRecSolver.jl.git")
 ## Usage
 Run the following commands Julia REPL to run experiments:
 ```julia-repl
-julia> using RobRecSolver
-julia> runExperiments([100, 400, 1000], [10, 25, 100]])
+julia> using RobRecSolver.Experiments
+julia> runExperiments([100, 400, 1000], [10, 25, 100])
 ```
 
 ## Documentation
