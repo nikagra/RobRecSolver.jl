@@ -1,4 +1,4 @@
-""""
+"""
     minimumAssignmentProblem(C)
 
 Solve minimum assignment problem using vector of costs `C`.

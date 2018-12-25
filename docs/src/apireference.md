@@ -1,38 +1,6 @@
-## Algorithms
-There is a number of types and helper functions defined to facilitate implementation
-of algorithms of algorithms described in paper.
+# Reference
 
-```@docs
-RobRecSolver.ProblemDescriptor
-```
-
-```@docs
-RobRecSolver.KnapsackProblemDescriptor
-```
-
-```@docs
-RobRecSolver.AssignmentProblemDescriptor
-```
-
-```@docs
-RobRecSolver.getProblemSize
-```
-
-```@docs
-RobRecSolver.getSaneComputationLimit
-```
-
-```@docs
-RobRecSolver.hasEqualCardinalityProperty
-```
-
-```@docs
-RobRecSolver.getCardinality
-```
-
-```@docs
-RobRecSolver.initialScenario
-```
+## Problems
 
 ### Incremental Problem
 
@@ -68,6 +36,42 @@ RobRecSolver.selectionLowerBound
 
 ```@docs
 RobRecSolver.lagrangianLowerBound
+```
+
+## Additional Types and functions
+There is a number of types and helper functions defined to facilitate implementation
+of algorithms described in _publication_.
+
+```@docs
+RobRecSolver.ProblemDescriptor
+```
+
+```@docs
+RobRecSolver.KnapsackProblemDescriptor
+```
+
+```@docs
+RobRecSolver.AssignmentProblemDescriptor
+```
+
+```@docs
+RobRecSolver.getProblemSize
+```
+
+```@docs
+RobRecSolver.getSaneComputationLimit
+```
+
+```@docs
+RobRecSolver.hasEqualCardinalityProperty
+```
+
+```@docs
+RobRecSolver.getCardinality
+```
+
+```@docs
+RobRecSolver.initialScenario
 ```
 
 ## Utilities

@@ -1,7 +1,7 @@
 """
     adversarialProblem(C, c, d, Γ, X, α, pd)
 
-Computes ``\\textsc{Adv}`` with accuracy ϵ.
+Computes ``Adv`` with accuracy ϵ.
 
 Check section 5.1 _Adversarial lower bound_ of [publication](https://arxiv.org/abs/1811.06719)
 for more information about this algorithm.

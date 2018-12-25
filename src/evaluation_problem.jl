@@ -1,7 +1,7 @@
 """
     evaluationProblem(C, c, d, Γ, α, x, X, pd)
 
-Computes ``\\textsc{Eval}(\\pmb{x})`` with accuracy ϵ.
+Computes ``Eval(\\pmb{x})`` with accuracy ϵ.
 
 Check section 4 _Solving the problems by MIP formulations_ of [publication](https://arxiv.org/abs/1811.06719)
 for more information about this algorithm.

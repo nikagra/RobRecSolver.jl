@@ -1,6 +1,6 @@
-## Experiments
+# Experiments
 
-### Problems
+## Problems
 
 ```@docs
 RobRecSolver.minimumKnapsackProblem
@@ -18,7 +18,7 @@ RobRecSolver.minimumAssignmentProblem
 RobRecSolver.getAssignmentConstraints
 ```
 
-### Testing Framework
+## Testing Framework
 ```@docs
 RobRecSolver.Experiments
 ```
