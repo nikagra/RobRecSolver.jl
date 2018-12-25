@@ -15,7 +15,7 @@ abstract type ProblemDescriptor end
 Returns the size of the problem.
 
 # Arguments
-- `pd`: instance of [`ProblemDescriptor`](@ref)
+- `pd`: an instance of [`ProblemDescriptor`](@ref)
 """
 getProblemSize(pd::ProblemDescriptor) = pd.n
 
@@ -26,7 +26,7 @@ Returns maximum size of the problem for which computing results for adversarial
 lower bound, recoverable lower bound, selection lower bound or lagrangian lower bound makes sense.
 
 # Arguments
-- `pd`: instance of [`ProblemDescriptor`](@ref)
+- `pd`: an instance of [`ProblemDescriptor`](@ref)
 """
 getSaneComputationLimit(pd::ProblemDescriptor) = pd.saneComputationLimit
 
@@ -36,7 +36,7 @@ getSaneComputationLimit(pd::ProblemDescriptor) = pd.saneComputationLimit
 Returns whether the problem possess equal cardinality property.
 
 # Arguments
-- `pd`: instance of [`ProblemDescriptor`](@ref)
+- `pd`: an instance of [`ProblemDescriptor`](@ref)
 """
 hasEqualCardinalityProperty(pd::ProblemDescriptor) = pd.equalCardinalityProperty
 
@@ -46,13 +46,13 @@ hasEqualCardinalityProperty(pd::ProblemDescriptor) = pd.equalCardinalityProperty
 Returns cardinality of the problem if any.
 
 # Arguments
-- `pd`: instance of [`ProblemDescriptor`](@ref)
+- `pd`: an instance of [`ProblemDescriptor`](@ref)
 """
 getCardinality(pd::ProblemDescriptor) = pd.cardinality
 
 """
 `KnapsackProblemDescriptor` is an implementation [`ProblemDescriptor`](@ref) for
-minmium knapsack problem.
+minimum knapsack problem.
 """
 struct KnapsackProblemDescriptor <: ProblemDescriptor
     equalCardinalityProperty::Bool
@@ -65,7 +65,7 @@ end
 
 """
 `AssignmentProblemDescriptor` is an implementation [`ProblemDescriptor`](@ref) for
-minmium assignment problem.
+minimum assignment problem.
 """
 struct AssignmentProblemDescriptor <: ProblemDescriptor
     equalCardinalityProperty::Bool

@@ -1,9 +1,10 @@
 site_name:        RobRecSolver.jl
+site_author:      Mikita Hradovich
 repo_url:         https://github.com/nikagra/RobRecSolver.jl
-site_description: Description...
-site_author:      nikagra
+site_description: Documentation for RobRecSolver package written in Julia programming language
 
-theme: readthedocs
+theme:
+  name: 'material'
 
 extra_css:
   - assets/Documenter.css
@@ -20,5 +21,8 @@ markdown_extensions:
 
 docs_dir: 'build'
 
-pages:
+nav:
   - Home: index.md
+  - Installation Guide: installation.md
+  - Reference: apireference.md
+  - Experiments: experiments.md

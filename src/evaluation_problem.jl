@@ -1,7 +1,7 @@
 """
     evaluationProblem(C, c, d, Γ, α, x, X, pd)
 
-Computes ``\\textsc{Eval}(\\pmb{x})`` with accuracy ϵ.
+Computes ``Eval(\\pmb{x})`` with accuracy ϵ.
 
 Check section 4 _Solving the problems by MIP formulations_ of [publication](https://arxiv.org/abs/1811.06719)
 for more information about this algorithm.
@@ -13,7 +13,7 @@ for more information about this algorithm.
 - `Γ`: is a budget, or the amount of uncertainty, which can be allocated to the second stage costs.
 - `X`: is a set of feasible solutions represented as a list functions, each of which accepts a list of JuMP variables as an argument and returns a JuMP linear constraint.
 - `α`: fixed number belonging to ``[0, 1]``
-- `pd`: instance of [`ProblemDescriptor`](@ref)
+- `pd`: an instance of [`ProblemDescriptor`](@ref)
 """
 function evaluationProblem(C, c, d, Γ, α, x, X, pd)
     ϵ = getProperty("evaluationProblem.epsilon", parameterType = Float64)

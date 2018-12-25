@@ -1,9 +1,3 @@
-"""
-`$(current_module())` is a Julia programming language package developed to test performance of algorithms
-proposed in _Robust recoverable 0-1 optimization problems under polyhedral uncertainty_
-(Mikita Hradovich, Adam Kasperski, Pawel Zielinski) which is available as preprint on
-[arxiv.org](https://arxiv.org/abs/1811.06719). This work will later be referenced as _publication_.
-"""
 module RobRecSolver
 
 using Base.Distributed
