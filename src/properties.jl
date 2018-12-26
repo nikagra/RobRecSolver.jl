@@ -30,7 +30,8 @@ end
 """
     getProperty(parameter[, parameterType, section])
 
-Get value for key of name `parameter` of type `parameterType` from section `section` from either default properties files or the one specified with a path in $configKey.
+Get value for key of name `parameter` of type `parameterType` from section `section`
+from either default properties files or the one specified with a path in `$configKey`.
 Argument  `parameterType` defaults to `Int` and `section` defaults to `main`.
 """
 getProperty = let

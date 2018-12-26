@@ -85,7 +85,14 @@ Saves `data` described by `columnNames` to CSV file with name`filename`.
 
 # Examples:
 ```
+julia> using RobRecSolver
 julia> Experiments.saveCsv("item_prices.csv", ["milk" 100; "ham" 250], ["item", "price"])
+```
+The above command will create file `item_prices.csv` with the following content:
+```csv
+item,price
+milk,100
+ham,250
 ```
 """
 function saveCsv(filename, data, columnNames)
@@ -98,12 +105,20 @@ end
 
 Draws plot and saves it to PDF file with name `filename`. Here `x` is a values of 0X axis,
 `ys` is a columns of series, `xlabel` is label of 0X axis, `ylabel` is label of 0Y axis
-and `yslabels` is a labels of individual series. The rest of arguments is self-descriptive.
+and `yslabels` is a labels of individual series.
 
 # Examples:
 ```
+julia> using RobRecSolver, Plots
+julia> pyplot()
 julia> Experiments.drawAndSavePlot("plot.pdf", [0.1, 0.2, 0.3], [21, 15, 12], "α", "average time (s)", "m=100")
 ```
+The above command will draw the plot shown below and save it as `plot.pdf`.
+![Example output](assets/plot.png)
+
+The rest of the arguments function uses is self-descriptive and is based on the ones from
+the [`Plots.jl`](http://docs.juliaplots.org/latest/) package. Default values of arguments
+are adjusted to the needs of the _publication_.
 """
 function drawAndSavePlot(filename, x, ys, xlabel, ylabel, yslabels; linewidth=2, linestyles = [:solid :dash :dashdot :dot :solid], shape = [:diamond :pentagon :star4 :utriangle :square], palette=cgrad([:black, :grey]), annotations = [])
     p = plot(x, ys, linewidth=linewidth, xlabel = xlabel, ylabel = ylabel, lab = yslabels, linestyle = linestyles, shape = shape, markersize = 8, palette = palette, annotations = annotations)

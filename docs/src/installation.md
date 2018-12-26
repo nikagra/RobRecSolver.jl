@@ -6,7 +6,7 @@ and RobRecSolver with all of its dependencies.
 Version of Julia required by JuMP and consequently by RobRecSolver is `0.6`. You
 can build Julia from source or use the binaries.
 
-Download links and more detailed instructions are available on the Julia website.
+Download links and more detailed instructions are available on the [Julia](https://julialang.org/) website.
 
 ## Getting CPLEX Optimizer
 RobRecSolver package depends on [CPLEX.jl](https://github.com/JuliaOpt/CPLEX.jl)
