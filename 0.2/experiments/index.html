@@ -390,34 +390,34 @@
 </code></pre>
 
 <p>Solve minimum knapsack problem using vector of costs <code>C</code>, weights <code>w</code> and overall weight limit <code>W</code>.</p>
-<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/ac300dabdb4e40f35942565f507e794cc2b9b045/src/minimum_knapsack_problem.jl#L1-L5' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/291cd99827b5c86da1c19ad259b10515056bf0ce/src/minimum_knapsack_problem.jl#L1-L5' class='documenter-source'>source</a><br></p>
 <p><a id='RobRecSolver.getKnapsackConstraints' href='#RobRecSolver.getKnapsackConstraints'>#</a>
 <strong><code>RobRecSolver.getKnapsackConstraints</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>getKnapsackConstraints(w, W)
 </code></pre>
 
 <p>Return a list of constraints defining a set of feasible solutions of a minimum knapsack problem. Each constraint is function with one parameter, which is variable of a mathematical programming model.</p>
-<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/ac300dabdb4e40f35942565f507e794cc2b9b045/src/minimum_knapsack_problem.jl#L22-L27' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/291cd99827b5c86da1c19ad259b10515056bf0ce/src/minimum_knapsack_problem.jl#L22-L27' class='documenter-source'>source</a><br></p>
 <p><a id='RobRecSolver.minimumAssignmentProblem' href='#RobRecSolver.minimumAssignmentProblem'>#</a>
 <strong><code>RobRecSolver.minimumAssignmentProblem</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>minimumAssignmentProblem(C)
 </code></pre>
 
 <p>Solve minimum assignment problem using vector of costs <code>C</code>.</p>
-<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/ac300dabdb4e40f35942565f507e794cc2b9b045/src/minimum_assignment_problem.jl#L1-L5' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/291cd99827b5c86da1c19ad259b10515056bf0ce/src/minimum_assignment_problem.jl#L1-L5' class='documenter-source'>source</a><br></p>
 <p><a id='RobRecSolver.getAssignmentConstraints' href='#RobRecSolver.getAssignmentConstraints'>#</a>
 <strong><code>RobRecSolver.getAssignmentConstraints</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>getAssignmentConstraints(m)
 </code></pre>
 
 <p>Return a list of constraints defining a set of feasible solutions of a minimum assignment problem. Each constraint is function with one parameter, which is variable of a mathematical programming model.</p>
-<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/ac300dabdb4e40f35942565f507e794cc2b9b045/src/minimum_assignment_problem.jl#L22-L27' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/291cd99827b5c86da1c19ad259b10515056bf0ce/src/minimum_assignment_problem.jl#L22-L27' class='documenter-source'>source</a><br></p>
 <p><a id='Testing-Framework-1'></a></p>
 <h2 id="testing-framework">Testing Framework</h2>
 <p><a id='RobRecSolver.Experiments' href='#RobRecSolver.Experiments'>#</a>
 <strong><code>RobRecSolver.Experiments</code></strong> &mdash; <em>Module</em>.</p>
 <p><code>RobRecSolver.Experiments</code> is a module containing all of the code regarding conduction of experiments.</p>
-<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/ac300dabdb4e40f35942565f507e794cc2b9b045/src/experiments/Experiments.jl#L1-L3' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/291cd99827b5c86da1c19ad259b10515056bf0ce/src/experiments/Experiments.jl#L1-L3' class='documenter-source'>source</a><br></p>
 <p><a id='RobRecSolver.Experiments.generateData' href='#RobRecSolver.Experiments.generateData'>#</a>
 <strong><code>RobRecSolver.Experiments.generateData</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>generateData(problemDescriptor::ProblemDescriptor)
@@ -431,7 +431,7 @@
 <li><code>Γ</code> is a budget, or the amount of uncertainty, which can be allocated to the second stage costs</li>
 <li><code>X</code> is a set of feasible solutions represented as a list functions, each of which accepts a list of JuMP variables as an argument and returns a JuMP linear constraint</li>
 </ol>
-<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/ac300dabdb4e40f35942565f507e794cc2b9b045/src/experiments/data_generators.jl#L1-L11' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/291cd99827b5c86da1c19ad259b10515056bf0ce/src/experiments/data_generators.jl#L1-L11' class='documenter-source'>source</a><br></p>
 <p><a id='RobRecSolver.Experiments.runExperiments' href='#RobRecSolver.Experiments.runExperiments'>#</a>
 <strong><code>RobRecSolver.Experiments.runExperiments</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>runExperiments(ns::Array{Integer}, ms::Array{Integer};  αs = collect(0.1:0.1:0.9), numberOfInstances = 5)
@@ -443,21 +443,21 @@
 julia&gt; runExperiments([100, 400, 1000], [10, 25, 100])
 </code></pre>
 
-<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/ac300dabdb4e40f35942565f507e794cc2b9b045/src/experiments/experiment.jl#L1-L15' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/291cd99827b5c86da1c19ad259b10515056bf0ce/src/experiments/experiment.jl#L1-L15' class='documenter-source'>source</a><br></p>
 <p><a id='RobRecSolver.Experiments.runKnapsackExperiments' href='#RobRecSolver.Experiments.runKnapsackExperiments'>#</a>
 <strong><code>RobRecSolver.Experiments.runKnapsackExperiments</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>runKnapsackExperiments(ns; αs = collect(0.1:0.1:0.9), numberOfInstances = 5)
 </code></pre>
 
 <p>Runs experiments for minimum knapsack problem.</p>
-<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/ac300dabdb4e40f35942565f507e794cc2b9b045/src/experiments/experiment.jl#L28-L32' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/291cd99827b5c86da1c19ad259b10515056bf0ce/src/experiments/experiment.jl#L28-L32' class='documenter-source'>source</a><br></p>
 <p><a id='RobRecSolver.Experiments.runAssignmentExperiments' href='#RobRecSolver.Experiments.runAssignmentExperiments'>#</a>
 <strong><code>RobRecSolver.Experiments.runAssignmentExperiments</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>runAssignmentExperiments(ms; αs = collect(0.1:0.1:0.9), numberOfInstances = 5)
 </code></pre>
 
 <p>Runs experiments for minimum assignment problem.</p>
-<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/ac300dabdb4e40f35942565f507e794cc2b9b045/src/experiments/experiment.jl#L65-L69' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/291cd99827b5c86da1c19ad259b10515056bf0ce/src/experiments/experiment.jl#L65-L69' class='documenter-source'>source</a><br></p>
 <p><a id='RobRecSolver.Experiments.exportKnapsackResults' href='#RobRecSolver.Experiments.exportKnapsackResults'>#</a>
 <strong><code>RobRecSolver.Experiments.exportKnapsackResults</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>exportKnapsackResults(problemDescriptor, αs, results)
@@ -470,7 +470,7 @@ julia&gt; runExperiments([100, 400, 1000], [10, 25, 100])
 <li><code>αs::Array{Integer, 1}</code>: list of values of α.</li>
 <li><code>results::Array{Float64, 1}</code>: three-dimentional array of results, where first   dimention specify problem, second dimention specify ratios or times results,   the third one contain results for each value of α.</li>
 </ul>
-<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/ac300dabdb4e40f35942565f507e794cc2b9b045/src/experiments/export.jl#L1-L12' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/291cd99827b5c86da1c19ad259b10515056bf0ce/src/experiments/export.jl#L1-L12' class='documenter-source'>source</a><br></p>
 <p><a id='RobRecSolver.Experiments.exportAssignmentResults' href='#RobRecSolver.Experiments.exportAssignmentResults'>#</a>
 <strong><code>RobRecSolver.Experiments.exportAssignmentResults</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>exportAssignmentResults(problemDescriptor, αs, results)
@@ -483,7 +483,7 @@ julia&gt; runExperiments([100, 400, 1000], [10, 25, 100])
 <li><code>αs::Array{Integer, 1}</code>: list of values of α.</li>
 <li><code>results::Array{Float64, 1}</code>: three-dimentional array of results, where first   dimention specify problem, second dimention specify ratios or times results,   the third one contain results for each value of α.</li>
 </ul>
-<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/ac300dabdb4e40f35942565f507e794cc2b9b045/src/experiments/export.jl#L41-L52' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/291cd99827b5c86da1c19ad259b10515056bf0ce/src/experiments/export.jl#L41-L52' class='documenter-source'>source</a><br></p>
 <p><a id='RobRecSolver.Experiments.saveCsv' href='#RobRecSolver.Experiments.saveCsv'>#</a>
 <strong><code>RobRecSolver.Experiments.saveCsv</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>saveCsv(filename, data, columnNames)
@@ -501,7 +501,7 @@ milk,100
 ham,250
 </code></pre>
 
-<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/ac300dabdb4e40f35942565f507e794cc2b9b045/src/experiments/export.jl#L81-L97' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/291cd99827b5c86da1c19ad259b10515056bf0ce/src/experiments/export.jl#L81-L97' class='documenter-source'>source</a><br></p>
 <p><a id='RobRecSolver.Experiments.drawAndSavePlot' href='#RobRecSolver.Experiments.drawAndSavePlot'>#</a>
 <strong><code>RobRecSolver.Experiments.drawAndSavePlot</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>drawAndSavePlot(filename, x, ys, xlabel, ylabel, yslabels; linewidth=2, linestyles = [:solid :dash :dashdot :dot :solid], shape = [:diamond :pentagon :star4 :utriangle :square], palette=cgrad([:black, :grey]), annotations = [])
@@ -516,7 +516,7 @@ julia&gt; Experiments.drawAndSavePlot(&quot;plot.pdf&quot;, [0.1, 0.2, 0.3], [21
 
 <p>The above command will draw the plot shown below and save it as <code>plot.pdf</code>. <img alt="Example output" src="../assets/plot.png" /></p>
 <p>The rest of the arguments function uses is self-descriptive and is based on the ones from the <a href="http://docs.juliaplots.org/latest/"><code>Plots.jl</code></a> package. Default values of arguments are adjusted to the needs of the <em>publication</em>.</p>
-<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/ac300dabdb4e40f35942565f507e794cc2b9b045/src/experiments/export.jl#L103-L122' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nikagra/RobRecSolver.jl/blob/291cd99827b5c86da1c19ad259b10515056bf0ce/src/experiments/export.jl#L103-L122' class='documenter-source'>source</a><br></p>
                 
                   
                 
