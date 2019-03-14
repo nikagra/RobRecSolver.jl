@@ -4,7 +4,8 @@
 to test performance of algorithms proposed in _Robust recoverable 0-1 optimization
 problems under polyhedral uncertainty_ (Mikita Hradovich, Adam Kasperski, Pawel Zielinski)
 which is available as preprint on [arxiv.org](https://arxiv.org/abs/1811.06719).
-This work will later be referenced as _publication_.
+This work will later be referenced as _publication_. It's is highly desirable to
+read the it before starting to use this package.
 
 ## Installing RobRecSolver
 If you are familiar with Julia you can quickly install RobRecSolver and CPLEX:
@@ -33,3 +34,6 @@ You can cite the _publication_ by using the following BibTeX snippet:
   year={2018}
 }
 ```
+
+## Acknowledgements
+This project was supported by the National Center for Science (Narodowe Centrum Nauki), grant 2017/25/B/ST6/00486.

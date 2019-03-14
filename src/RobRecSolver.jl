@@ -41,7 +41,8 @@ export
     getProperty,
     getProblemSize,
     getSaneComputationLimit,
-    hasEqualCardinalityProperty
+    hasEqualCardinalityProperty,
+    getCardinality
 
 
 files = [

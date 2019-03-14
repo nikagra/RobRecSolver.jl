@@ -33,3 +33,6 @@ To run unit tests run the following command in Julia REPL:
 ```julia-repl
 julia> Pkg.test("RobRecSolver")
 ```
+
+## Acknowledgements
+This project was supported by the National Center for Science (Narodowe Centrum Nauki), grant 2017/25/B/ST6/00486.
