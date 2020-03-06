@@ -56,7 +56,7 @@ files = [
         "selection_lower_bound",
         "lagrangian_lower_bound",
         "problem_descriptors",
-        "properties",
+        "properties" # Add more files here
     ]
 
     for file in files

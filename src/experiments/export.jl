@@ -122,5 +122,5 @@ are adjusted to the needs of the _publication_.
 """
 function drawAndSavePlot(filename, x, ys, xlabel, ylabel, yslabels; linewidth=2, linestyles = [:solid :dash :dashdot :dot :solid], shape = [:diamond :pentagon :star4 :utriangle :square], palette=cgrad([:black, :grey]), annotations = [])
     p = plot(x, ys, linewidth=linewidth, xlabel = xlabel, ylabel = ylabel, lab = yslabels, linestyle = linestyles, shape = shape, markersize = 8, palette = palette, annotations = annotations)
-    savefig(p, filename)
+    savefig(p, filename) # Default values selected in a way to produce the most readible charts
 end
