@@ -1,5 +1,7 @@
+% !TEX spellcheck = en_US
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% University Assignment Title Page 
+% University Assignment Title Page
 % LaTeX Template
 % Version 1.0 (27/12/12)
 %
@@ -11,17 +13,17 @@
 %
 % License:
 % CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
-% 
-% Instructions for using this template:
-% This title page is capable of being compiled as is. This is not useful for 
-% including it in another document. To do this, you have two options: 
 %
-% 1) Copy/paste everything between \begin{document} and \end{document} 
-% starting at \begin{titlepage} and paste this into another LaTeX file where you 
+% Instructions for using this template:
+% This title page is capable of being compiled as is. This is not useful for
+% including it in another document. To do this, you have two options:
+%
+% 1) Copy/paste everything between \begin{document} and \end{document}
+% starting at \begin{titlepage} and paste this into another LaTeX file where you
 % want your title page.
 % OR
-% 2) Remove everything outside the \begin{titlepage} and \end{titlepage} and 
-% move this file to the same directory as the LaTeX file you wish to add it to. 
+% 2) Remove everything outside the \begin{titlepage} and \end{titlepage} and
+% move this file to the same directory as the LaTeX file you wish to add it to.
 % Then add \input{./title_page_1.tex} to your LaTeX file where you want your
 % title page.
 %
@@ -80,7 +82,7 @@
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
 
 \center % Center everything on the page
- 
+
 %----------------------------------------------------------------------------------------
 %	HEADING SECTIONS
 %----------------------------------------------------------------------------------------
@@ -104,7 +106,7 @@
 %----------------------------------------------------------------------------------------
 
 Report: \textsc{Ser. PRE nr 3} \\[1.6cm]
- 
+
 %----------------------------------------------------------------------------------------
 %	AUTHOR SECTION
 %----------------------------------------------------------------------------------------
@@ -131,7 +133,7 @@ Mikita \textsc{Hradovich}
 %----------------------------------------------------------------------------------------
 
 \includegraphics[width=2.5cm]{logo.png} % Include a department/university logo - this will require the graphicx package
- 
+
 %----------------------------------------------------------------------------------------
 
 \vfill % Fill the rest of the page with whitespace
@@ -142,8 +144,7 @@ Mikita \textsc{Hradovich}
 
 \section{Introduction}
 
-\href{https://github.com/nikagra/RobRecSolver.jl}{RobRecSolver} is a package written in a Julia programming language developed to test performance of algorithms proposed in M. Hradovich, A. Kasperski, P. Zieliński \textit{Robust recoverable 0-1 optimization problems under polyhedral uncertainty}\cite{DBLP:journals/corr/abs-1811-06719} 
-which is available as preprint on \href{https://arxiv.org/abs/1811.06719}{arxiv.org}. This work was supported by the grant "Discrete optimization problems under uncertainty - models and algorithms" (2017/25/B/ST6/00486) by  the  National  Center  for  Science  (Narodowe
+\href{https://github.com/nikagra/RobRecSolver.jl}{RobRecSolver} is a package written in a Julia programming language developed to test performance of algorithms proposed in M. Hradovich, A. Kasperski, P. Zieliński \textit{Robust recoverable 0-1 optimization problems under polyhedral uncertainty}\cite{HKZ19}. This work was supported by the grant "Discrete optimization problems under uncertainty - models and algorithms" (2017/25/B/ST6/00486) by  the  National  Center  for  Science  (Narodowe
 Centrum Nauki).
 
 \subsection{Installing RobRecSolver}
@@ -156,14 +157,19 @@ julia> Pkg.clone("https://github.com/nikagra/RobRecSolver.jl.git")
 \textbf{Note}: You need a working installation of CPLEX Optimizer. See \ref{sec:getting_cplex}{Getting CPLEX Optimizer} for more information.
 
 \subsection{Citing}
-You can cite \cite{DBLP:journals/corr/abs-1811-06719} by using the following BibTeX snippet:
+You can cite \cite{HKZ19} by using the following BibTeX snippet:
 \begin{lstlisting}{language=LaTeX}
-@article{hradovich2018robust,
-  title={Robust recoverable 0-1 optimization problems under polyhedral uncertainty},
-  author={Hradovich, Mikita and Kasperski, Adam and Zielinski, Pawel},
-  journal={arXiv preprint arXiv:1811.06719},
-  year={2018}
-}   
+@article{HKZ19,
+	Author = {Mikita Hradovich and Adam Kasperski and Zieli{\'n}ski, Pawe{\l}},
+	Title = {Robust recoverable 0-1 optimization problems under polyhedral uncertainty},
+	Journal = {European Journal of Operational Research},
+	Volume = {278},
+	Number = {1},
+	Pages = {136-148},
+	Year = {2019},
+	Doi = {10.1016/j.ejor.2019.04.017},
+	Url = {https://doi.org/10.1016/j.ejor.2019.04.017}
+}
 \end{lstlisting}
 
 \section{Instalation Guide}
@@ -203,7 +209,7 @@ You may want to check \href{https://git-scm.com/book/en/v2}{Pro Git} written by 
 \section{Manual}
 
 \subsection{Getting Started}
-Package consists of a number of functions implementing algorithms described in \cite{DBLP:journals/corr/abs-1811-06719} as well as some utility functions. The easiest way to experiment with them is to use package in Julia's interactive session (or REPL which stands for read-eval-print loop). For example:
+Package consists of a number of functions implementing algorithms described in \cite{HKZ19} as well as some utility functions. The easiest way to experiment with them is to use package in Julia's interactive session (or REPL which stands for read-eval-print loop). For example:
 \begin{lstlisting}{language=Julia}
 $ julia
                _
@@ -242,7 +248,7 @@ Check \href{https://docs.julialang.org/en/v0.6/manual/modules/#modules-1}{Julia 
 
 
 \subsection{Additional Types and Functions}
-There is a number of types and helper functions defined to facilitate implementation of algorithms described in \cite{DBLP:journals/corr/abs-1811-06719}. \texttt{ProblemDescriptor} is one of such a types. It serves as a basic interface, defining size of the problem or whether it has equal cardinality property among other properties. There two subtypes of \texttt{ProblemDescriptor}, namely \texttt{KnapsackProblemDescriptor} and \texttt{AssignmentProblemDescriptor} for each problem discussed in \cite{DBLP:journals/corr/abs-1811-06719}:
+There is a number of types and helper functions defined to facilitate implementation of algorithms described in \cite{HKZ19}. \texttt{ProblemDescriptor} is one of such a types. It serves as a basic interface, defining size of the problem or whether it has equal cardinality property among other properties. There two subtypes of \texttt{ProblemDescriptor}, namely \texttt{KnapsackProblemDescriptor} and \texttt{AssignmentProblemDescriptor} for each problem discussed in \cite{HKZ19}:
 \begin{lstlisting}{language=Julia}
 
 using RobRecSolver
@@ -265,7 +271,7 @@ AssignmentProblemDescriptor.hasEqualCardinalityProperty: true
 AssignmentProblemDescriptor.getCardinality: 5
 \end{lstlisting}
 
-Function \texttt{initialScenario} is another example of a helper function. It searches for good heuristic initial scenario in order to speed up some computations. Its behavior is described in the section 5.1 \textit{Adversarial lower bound} of \cite{DBLP:journals/corr/abs-1811-06719}. See example below on how to use this function:
+Function \texttt{initialScenario} is another example of a helper function. It searches for good heuristic initial scenario in order to speed up some computations. Its behavior is described in the section 5.1 \textit{Adversarial lower bound} of \cite{HKZ19}. See example below on how to use this function:
 \begin{lstlisting}[mathescape]{language=Julia}
 using RobRecSolver
 
@@ -314,7 +320,7 @@ In the example above value for property \texttt{evaluationProblem.epsilon} of ty
 
 \section{Problems}
 \subsection{Incremental and Recoverable Problems}
-Section 4 \textit{Solving the problems by MIP formulations} of \cite{DBLP:journals/corr/abs-1811-06719} presents MIP formulations for incremental and recoverable problems for element exclusion neighborhood as well its simplified versions for equal cardinality problem.
+Section 4 \textit{Solving the problems by MIP formulations} of \cite{HKZ19} presents MIP formulations for incremental and recoverable problems for element exclusion neighborhood as well its simplified versions for equal cardinality problem.
 
 Both versions of incremental problems are solved by \texttt{incrementalProblem} function. Here is example of solving incremental problem for minimum knapsack problem:
 \begin{lstlisting}[mathescape]{language=Julia}
@@ -329,7 +335,7 @@ julia> X = getKnapsackConstraints(w, W)
 julia> problemDescriptor = KnapsackProblemDescriptor(n)
 julia> incrementalProblem(c, $\alpha$, x, X, problemDescriptor)
 \end{lstlisting}
-In this example we first import RobRecSolver package. Then we define a number of variables, namely \texttt{c} for a vector of nonnegative nominal second stage costs, \texttt{x} for a first stage solution, variable \texttt{$\alpha$} for fixed number belonging to \texttt{[0,1]} as described in \cite{DBLP:journals/corr/abs-1811-06719}. We also define variable \texttt{w} for a vector of item weights and \texttt{W} for knapsack capacity. Set of feasible solutions is prepared by function \texttt{getKnapsackConstraints}. It is represented as a list of anonymous functions each of which for given vector of JuMP variables returns a JuMP linear constraint. Variable \texttt{problemDescriptor} is an instance of type \texttt{KnapsackProblemDescriptor} which defines some useful properties of a problem, i.e. its size or whether it has equal cardinality property. Last step is to call function \texttt{incrementalProblem}. It will return tuple containing vector of second stage solutions and objective value.
+In this example we first import RobRecSolver package. Then we define a number of variables, namely \texttt{c} for a vector of nonnegative nominal second stage costs, \texttt{x} for a first stage solution, variable \texttt{$\alpha$} for fixed number belonging to \texttt{[0,1]} as described in \cite{HKZ19}. We also define variable \texttt{w} for a vector of item weights and \texttt{W} for knapsack capacity. Set of feasible solutions is prepared by function \texttt{getKnapsackConstraints}. It is represented as a list of anonymous functions each of which for given vector of JuMP variables returns a JuMP linear constraint. Variable \texttt{problemDescriptor} is an instance of type \texttt{KnapsackProblemDescriptor} which defines some useful properties of a problem, i.e. its size or whether it has equal cardinality property. Last step is to call function \texttt{incrementalProblem}. It will return tuple containing vector of second stage solutions and objective value.
 
 Let us solve recoverable problem for minimum assignment problem using \texttt{recoverableProblem} function:
 \begin{lstlisting}[mathescape]{language=Julia}
@@ -345,7 +351,7 @@ julia> recoverableProblem(C, c, X, $\alpha$, problemDescriptor)
 As in a previous example we first define some auxiliary variables. Here  \texttt{C} is a vector of nonnegative first stage costs,  \texttt{C} is a vector of a nonnegative nominal second stage costs, \texttt{X} is a set of feasible solutions,  \texttt{$\alpha$} is fixed number belonging to \texttt{[0, 1]} and \texttt{problemDescriptor} is an instance of \texttt{\seqsplit{AssignmentProblemDescriptor}}. This example will return a tuple consisting of a vector of first stage solutions, a vector of second stage solutions and objective value.
 
 \subsection{Evaluation Problem}
-Let us take a look at a function named \texttt{evaluationProblem}, which implements \textbf{Algorithm 1} of Section 4 \textit{Solving the problems by MIP formulations} of \cite{DBLP:journals/corr/abs-1811-06719}. Here is an example of how one can use it for minimum knapsack problem:
+Let us take a look at a function named \texttt{evaluationProblem}, which implements \textbf{Algorithm 1} of Section 4 \textit{Solving the problems by MIP formulations} of \cite{HKZ19}. Here is an example of how one can use it for minimum knapsack problem:
 \begin{lstlisting}[mathescape]{language=Julia}
 julia> using RobRecSolver
 julia> n = 2
@@ -395,7 +401,7 @@ Adversarial lower bound is 5.0
 In this program we first define size of a problem \texttt{n}, parameter  \texttt{$\alpha$}, a vector of first stage costs  \texttt{C}, a vector of a second stage costs  \texttt{C}, a vector of maximal deviations of the costs from their nominal values  \texttt{d}, budget  \texttt{$\Gamma$}, set of feasible solutions \texttt{X} and an instance of type `KnapsackProblemDescriptor` `problemDescriptor` defining problem properties. Then we call `adversarialProblem` function passing all necessary arguments and printing out result. Note, that depending on package settings it also may print some additional logs.
 
 \subsection{Experiments}
-RobRecSolver package also contains \texttt{Experiments} submodule which can serve as a reference on how to use core package functionality in experiments. Please remember that almost all functions in \texttt{RobRecSolver.Experiments} are highly customized to serve purposes of \cite{DBLP:journals/corr/abs-1811-06719}. Never the less let us take a closer look at functions presented here.
+RobRecSolver package also contains \texttt{Experiments} submodule which can serve as a reference on how to use core package functionality in experiments. Please remember that almost all functions in \texttt{RobRecSolver.Experiments} are highly customized to serve purposes of \cite{HKZ19}. Never the less let us take a closer look at functions presented here.
 
 \texttt{RobRecSolver.Experiments.runExperiments} is an entry point of experiments. It accepts list of minimum knapsack problem sizes \texttt{ns}, list of minimum assignment problem sizes \texttt{ms} and optionally list of values of parameter $\alpha$ called \texttt{$\alpha$s} and a number of instances to be generated for each value of $\alpha$ called \texttt{numberOfInstances}. By default \texttt{$\alpha$s} has values $0.1,0.2,...,0.9$ and \texttt{numberOfInstances} equals 5:
 \begin{lstlisting}[mathescape]{language=Julia}
@@ -403,7 +409,7 @@ using RobRecSolver.Experiments
 
 runExperiments([100, 400, 1000], [10, 25, 100])
 \end{lstlisting}
-Check \cite{DBLP:journals/corr/abs-1811-06719} for more information about scope of experiments.
+Check \cite{HKZ19} for more information about scope of experiments.
 
 \texttt{RobRecSolver.Experiments.saveCsv} is a helper function developed to save experiment results as CSV files. It saves data described by \texttt{columnNames} argument using data passed in \texttt{data} argument to CSV file with name \texttt{filename}:
 \begin{lstlisting}[mathescape]{language=Julia}
@@ -418,7 +424,7 @@ milk,100
 ham,250
 \end{lstlisting}
 
-Function \texttt{RobRecSolver.Experiments.drawAndSavePlot} is a function used to draw plots used in \cite{DBLP:journals/corr/abs-1811-06719}. It accepts a number of parameteres and is heavily based on \texttt{PyPlot} backend. As an example. the following code snippet:
+Function \texttt{RobRecSolver.Experiments.drawAndSavePlot} is a function used to draw plots used in \cite{HKZ19}. It accepts a number of parameteres and is heavily based on \texttt{PyPlot} backend. As an example. the following code snippet:
 \begin{lstlisting}[mathescape]{language=Julia}
 using RobRecSolver, Plots
 
